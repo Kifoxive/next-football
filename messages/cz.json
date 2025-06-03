@@ -1,0 +1,17 @@
+{
+  "home": {
+    "title": "Vítejte v lese Klanovice"
+  },
+  "navbar": {
+    "home": "Domů",
+    "games": "Zápasy",
+    "players": "Hráči"
+  },
+  "login": {
+    "title": "Přihlášení",
+    "google": "Přihlásit se pomocí Googlu"
+  },
+  "locations": {
+    "add": "Add new location"
+  }
+}

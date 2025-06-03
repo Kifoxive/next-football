@@ -1,0 +1,151 @@
+{
+  "home": {
+    "title": "Home"
+  },
+  "navbar": {
+    "home": "Home",
+    "games": "Games",
+    "players": "Players",
+    "locations": "Locations"
+  },
+  "validation": {
+    "required": "This field is required",
+    "emailFormat": "Enter a valid email format",
+    "numberFormat": "Please enter a valid number",
+    "phoneFormat": "Please enter a valid phone number",
+    "stringFormat": "Please enter the correct format",
+    "exactlyLength": "Must have exactly {{length}} characters",
+    "notDigits": "Must not contain digits",
+    "firstNameRequired": "You must enter a first name",
+    "lastNameRequired": "You must enter a last name",
+    "minLengthOther": "The item must have at least {{minLength}} characters",
+    "minLengthOne": "The item must have at least {{minLength}} character",
+    "minLengthFew": "The item must have at least {{minLength}} characters",
+    "maxLengthOther": "Item must be at most {{maxLength}} characters",
+    "maxLengthOne": "Item must have at most {{maxLength}} character",
+    "maxLengthFew": "Item must have at most {{maxLength}} characters",
+    "exactlyLengthOther": "Item must be exactly {{length}} characters",
+    "exactlyLengthOne": "Item must be exactly {{length}} character",
+    "exactlyLengthFew": "Item must be exactly {{length}} characters",
+    "minValue": "Please enter a number greater than or equal to {{value}}",
+    "maxValue": "Please enter a number less than or equal to {{value}}",
+    "passwordLength": "Password must be at least {{minLength}} characters long"
+  },
+  "login": {
+    "title": "Sign in",
+    "google": "Sign in with Google"
+  },
+  "games": {
+    "table": {
+      "title": "Games"
+    }
+  },
+  "players": {
+    "new": {
+      "title": "Add a new player",
+      "addButton": "Create player",
+      "createSuccess": "Player was created successfully",
+      "createError": "Unable to create player"
+    },
+    "detail": {
+      "title": "Player card",
+      "fetchError": "Unable to fetch user"
+    },
+    "edit": {
+      "title": "Edit player",
+      "updateButton": "Update player",
+      "updateSuccess": "Player was updated successfully",
+      "updateError": "Unable to update player",
+      "fetchError": "Unable to fetch player",
+      "removeButton": "Remove player",
+      "removeSuccess": "Player was removed successfully",
+      "removeError": "Unable to remove player",
+      "removeDialog": {
+        "title": "Do you really want to remove this player?",
+        "description": "This action cannot be undone. The player's data will be permanently deleted.",
+        "agreeBtnText": "Yes, remove",
+        "cancelBtnText": "Cancel"
+      }
+    },
+    "table": {
+      "title": "Players",
+      "add": "Add a new player"
+    },
+    "form": {
+      "id": "User ID",
+      "user_name": "Username",
+      "email": "Email",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "role": "User role",
+      "created_by": "Created by",
+      "updated_at": "Updated at",
+      "invited_at": "Invited at",
+      "joined_at": "Joined at"
+    },
+    "role": {
+      "admin": "Admin",
+      "moderator": "Moderator",
+      "player": "Player"
+    }
+  },
+  "locations": {
+    "new": {
+      "title": "Add a new location",
+      "addButton": "Create location",
+      "createSuccess": "Location was created successfully",
+      "createError": "Unable to create location"
+    },
+    "detail": {},
+    "edit": {
+      "title": "Edit location",
+      "updateButton": "Update location",
+      "updateSuccess": "Location was updated successfully",
+      "updateError": "Unable to update location",
+      "fetchError": "Unable to fetch location",
+      "removeButton": "Remove location",
+      "removeSuccess": "Location was removed successfully",
+      "removeError": "Unable to remove location",
+      "removeDialog": {
+        "title": "Do you really want to remove this location?",
+        "description": "This action cannot be undone. The location's data will be permanently deleted.",
+        "agreeBtnText": "Yes, remove",
+        "cancelBtnText": "Cancel"
+      }
+    },
+    "table": {
+      "title": "Locations",
+      "add": "Add a new location",
+      "edit": "Edit location"
+    },
+    "form": {
+      "name": "Name",
+      "description": "Description",
+      "address": "Address",
+      "price_per_hour": "Price per hour",
+      "floor_type": "Floor type",
+      "building_type": "Building type",
+      "latitude": "latitude",
+      "longitude": "longitude"
+    },
+    "floor_type": {
+      "artificial_grass": "Artificial Grass",
+      "natural_grass": "Natural Grass",
+      "parquet": "Parquet",
+      "rubber": "Rubber",
+      "sand": "Sand",
+      "asphalt": "Asphalt"
+    },
+    "building_type": {
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "covered_outdoor": "Covered Outdoor"
+    }
+  },
+  "basic": {
+    "picture_add": "Upload picture",
+    "picture_remove": "Remove picture",
+    "size_too_big": "File size exceeds {value}MB",
+    "czk_hour": "{value} CZK / h"
+  }
+}

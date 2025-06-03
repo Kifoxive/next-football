@@ -1,0 +1,31 @@
+{
+  "home": {
+    "title": "Ласкаво просимо до Клановицького лісу"
+  },
+  "navbar": {
+    "home": "Головна",
+    "games": "Ігри",
+    "players": "Гравці",
+    "locations": "Локації"
+  },
+  "login": {
+    "title": "Вхід в систему",
+    "google": "Увійти за допомогою Google"
+  },
+  "locations": {
+    "add": "Додати нову локацію",
+    "floor_type": {
+      "artificial_grass": "Штучна трава",
+      "natural_grass": "Природна трава",
+      "parquet": "Паркет",
+      "rubber": "Гумове покриття",
+      "sand": "Пісок",
+      "asphalt": "Асфальт"
+    },
+    "building_type": {
+      "indoor": "У приміщенні",
+      "outdoor": "На вулиці",
+      "covered_outdoor": "Накритий відкритий майданчик"
+    }
+  }
+}
