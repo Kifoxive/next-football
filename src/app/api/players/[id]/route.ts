@@ -4,6 +4,7 @@ import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
+// update player
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -29,11 +30,11 @@ export async function PUT(
 
   const isSelfUpdate = targetId === user_id;
 
-  // Admin: без обмежень
+  // Admin: no restrictions
   if (role === USER_ROLE.admin) {
     const { data, error } = await supabase
       .from("profiles")
-      .update({ ...body, updated_at: new Date() })
+      .update({ ...body, updated_at: new Date().toISOString() })
       .eq("id", targetId)
       .select("*");
 
@@ -48,9 +49,9 @@ export async function PUT(
     );
   }
 
-  // Moderator: може змінювати себе або player-а, але не роль
+  // Moderator: can change himself or the player, but not the role
   if (role === USER_ROLE.moderator) {
-    // отримуємо роль того, кого хочемо змінити
+    // we get the role of the player we want to change
     const { data: targetUser } = await supabase
       .from("profiles")
       .select("role")
@@ -61,12 +62,12 @@ export async function PUT(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // ❌ не можна змінювати role
+    // ❌ you can't change roles
     if ("role" in body) {
       delete body.role;
     }
 
-    // ❌ не можна змінювати admin або іншого модератора
+    // ❌ you cannot change the admin or other moderator
     if (!isSelfUpdate && targetUser.role !== USER_ROLE.player) {
       return NextResponse.json(
         { error: "Forbidden to edit this user" },
@@ -76,7 +77,7 @@ export async function PUT(
 
     const { data, error } = await supabase
       .from("profiles")
-      .update({ ...body, updated_at: new Date() })
+      .update({ ...body, updated_at: new Date().toISOString() })
       .eq("id", targetId)
       .select("*");
 
@@ -91,7 +92,7 @@ export async function PUT(
     );
   }
 
-  // Player: може змінити лише себе, без ролі
+  // Player: can only change himself, no role
   if (!isSelfUpdate) {
     return NextResponse.json(
       { error: "You can only update your own profile" },
@@ -105,7 +106,7 @@ export async function PUT(
 
   const { data, error } = await supabase
     .from("profiles")
-    .update({ ...body, updated_at: new Date() })
+    .update({ ...body, updated_at: new Date().toISOString() })
     .eq("id", targetId)
     .select("*");
 
@@ -120,6 +121,7 @@ export async function PUT(
   );
 }
 
+// remove player
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -144,7 +146,7 @@ export async function DELETE(
 
   const isSelfDelete = targetId === user_id;
 
-  // Admin: без обмежень
+  // Admin: no restrictions
   if (role === USER_ROLE.admin) {
     const { error } = await supabase
       .from("profiles")
@@ -158,7 +160,7 @@ export async function DELETE(
     return NextResponse.json({ message: "User deleted" }, { status: 200 });
   }
 
-  // Moderator: можна видаляти тільки player-ів
+  // Moderator: only players can be deleted
   if (role === USER_ROLE.moderator) {
     const { data: targetUser } = await supabase
       .from("profiles")
@@ -189,7 +191,7 @@ export async function DELETE(
     return NextResponse.json({ message: "User deleted" }, { status: 200 });
   }
 
-  // Player: може видалити тільки себе
+  // Player: can only delete himself
   if (!isSelfDelete) {
     return NextResponse.json(
       { error: "You can only delete your own profile" },

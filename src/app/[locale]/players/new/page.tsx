@@ -4,7 +4,7 @@ import ContentLayout from "@/components/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
-
+import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { UserForm } from "@/app/[locale]/players/UserForm";
 import { IUserForm } from "../types";
@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { useAuthStore, USER_ROLE } from "@/store/auth";
 import { useState } from "react";
 import { axiosClient } from "@/utils/axiosClient";
-import { Button } from "@mui/material";
 
 export default function PlayersNewPage() {
   const t = useTranslations("players.new");
@@ -27,7 +26,7 @@ export default function PlayersNewPage() {
     try {
       await axiosClient.post(config.endpoints.players, newUserData);
       toast.success(t("createSuccess"));
-      router.push(config.routes.players.table);
+      router.push(config.routes.players.list);
     } catch {
       toast.error(t("createError"));
     } finally {
@@ -38,17 +37,17 @@ export default function PlayersNewPage() {
   return (
     <ContentLayout
       title={t("title")}
-      endContent={
-        <Button
-          form="player_form"
-          type="submit"
-          variant="contained"
-          color="success"
-          loading={isCreateLoading}
-        >
-          {t("addButton")}
-        </Button>
-      }
+      endContent={[
+        {
+          text: t("addButton"),
+          icon: <UpgradeIcon />,
+          variant: "contained",
+          color: "success",
+          type: "submit",
+          form: "player_form",
+          loading: isCreateLoading,
+        },
+      ]}
     >
       <UserForm
         authUserRole={authUser?.role || USER_ROLE["player"]}

@@ -36,8 +36,9 @@
     "google": "Sign in with Google"
   },
   "games": {
-    "table": {
-      "title": "Games"
+    "list": {
+      "title": "Games",
+      "add": "Add a new game"
     }
   },
   "players": {
@@ -67,7 +68,7 @@
         "cancelBtnText": "Cancel"
       }
     },
-    "table": {
+    "list": {
       "title": "Players",
       "add": "Add a new player"
     },
@@ -96,7 +97,6 @@
       "createSuccess": "Location was created successfully",
       "createError": "Unable to create location"
     },
-    "detail": {},
     "edit": {
       "title": "Edit location",
       "updateButton": "Update location",
@@ -113,7 +113,7 @@
         "cancelBtnText": "Cancel"
       }
     },
-    "table": {
+    "list": {
       "title": "Locations",
       "add": "Add a new location",
       "edit": "Edit location"
@@ -146,6 +146,7 @@
     "picture_add": "Upload picture",
     "picture_remove": "Remove picture",
     "size_too_big": "File size exceeds {value}MB",
-    "czk_hour": "{value} CZK / h"
+    "czk_hour": "{value} CZK / h",
+    "noLocation": "Please select a location on the map"
   }
 }

@@ -37,11 +37,10 @@ export async function POST(request: Request) {
       const file = value;
       const fileExt = file.name.split(".").pop();
       const fileName = `${randomUUID()}.${fileExt}`;
-      const filePath = `${config.buckets.locations}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from(config.buckets.locations)
-        .upload(filePath, file, {
+        .upload(fileName, file, {
           contentType: file.type,
         });
 
@@ -50,7 +49,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Upload failed" }, { status: 500 });
       }
 
-      uploadedImagePaths.push(filePath);
+      uploadedImagePaths.push(fileName);
     }
   }
 

@@ -18,17 +18,17 @@ export const navItems = [
     icon: <HomeIcon />,
   },
   {
-    pathname: config.routes.games.table,
+    pathname: config.routes.games.list,
     name: "games",
     icon: <SportsSoccerIcon />,
   },
   {
-    pathname: config.routes.players.table,
+    pathname: config.routes.players.list,
     name: "players",
     icon: <PeopleIcon />,
   },
   {
-    pathname: config.routes.locations.table,
+    pathname: config.routes.locations.list,
     name: "locations",
     icon: <MapIcon />,
   },

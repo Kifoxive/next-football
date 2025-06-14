@@ -5,14 +5,15 @@ import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { UserForm } from "@/app/[locale]/players/UserForm";
 import { IUser, IUserForm } from "../../types";
 import { createClient } from "@/utils/supabase/client";
 import { useAuthStore, USER_ROLE } from "@/store/auth";
 import { useEffect, useState } from "react";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { axiosClient } from "@/utils/axiosClient";
 import Dialog from "@/components/Dialog";
@@ -49,7 +50,7 @@ export default function PlayersEditPage() {
     try {
       await axiosClient.put(`${config.endpoints.players}/${id}`, newUserData);
       toast.success(t("updateSuccess"));
-      router.push(config.routes.players.table);
+      router.push(config.routes.players.list);
     } catch {
       toast.error(t("updateError"));
     } finally {
@@ -62,7 +63,7 @@ export default function PlayersEditPage() {
     try {
       await axiosClient.delete(`${config.endpoints.players}/${id}`);
       toast.success(t("removeSuccess"));
-      router.push(config.routes.players.table);
+      router.push(config.routes.players.list);
     } catch {
       toast.error(t("removeError"));
     } finally {
@@ -70,43 +71,39 @@ export default function PlayersEditPage() {
     }
   };
 
-  const isMe = authUser?.id === player?.id;
-  const canUpdate =
-    authUser?.role === USER_ROLE.admin || // auth user is admin
-    (authUser?.role === USER_ROLE.moderator && // auth user is moderator and fetched user is player
-      player?.role === USER_ROLE.player) ||
-    isMe; // it is self-update
+  // const isMe = authUser?.id === player?.id;
+  // const canUpdate =
+  //   authUser?.role === USER_ROLE.admin || // auth user is admin
+  //   (authUser?.role === USER_ROLE.moderator && // auth user is moderator and fetched user is player
+  //     player?.role === USER_ROLE.player) ||
+  //   isMe; // it is self-update
 
-  const canRemove = authUser?.role === USER_ROLE.admin;
+  // const canRemove = authUser?.role === USER_ROLE.admin;
 
   return (
     <ContentLayout
       title={t("title")}
-      endContent={
-        <>
-          {canRemove && (
-            <Button
-              onClick={() => setIsRemoveConfirmationDialogOpen(true)}
-              variant="outlined"
-              color="error"
-              loading={isRemoveLoading}
-            >
-              {t("removeButton")}
-            </Button>
-          )}
-          {canUpdate && (
-            <Button
-              form="player_form"
-              type="submit"
-              variant="contained"
-              color="success"
-              loading={isUpdateLoading}
-            >
-              {t("updateButton")}
-            </Button>
-          )}
-        </>
-      }
+      endContent={[
+        {
+          text: t("removeButton"),
+          icon: <DeleteIcon />,
+          variant: "outlined",
+          color: "error",
+          loading: isRemoveLoading,
+          // show: canRemove,
+          onClick: () => setIsRemoveConfirmationDialogOpen(true),
+        },
+        {
+          text: t("updateButton"),
+          icon: <UpgradeIcon />,
+          variant: "contained",
+          color: "success",
+          type: "submit",
+          form: "player_form",
+          // show: canUpdate,
+          loading: isUpdateLoading,
+        },
+      ]}
     >
       {player ? (
         <UserForm

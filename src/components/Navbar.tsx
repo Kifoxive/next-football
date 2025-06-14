@@ -25,14 +25,14 @@ import { useState } from "react";
 //     switch (role) {
 //         case AUTH_ROLE['admin']:
 //             return [
-//                 [config.nav.reservation.table, config.routes.reservation.table],
-//                 [config.nav.delivery.table, config.routes.delivery.table],
-//                 [config.nav.menu.table, config.routes.menu.table],
+//                 [config.nav.reservation.list, config.routes.reservation.list],
+//                 [config.nav.delivery.list, config.routes.delivery.list],
+//                 [config.nav.menu.list, config.routes.menu.list],
 //             ];
 //         case AUTH_ROLE['guest']:
 //             return [
-//                 [config.nav.reservation.table, config.routes.reservation.table],
-//                 [config.nav.delivery.table, config.routes.delivery.table],
+//                 [config.nav.reservation.list, config.routes.reservation.list],
+//                 [config.nav.delivery.list, config.routes.delivery.list],
 //             ];
 //         default:
 //             return [
@@ -47,9 +47,9 @@ import { useState } from "react";
 
 const navItems = [
   { pathname: config.routes.home, name: "home" },
-  { pathname: config.routes.games.table, name: "games" },
-  { pathname: config.routes.players.table, name: "players" },
-  { pathname: config.routes.locations.table, name: "locations" },
+  { pathname: config.routes.games.list, name: "games" },
+  { pathname: config.routes.players.list, name: "players" },
+  { pathname: config.routes.locations.list, name: "locations" },
 ];
 
 const Navbar = () => {

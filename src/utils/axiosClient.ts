@@ -2,11 +2,11 @@ import axios from "axios";
 // import { getAccessToken } from "@/utils/auth"; // твоя функція для токена, налаштуй
 
 export const axiosClient = axios.create({
-  baseURL: "/api", // або просто залиш /api
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // або просто залиш /api
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, // якщо треба cookie — постав true
+  withCredentials: true, // якщо треба cookie — постав true
 });
 
 // // 🔐 Додаємо токен перед кожним запитом
@@ -26,7 +26,8 @@ axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.warn("Unauthorized - maybe redirect to login");
+      // console.log(error.request);
+      // console.warn("Unauthorized - maybe redirect to login");
       // Можна перенаправити або очистити токени
     }
     return Promise.reject(error);

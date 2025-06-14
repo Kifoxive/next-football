@@ -1,26 +1,23 @@
 "use client";
 
 import ContentLayout from "@/components/ContentLayout";
-import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
-import { redirect, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
-import toast, { LoaderIcon } from "react-hot-toast";
-import { UserForm } from "@/app/[locale]/players/UserForm";
-import { IUserForm } from "../../types";
+import toast from "react-hot-toast";
+
 import { createClient } from "@/utils/supabase/client";
-import { IUser, useAuthStore, USER_ROLE } from "@/store/auth";
 import { useEffect, useState } from "react";
 import { Box, CircularProgress } from "@mui/material";
+import { IUser } from "../types";
 
 export default function PlayersDetailPage() {
   const t = useTranslations("players.detail");
   useDocumentTitle(t("title"));
   const supabase = createClient();
-  const authUser = useAuthStore((s) => s.user);
+  // const authUser = useAuthStore((s) => s.user);
   const [user, setUser] = useState<IUser>();
-  const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false);
   const { id } = useParams();
 
   useEffect(() => {

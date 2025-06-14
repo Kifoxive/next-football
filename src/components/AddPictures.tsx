@@ -12,7 +12,7 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 
-export type PictureItem = {
+export type IPictureItem = {
   file: File | null; // null if this is an existing photo
   url: string; // either local preview, or signed URL
   originalId?: string; // only for edited existing photos
@@ -20,10 +20,10 @@ export type PictureItem = {
 
 type AddPicturesProps = {
   locationName: string;
-  pictures: PictureItem[];
+  pictures: IPictureItem[];
   onAddPicture: (file: File) => void;
   onRemovePicture: (index: number) => void;
-  onReorderPictures: (items: PictureItem[]) => void;
+  onReorderPictures: (items: IPictureItem[]) => void;
 };
 
 export const AddPictures: React.FC<AddPicturesProps> = ({
@@ -87,6 +87,8 @@ export const AddPictures: React.FC<AddPicturesProps> = ({
                         alt={locationName}
                         fill
                         className="object-cover"
+                        sizes="240 120"
+                        priority={index === 0}
                       />
                       <Box className="absolute right-1 top-1">
                         <Tooltip title={t("basic.picture_remove")}>
@@ -129,31 +131,31 @@ export const AddPictures: React.FC<AddPicturesProps> = ({
   );
 };
 
-type PictureItemProps = {
-  item: PictureItem;
-  locationName: string;
-  onRemove: () => void;
-};
+// type PictureItemProps = {
+//   item: IPictureItem;
+//   locationName: string;
+//   onRemove: () => void;
+// };
 
-const PictureItem: React.FC<PictureItemProps> = ({
-  item,
-  locationName,
-  onRemove,
-}) => {
-  const t = useTranslations();
+// const PictureItem: React.FC<PictureItemProps> = ({
+//   item,
+//   locationName,
+//   onRemove,
+// }) => {
+//   const t = useTranslations();
 
-  return (
-    <Box component={Paper} className="relative h-full aspect-2/1">
-      <Image src={item.url} alt={locationName} fill className="object-cover" />
-      <Box className="relative">
-        <Box className="absolute right-1 top-1">
-          <Tooltip title={t("basic.picture_remove")}>
-            <IconButton onClick={onRemove} aria-label="remove" size="small">
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
+//   return (
+//     <Box component={Paper} className="relative h-full aspect-2/1">
+//       <Image src={item.url} alt={locationName} fill className="object-cover" />
+//       <Box className="relative">
+//         <Box className="absolute right-1 top-1">
+//           <Tooltip title={t("basic.picture_remove")}>
+//             <IconButton onClick={onRemove} aria-label="remove" size="small">
+//               <ClearIcon />
+//             </IconButton>
+//           </Tooltip>
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// };

@@ -29,19 +29,19 @@ export const config = {
     games: {
       new: "/games/new",
       detail: "/games/:id",
-      table: "/games",
+      list: "/games",
     },
     players: {
       new: "/players/new",
       detail: "/players/:id",
       edit: "players/:id/edit",
-      table: "/players",
+      list: "/players",
     },
     locations: {
       new: "/locations/new",
       detail: "/locations/:id",
       edit: "/locations/:id/edit",
-      table: "/locations",
+      list: "/locations",
     },
     login: "/login",
   },

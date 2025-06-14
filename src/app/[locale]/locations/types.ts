@@ -8,8 +8,8 @@ export const locationFormSchema = (t: (key: string) => string) =>
     price_per_hour: z.number(),
     floor_type: z.string().min(1, t("validation.required")),
     building_type: z.string().min(1, t("validation.required")),
-    latitude: z.number(),
-    longitude: z.number(),
+    latitude: z.number({ message: t("validation.required") }),
+    longitude: z.number({ message: t("validation.required") }),
     image_list: z.array(z.string()),
   });
 
@@ -30,5 +30,6 @@ export interface ILocation {
   image_list: string[];
   // info
   created_at: string;
+  updated_at: string | null;
   created_by: string;
 }

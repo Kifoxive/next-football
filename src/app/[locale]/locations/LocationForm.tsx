@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
-import { FormProvider, useForm } from "react-hook-form";
+import { FieldErrors, FormProvider, useForm } from "react-hook-form";
 
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,14 +13,15 @@ import {
   locationFormSchema,
 } from "@/app/[locale]/locations/types";
 import { useEffect, useState } from "react";
-import { AddPictures, PictureItem } from "@/components/AddPictures";
+import { AddPictures, IPictureItem } from "@/components/AddPictures";
 import { BUILDING_TYPE_ENUM, config, FLOOR_TYPE_ENUM } from "@/config";
 import { createClient } from "@/utils/supabase/client";
+import { LocationEditorMap } from "./LocationEditorMap";
 
 type LocationFormProps = {
   fetchedData?: ILocation;
   isLoading: boolean;
-  onSubmitData: (data: ILocationForm, attachedPictures: File[]) => void;
+  onSubmitData: (data: ILocationForm, attachedPictures: IPictureItem[]) => void;
 };
 
 export const LocationForm: React.FC<LocationFormProps> = ({
@@ -29,8 +30,9 @@ export const LocationForm: React.FC<LocationFormProps> = ({
 }) => {
   const t = useTranslations();
   const supabase = createClient();
-  const [attachedPictures, setAttachedPictures] = useState<File[]>([]);
-  const isNew = !fetchedData;
+
+  // pictures state to manipulate then locally
+  const [pictures, setPictures] = useState<IPictureItem[]>([]);
 
   const formDefaultValues = {
     name: "",
@@ -39,8 +41,8 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     price_per_hour: 0,
     floor_type: "",
     building_type: "",
-    latitude: 0,
-    longitude: 0,
+    // latitude: 0,
+    // longitude: 0,
     image_list: [],
   };
 
@@ -50,7 +52,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     reValidateMode: "onChange",
     resolver: zodResolver(locationFormSchema(t)),
   });
-  const { handleSubmit, getValues } = methods;
+  const { handleSubmit, watch, getValues, setValue, formState } = methods;
 
   const floorTypeOptions = Object.values(FLOOR_TYPE_ENUM).map((value) => ({
     label: t(`locations.floor_type.${value}`),
@@ -64,13 +66,28 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     })
   );
 
-  const onSubmit = async (formData: ILocationForm) => {
-    onSubmitData(formData, attachedPictures);
+  const handleAddPicture = (file: File) => {
+    const objectUrl = URL.createObjectURL(file);
+    setPictures((prev) => [...prev, { file, url: objectUrl }]);
   };
 
-  // pictures state to manipulate then locally
-  const [pictures, setPictures] = useState<PictureItem[]>([]);
+  const handleRemovePicture = (index: number) => {
+    setPictures((prev) => {
+      const newArr = [...prev];
+      const removed = newArr.splice(index, 1)[0];
 
+      if (removed.file) {
+        // if this is a local object URL — free the memory
+        URL.revokeObjectURL(removed.url);
+      }
+
+      return newArr;
+    });
+  };
+
+  const onSubmit = async (formData: ILocationForm) => {
+    onSubmitData(formData, pictures);
+  };
   // on first render, add supabase pictures to local state
   useEffect(() => {
     if (!fetchedData) return;
@@ -96,46 +113,25 @@ export const LocationForm: React.FC<LocationFormProps> = ({
       );
 
       // filter null (in case of errors)
-      setPictures(signedUrls.filter(Boolean) as PictureItem[]);
+      setPictures(signedUrls.filter(Boolean) as IPictureItem[]);
     };
 
     fetchImages();
   }, [fetchedData]);
 
-  const handleAddPicture = (file: File) => {
-    const objectUrl = URL.createObjectURL(file);
-    setPictures((prev) => [...prev, { file, url: objectUrl }]);
+  const onError = (errors: FieldErrors<LocationFormProps>) => {
+    console.log(errors);
   };
 
-  const handleRemovePicture = (index: number) => {
-    setPictures((prev) => {
-      const newArr = [...prev];
-      const removed = newArr.splice(index, 1)[0];
-
-      if (removed.file) {
-        // if this is a local object URL — free the memory
-        URL.revokeObjectURL(removed.url);
-      }
-
-      return newArr;
-    });
-  };
+  const latitude = watch("latitude");
+  const longitude = watch("longitude");
 
   return (
     <FormProvider {...methods}>
-      <form
-        id="location_form"
-        onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
-      >
-        {/* <Container className="w-full" disableGutters> */}
-        <Container maxWidth="md" disableGutters>
-          <Grid
-            container
-            spacing={4}
-            // columns={{ xs: 1, md: 2 }}
-            columns={1}
-            flexDirection="row-reverse"
-          >
+      <form id="location_form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <Container className="w-full" disableGutters>
+          {/* <Container maxWidth="md" disableGutters> */}
+          <Grid container spacing={4} columns={{ xs: 1, md: 2 }}>
             {/* left side (form) */}
             <Grid
               container
@@ -194,51 +190,27 @@ export const LocationForm: React.FC<LocationFormProps> = ({
             </Grid>
             {/* right side (img) */}
             <Grid size={1}>
-              {/* <Box
-                component={Paper}
-                className="relative w-full h-full overflow-hidden aspect-2/1"
-              >
-                <Image
-                  fill
-                  className="object-cover"
-                  src={
-                    (imgFile && URL.createObjectURL(imgFile)) ||
-                    fetchedData?.image_list[0] ||
-                    "/images/showcase-missing-image.webp"
-                  }
-                  alt={fetchedData?.name || ""}
-                />
-                <Box className="absolute right-[10px] bottom-[10px] z-10">
-                  <Button variant="contained">
-                    {t("locations.upload_cover")}
-                  </Button>
-                </Box>
-              </Box> */}
-              <AddPictures
-                locationName={getValues("name")}
-                pictures={pictures}
-                onAddPicture={handleAddPicture}
-                onRemovePicture={handleRemovePicture}
-                onReorderPictures={setPictures}
+              <LocationEditorMap
+                latitude={latitude}
+                longitude={longitude}
+                isError={Boolean(
+                  latitude ? !latitude : formState.errors.latitude?.message
+                )}
+                onChange={(newLat, newLng) => {
+                  setValue("latitude", newLat);
+                  setValue("longitude", newLng);
+                }}
+                // mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN!}
               />
             </Grid>
           </Grid>
-          {/* <Box className="flex w-full justify-end">
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              // disabled={!methods.formState.isValid}
-              loading={isLoading}
-              sx={{ marginTop: "14px", alignSelf: "end" }}
-            >
-              {t(
-                fetchedData
-                  ? "locations.edit.updateButton"
-                  : "locations.new.addButton"
-              )}
-            </Button>
-          </Box> */}
+          <AddPictures
+            locationName={getValues("name")}
+            pictures={pictures}
+            onAddPicture={handleAddPicture}
+            onRemovePicture={handleRemovePicture}
+            onReorderPictures={setPictures}
+          />
         </Container>
       </form>
     </FormProvider>

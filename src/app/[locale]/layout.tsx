@@ -21,7 +21,6 @@ import { notFound } from "next/navigation";
 import AuthLayout from "@/components/AuthProvider";
 import { Metadata } from "next";
 import { Providers } from "../themeRegistry";
-import { Toaster } from "react-hot-toast";
 import DashboardLayoutWrapper from "./Dashboard";
 
 const geistSans = Geist({
@@ -61,7 +60,6 @@ export default async function RootLayout({
                 {children}
                 <Footer /> */}
                 <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>
-                <Toaster position="bottom-right" />
               </>
             </AuthLayout>
           </NextIntlClientProvider>

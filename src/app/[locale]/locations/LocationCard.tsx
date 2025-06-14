@@ -18,13 +18,14 @@ import { useTranslations } from "next-intl";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/navigation";
 
-type Props = {
+type LocationCardProps = {
   location: ILocation;
+  isModerator: boolean;
 };
 
-export const LocationCard = ({ location }: Props) => {
+export const LocationCard = ({ location, isModerator }: LocationCardProps) => {
   const t = useTranslations();
-  const { name, description, address, price_per_hour, image_list } = location;
+  const { name, address, price_per_hour, image_list } = location;
   const [imageUrl, setImageUrl] = useState<string>();
   const supabase = createClient();
   const router = useRouter();
@@ -49,28 +50,30 @@ export const LocationCard = ({ location }: Props) => {
 
   return (
     <Card
-      sx={{ width: 320, borderRadius: 3, boxShadow: 3 }}
+      sx={{ borderRadius: 3, boxShadow: 3, minHeight: "100%" }}
       className="relative"
     >
-      <Box className="absolute right-1 top-1">
-        <Tooltip title={t("locations.table.edit")}>
-          <IconButton
-            onClick={() =>
-              router.push(
-                config.routes.locations.edit.replace(":id", location.id)
-              )
-            }
-            aria-label="edit"
-            size="small"
-          >
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
+      {isModerator && (
+        <Box className="absolute right-1 top-1">
+          <Tooltip title={t("locations.list.edit")}>
+            <IconButton
+              onClick={() =>
+                router.push(
+                  config.routes.locations.edit.replace(":id", location.id)
+                )
+              }
+              aria-label="edit"
+              size="small"
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
       {/* <CardActionArea> */}
       <CardMedia
         component="img"
-        height="180"
+        className="aspect-3/2"
         image={imageUrl}
         alt={name}
         sx={{ objectFit: "cover" }}
@@ -80,14 +83,14 @@ export const LocationCard = ({ location }: Props) => {
         <Typography variant="h6" component="div" gutterBottom>
           {name}
         </Typography>
-        <Box display="flex" alignItems="center" mb={1}>
-          <PlaceIcon fontSize="small" sx={{ mr: 0.5 }} />
+        <Box display="flex" mb={1}>
+          <PlaceIcon fontSize="small" sx={{ mr: 1 }} />
           <Typography variant="body2" color="text.secondary">
             {address}
           </Typography>
         </Box>
-        <Box display="flex" alignItems="center">
-          <LocalOfferIcon fontSize="small" sx={{ mr: 0.5 }} />
+        <Box display="flex">
+          <LocalOfferIcon fontSize="small" sx={{ mr: 1 }} />
           <Typography variant="body2" color="text.secondary">
             {t("basic.czk_hour", { value: price_per_hour })}
           </Typography>

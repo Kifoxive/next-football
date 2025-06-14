@@ -5,16 +5,15 @@ import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-
+import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-
 import { useState } from "react";
 import { LocationForm } from "../LocationForm";
 import { ILocationForm } from "../types";
-import { Button } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
+import { IPictureItem } from "@/components/AddPictures";
 
-export default function LocationsNewpage() {
+export default function LocationsNewPage() {
   const t = useTranslations("locations.new");
   useDocumentTitle(t("title"));
 
@@ -23,14 +22,14 @@ export default function LocationsNewpage() {
 
   const onSubmit = async (
     newLocationData: ILocationForm,
-    attachedPictures: File[]
+    attachedPictures: IPictureItem[]
   ) => {
     setIsCreateLoading(true);
 
     const formData = new FormData();
     formData.append("location", JSON.stringify(newLocationData));
-    attachedPictures.forEach((file, index) => {
-      formData.append(`file_${index}`, file);
+    attachedPictures.forEach((pic, index) => {
+      if (pic.file) formData.append(`file_${index}`, pic.file);
     });
 
     try {
@@ -40,7 +39,7 @@ export default function LocationsNewpage() {
         },
       });
       toast.success(t("createSuccess"));
-      router.push(config.routes.locations.table);
+      router.push(config.routes.locations.list);
     } catch {
       toast.error(t("createError"));
     } finally {
@@ -51,17 +50,17 @@ export default function LocationsNewpage() {
   return (
     <ContentLayout
       title={t("title")}
-      endContent={
-        <Button
-          form="location_form"
-          type="submit"
-          variant="contained"
-          color="success"
-          loading={isCreateLoading}
-        >
-          {t("addButton")}
-        </Button>
-      }
+      endContent={[
+        {
+          text: t("addButton"),
+          icon: <UpgradeIcon />,
+          variant: "contained",
+          color: "success",
+          type: "submit",
+          form: "location_form",
+          loading: isCreateLoading,
+        },
+      ]}
     >
       <LocationForm onSubmitData={onSubmit} isLoading={isCreateLoading} />
     </ContentLayout>

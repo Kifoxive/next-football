@@ -1,30 +1,32 @@
 "use client";
 
 import ContentLayout from "@/components/ContentLayout";
-import { config, permissions } from "@/config";
+import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 
 import { useEffect, useState } from "react";
 
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
 import { ILocation, ILocationForm } from "../../types";
 import { LocationForm } from "../../LocationForm";
-import { useAuthStore } from "@/store/auth";
+// import { useAuthStore } from "@/store/auth";
 import Dialog from "@/components/Dialog";
 import { createClient } from "@/utils/supabase/client";
+import { IPictureItem } from "@/components/AddPictures";
 
-export default function LocationsNewpage() {
+export default function LocationsEditPage() {
   const t = useTranslations("locations.edit");
   useDocumentTitle(t("title"));
 
   const { id } = useParams();
   const supabase = createClient();
-  const authUser = useAuthStore((s) => s.user);
+  // const authUser = useAuthStore((s) => s.user);
   const [location, setLocation] = useState<ILocation>();
   const router = useRouter();
   const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false);
@@ -47,26 +49,34 @@ export default function LocationsNewpage() {
 
   const onSubmit = async (
     newLocationData: ILocationForm,
-    attachedPictures: File[]
+    attachedPictures: IPictureItem[]
   ) => {
     setIsUpdateLoading(true);
 
     const formData = new FormData();
     formData.append("location", JSON.stringify(newLocationData));
-    attachedPictures.forEach((file, index) => {
-      formData.append(`file_${index}`, file);
+
+    attachedPictures.forEach((pic, index) => {
+      if (pic.file) {
+        formData.append(`file_${index}`, pic.file);
+      } else {
+        // existed image - send ID
+        formData.append(`existing_${index}`, pic.originalId!);
+      }
     });
 
     try {
-      await axiosClient.patch(config.endpoints.locations, formData, {
+      await axiosClient.put(`${config.endpoints.locations}/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success(t("createSuccess"));
-      router.push(config.routes.locations.table);
-    } catch {
-      toast.error(t("createError"));
+
+      toast.success(t("updateSuccess"));
+      router.push(config.routes.locations.list);
+    } catch (e) {
+      console.error(e);
+      toast.error(t("updateError"));
     } finally {
       setIsUpdateLoading(false);
     }
@@ -75,9 +85,9 @@ export default function LocationsNewpage() {
   const onRemove = async () => {
     setIsRemoveLoading(true);
     try {
-      await axiosClient.delete(`${config.endpoints.players}/${id}`);
+      await axiosClient.delete(`${config.endpoints.locations}/${id}`);
       toast.success(t("removeSuccess"));
-      router.push(config.routes.players.table);
+      router.push(config.routes.locations.list);
     } catch {
       toast.error(t("removeError"));
     } finally {
@@ -89,28 +99,27 @@ export default function LocationsNewpage() {
     <ContentLayout
       title={t("title")}
       endContent={
-        authUser &&
-        permissions.moderator.includes(authUser.role) && (
-          <>
-            <Button
-              onClick={() => setIsRemoveConfirmationDialogOpen(true)}
-              variant="outlined"
-              color="error"
-              loading={isRemoveLoading}
-            >
-              {t("removeButton")}
-            </Button>
-            <Button
-              form="location_form"
-              type="submit"
-              variant="contained"
-              color="success"
-              loading={isUpdateLoading}
-            >
-              {t("updateButton")}
-            </Button>
-          </>
-        )
+        // authUser &&
+        // permissions.moderator.includes(authUser.role) &&
+        [
+          {
+            text: t("removeButton"),
+            icon: <DeleteIcon />,
+            variant: "outlined",
+            color: "error",
+            loading: isRemoveLoading,
+            onClick: () => setIsRemoveConfirmationDialogOpen(true),
+          },
+          {
+            text: t("updateButton"),
+            icon: <UpgradeIcon />,
+            variant: "contained",
+            color: "success",
+            type: "submit",
+            form: "location_form",
+            loading: isUpdateLoading,
+          },
+        ]
       }
     >
       {location ? (

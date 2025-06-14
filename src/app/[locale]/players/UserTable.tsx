@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useTranslations } from "next-intl";
 // import { AccessAlarm, CalendarMonth, Person } from "@mui/icons-material";
@@ -45,14 +46,12 @@ export const UserTable: React.FC<UserTableProps> = ({ data }) => {
         component={Paper}
         // sx={{ width: "100%", overflowX: "scroll" }}
       >
-        <Table aria-label="simple table">
+        <Table aria-label="simple list">
           <TableHead>
             <TableRow>
               <TableCell align="left">{t("form.id")}</TableCell>
               <TableCell align="left">{t("form.user_name")}</TableCell>
               <TableCell align="left">{t("form.email")}</TableCell>
-              {/* <TableCell align="left">{t("first_name")}</TableCell>
-              <TableCell align="left">{t("last_name")}</TableCell> */}
               <TableCell align="left">{t("form.role")}</TableCell>
               <TableCell align="right" />
             </TableRow>
@@ -118,7 +117,7 @@ export const UserTable: React.FC<UserTableProps> = ({ data }) => {
                       aria-label="view"
                       onClick={() =>
                         router.push(
-                          config.routes.players.detail.replace(":id", row.id)
+                          config.routes.players.list.replace(":id", row.id)
                         )
                       }
                     >
@@ -131,75 +130,6 @@ export const UserTable: React.FC<UserTableProps> = ({ data }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* </div> */}
-      {/* <Modal
-        show={Boolean(reservationIdToApprove)}
-        onClick={() => setReservationIdToApprove(null)}
-        label={t("reservation.approveReservationStatusModal.label")}
-        description={
-          <Trans
-            i18nKey={"reservation.approveReservationStatusModal.description"}
-            values={{ email: reservationIdToApprove?.email || "" }}
-            components={{ strong: <strong /> }}
-          />
-        }
-        cancelComponent={
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() => setReservationIdToApprove(null)}
-          >
-            {t("reservation.approveReservationStatusModal.cancel")}
-          </Button>
-        }
-        approveComponent={
-          <Button
-            type="button"
-            variant="contained"
-            onClick={() => {
-              onApproveReservationStatus(
-                reservationIdToApprove?.reservation_id || ""
-              );
-            }}
-          >
-            {t("reservation.approveReservationStatusModal.approve")}
-          </Button>
-        }
-      />
-      <Modal
-        show={Boolean(reservationIdToCancel)}
-        onClick={() => setReservationIdToCancel(null)}
-        label={t("reservation.cancelReservationStatusModal.label")}
-        description={
-          <Trans
-            i18nKey={"reservation.cancelReservationStatusModal.description"}
-            values={{ email: reservationIdToCancel?.email || "" }}
-            components={{ strong: <strong /> }}
-          />
-        }
-        cancelComponent={
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() => setReservationIdToCancel(null)}
-          >
-            {t("reservation.cancelReservationStatusModal.cancel")}
-          </Button>
-        }
-        approveComponent={
-          <Button
-            variant="contained"
-            onClick={() => {
-              onCancelReservationStatus(
-                reservationIdToCancel?.reservation_id || ""
-              );
-            }}
-          >
-            {t("reservation.cancelReservationStatusModal.approve")}
-          </Button>
-        }
-      /> */}
     </>
-    // </PageContent>
   );
 };
