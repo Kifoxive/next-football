@@ -119,7 +119,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     fetchImages();
   }, [fetchedData]);
 
-  const onError = (errors: FieldErrors<LocationFormProps>) => {
+  const onError = (errors: FieldErrors<ILocationForm>) => {
     console.log(errors);
   };
 

@@ -16,10 +16,19 @@ export enum FLOOR_TYPE_ENUM {
   sand = "sand",
   asphalt = "asphalt",
 }
+
 export enum BUILDING_TYPE_ENUM {
   indoor = "indoor",
   outdoor = "outdoor",
   covered_outdoor = "covered_outdoor",
+}
+
+export enum GAME_STATUS {
+  initialization = "initialization",
+  voting = "voting",
+  confirmed = "confirmed",
+  completed = "completed",
+  cancelled = "cancelled",
 }
 
 export const config = {
@@ -29,6 +38,7 @@ export const config = {
     games: {
       new: "/games/new",
       detail: "/games/:id",
+      edit: "/games/id:/edit",
       list: "/games",
     },
     players: {
@@ -46,6 +56,7 @@ export const config = {
     login: "/login",
   },
   endpoints: {
+    games: "/games",
     players: "/players",
     locations: "/locations",
   },

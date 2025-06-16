@@ -5,3 +5,5 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export type ILocales = "en" | "uk" | "cz";
+
+export type OptionType = { label: string; value: string | number };

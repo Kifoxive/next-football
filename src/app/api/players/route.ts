@@ -54,7 +54,14 @@ export async function POST(request: Request) {
   // Creating user
   const { data, error } = await supabase
     .from("profiles")
-    .insert([{ ...body, created_at: new Date(), updated_at: new Date() }])
+    .insert([
+      {
+        ...body,
+        created_by: user_id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+    ])
     .select("*");
 
   if (error) {

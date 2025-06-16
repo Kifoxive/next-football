@@ -1,25 +1,26 @@
 import { Controller } from "react-hook-form";
 import {
-  BaseSelectProps,
+  Autocomplete,
   FormControl,
   FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
+  AutocompleteProps,
+  TextField,
 } from "@mui/material";
 
 import { BaseFieldProps } from "../../types";
 import { OptionType } from "@/types";
 
-type SelectFieldProps = BaseFieldProps &
-  BaseSelectProps & {
+type AutocompleteFieldProps = BaseFieldProps &
+  Omit<AutocompleteProps<OptionType, false, false, false>, "renderInput"> & {
     options: OptionType[];
+    number: boolean;
   };
 
-export const SelectField: React.FC<SelectFieldProps> = ({
+export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({
   name,
   label,
   options,
+  number,
   ...props
 }) => {
   return (
@@ -31,21 +32,17 @@ export const SelectField: React.FC<SelectFieldProps> = ({
             fullWidth={props.fullWidth}
             error={Boolean(error?.message)}
           >
-            <InputLabel id={name + "-label"}>{label}</InputLabel>
-            <Select
+            <Autocomplete
               {...props}
-              labelId={name + "-label"}
+              disablePortal
+              options={options}
               id={name}
-              value={value}
-              label={label}
-              onChange={onChange}
-            >
-              {options.map(({ label, value }) => (
-                <MenuItem key={value} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
-            </Select>
+              value={options.find((option) => option.value === value) || null}
+              onChange={(_event, newValue) =>
+                onChange(number ? Number(newValue?.value) : newValue?.value)
+              }
+              renderInput={(params) => <TextField {...params} label={label} />}
+            />
             {Boolean(error?.message) && (
               <FormHelperText color="danger">{error?.message}</FormHelperText>
             )}

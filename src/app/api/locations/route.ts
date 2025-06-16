@@ -5,6 +5,7 @@ import { USER_ROLE } from "@/store/auth";
 import { randomUUID } from "crypto";
 import { config } from "@/config";
 
+// post new location
 export async function POST(request: Request) {
   const { user_id, role, isAllowed, errorMessage, status } = await getIsAllowed(
     {
@@ -75,6 +76,7 @@ export async function POST(request: Request) {
   );
 }
 
+// get all locations
 export async function GET() {
   const { user_id, role, isAllowed, errorMessage, status } = await getIsAllowed(
     {

@@ -36,9 +36,31 @@
     "google": "Sign in with Google"
   },
   "games": {
+    "new": {
+      "title": "Add a new game",
+      "addButton": "Create game",
+      "createSuccess": "Game was created successfully",
+      "createError": "Unable to create game"
+    },
     "list": {
       "title": "Games",
       "add": "Add a new game"
+    },
+    "form": {
+      "location_id": "Location",
+      "description": "Description",
+      "date": "Date",
+      "duration": "Duration",
+      "reserved": "Is reserved",
+      "status": "Game status",
+      "cancelledReason": "Cancelled reason"
+    },
+    "game_status": {
+      "initialization": "Initialization",
+      "voting": "voting",
+      "confirmed": "confirmed",
+      "completed": "completed",
+      "cancelled": "cancelled"
     }
   },
   "players": {
