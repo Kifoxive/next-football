@@ -1,5 +1,6 @@
 import { GAME_STATUS } from "@/config";
 import { z } from "zod";
+import { ILocation } from "../locations/types";
 
 export const gameFormSchema = (t: (key: string) => string) =>
   z.object({
@@ -29,3 +30,16 @@ export interface IGame {
   created_at: string;
   created_by: string;
 }
+
+export type GetGames = {
+  request: null;
+  response: (IGame & { locations: Pick<ILocation, "name"> })[];
+};
+export type PostGame = {
+  request: IGameForm;
+  response: IGame;
+};
+export type PutGame = {
+  request: IGameForm;
+  response: IGame;
+};

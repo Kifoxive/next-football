@@ -44,9 +44,11 @@
     },
     "list": {
       "title": "Games",
-      "add": "Add a new game"
+      "add": "Add a new game",
+      "id": "Game ID"
     },
     "form": {
+      "id": "Game ID",
       "location_id": "Location",
       "description": "Description",
       "date": "Date",
@@ -61,7 +63,8 @@
       "confirmed": "confirmed",
       "completed": "completed",
       "cancelled": "cancelled"
-    }
+    },
+    "minutes": "m"
   },
   "players": {
     "new": {

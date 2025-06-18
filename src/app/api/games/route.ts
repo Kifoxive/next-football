@@ -54,7 +54,12 @@ export async function GET() {
 
   if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });
 
-  const { data, error } = await supabase.from("games").select("*");
+  const { data, error } = await supabase.from("games").select(`
+    *,
+    locations (
+      name
+    )
+  `);
 
   if (error) {
     console.error(error);

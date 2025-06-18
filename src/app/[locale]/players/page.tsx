@@ -6,7 +6,7 @@ import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UserTable } from "@/app/[locale]/players/UserTable";
+import { UsersTable } from "@/app/[locale]/players/UsersTable";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { GetUsers, IUser } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
@@ -47,7 +47,7 @@ export default function PlayersListPage() {
         },
       ]}
     >
-      <UserTable data={playersData} />
+      <UsersTable data={playersData} />
     </ContentLayout>
   );
 }

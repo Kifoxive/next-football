@@ -6,12 +6,11 @@ import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
 // get all players
-export async function GET(request: Request) {
+export async function GET() {
   const supabase = await createClient();
   const { isAllowed, errorMessage, status } = await getIsAllowed({
     permission: USER_ROLE.player,
   });
-  console.log(request.headers);
 
   if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });
 

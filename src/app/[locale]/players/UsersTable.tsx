@@ -24,19 +24,19 @@ import PersonOffIcon from "@mui/icons-material/PersonOff";
 import { IUser } from "./types";
 import { useAuthStore } from "@/store/auth";
 
-type UserTableProps = {
+type UsersTableProps = {
   data?: IUser[];
 };
 
-export const UserTable: React.FC<UserTableProps> = ({ data }) => {
+export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
   const t = useTranslations("players");
   const authUser = useAuthStore((s) => s.user);
   const router = useRouter();
-  const onEditButtonClick = (auth_user_id: string, id: string) => {
+  const onEditButtonClick = (user_id: string) => {
     router.push(
-      authUser?.id === auth_user_id
+      authUser?.id === user_id
         ? config.routes.profile
-        : config.routes.players.edit.replace(":id", id)
+        : config.routes.players.edit.replace(":id", user_id)
     );
   };
 
@@ -67,7 +67,9 @@ export const UserTable: React.FC<UserTableProps> = ({ data }) => {
                   textWrap: "nowrap",
                 }}
               >
-                <TableCell sx={{ textWrap: "nowrap" }}>{row.id}</TableCell>
+                <TableCell sx={{ textWrap: "nowrap" }}>
+                  <Typography color="primary">{row.id}</Typography>
+                </TableCell>
                 <TableCell align="left" className="flex flex-col">
                   <Typography fontWeight="600">
                     {row.first_name} {row.last_name}
@@ -99,7 +101,7 @@ export const UserTable: React.FC<UserTableProps> = ({ data }) => {
                         <>
                           <IconButton
                             aria-label="edit"
-                            onClick={() => onEditButtonClick(row.id, row.id)}
+                            onClick={() => onEditButtonClick(row.id)}
                           >
                             <EditIcon fontSize="small" />
                           </IconButton>
