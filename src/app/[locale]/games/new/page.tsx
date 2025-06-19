@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { LocationForm } from "../GameForm";
+import { GameForm } from "../GameForm";
 import { IGameForm } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
 
@@ -48,7 +48,7 @@ export default function GamesNewPage() {
         },
       ]}
     >
-      <LocationForm onSubmitData={onSubmit} isLoading={isCreateLoading} />
+      <GameForm onSubmitData={onSubmit} isLoading={isCreateLoading} />
     </ContentLayout>
   );
 }

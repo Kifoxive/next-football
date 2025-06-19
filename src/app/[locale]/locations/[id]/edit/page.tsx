@@ -35,7 +35,7 @@ export default function LocationsEditPage() {
     useState<boolean>(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchLocation = async () => {
       const { data, error } = await supabase
         .from("locations")
         .select("*")
@@ -44,7 +44,7 @@ export default function LocationsEditPage() {
       if (error) return toast.error(t("fetchError"));
       setLocation(data);
     };
-    fetchUser();
+    fetchLocation();
   }, [id]);
 
   const onSubmit = async (

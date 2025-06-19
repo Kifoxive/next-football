@@ -17,16 +17,17 @@ import { useEffect, useState } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 // import toast from "react-hot-toast";
 import { OptionType } from "@/types";
+import dayjs from "dayjs";
+import toast from "react-hot-toast";
 
 // import { LocationEditorMap } from "./LocationEditorMap";
 
 type GameFormProps = {
   fetchedData?: IGame;
-  isLoading: boolean;
   onSubmitData: (data: IGameForm) => void;
 };
 
-export const LocationForm: React.FC<GameFormProps> = ({
+export const GameForm: React.FC<GameFormProps> = ({
   fetchedData,
   onSubmitData,
 }) => {
@@ -74,7 +75,7 @@ export const LocationForm: React.FC<GameFormProps> = ({
         );
         setLocationOptions(res.data);
       } catch {
-        // toast.error(t("createError"));
+        toast.error(t("games.locationsFetchError"));
       }
     };
     fetchLocationList();
@@ -101,7 +102,11 @@ export const LocationForm: React.FC<GameFormProps> = ({
               />
             </Grid>
             <Grid size={1}>
-              <DateTimePickerField name="date" label={t("games.form.date")} />
+              <DateTimePickerField
+                name="date"
+                label={t("games.form.date")}
+                minDateTime={dayjs()}
+              />
             </Grid>
             <Grid size={1}>
               <AutocompleteField

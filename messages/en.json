@@ -14,22 +14,22 @@
     "numberFormat": "Please enter a valid number",
     "phoneFormat": "Please enter a valid phone number",
     "stringFormat": "Please enter the correct format",
-    "exactlyLength": "Must have exactly {{length}} characters",
+    "exactlyLength": "Must have exactly {length} characters",
     "notDigits": "Must not contain digits",
     "firstNameRequired": "You must enter a first name",
     "lastNameRequired": "You must enter a last name",
-    "minLengthOther": "The item must have at least {{minLength}} characters",
-    "minLengthOne": "The item must have at least {{minLength}} character",
-    "minLengthFew": "The item must have at least {{minLength}} characters",
-    "maxLengthOther": "Item must be at most {{maxLength}} characters",
-    "maxLengthOne": "Item must have at most {{maxLength}} character",
-    "maxLengthFew": "Item must have at most {{maxLength}} characters",
-    "exactlyLengthOther": "Item must be exactly {{length}} characters",
-    "exactlyLengthOne": "Item must be exactly {{length}} character",
-    "exactlyLengthFew": "Item must be exactly {{length}} characters",
-    "minValue": "Please enter a number greater than or equal to {{value}}",
-    "maxValue": "Please enter a number less than or equal to {{value}}",
-    "passwordLength": "Password must be at least {{minLength}} characters long"
+    "minLengthOther": "The item must have at least {minLength} characters",
+    "minLengthOne": "The item must have at least {minLength} character",
+    "minLengthFew": "The item must have at least {minLength} characters",
+    "maxLengthOther": "Item must be at most {maxLength} characters",
+    "maxLengthOne": "Item must have at most {maxLength} character",
+    "maxLengthFew": "Item must have at most {maxLength} characters",
+    "exactlyLengthOther": "Item must be exactly {length} characters",
+    "exactlyLengthOne": "Item must be exactly {length} character",
+    "exactlyLengthFew": "Item must be exactly {length} characters",
+    "minValue": "Please enter a number greater than or equal to {value}",
+    "maxValue": "Please enter a number less than or equal to {value}",
+    "passwordLength": "Password must be at least {minLength} characters long"
   },
   "login": {
     "title": "Sign in",
@@ -41,6 +41,22 @@
       "addButton": "Create game",
       "createSuccess": "Game was created successfully",
       "createError": "Unable to create game"
+    },
+    "edit": {
+      "title": "Edit game",
+      "updateButton": "Update game",
+      "updateSuccess": "Game was updated successfully",
+      "updateError": "Unable to update game",
+      "fetchError": "Unable to fetch game",
+      "removeButton": "Remove game",
+      "removeSuccess": "Game was removed successfully",
+      "removeError": "Unable to remove game",
+      "removeDialog": {
+        "title": "Do you really want to remove this game?",
+        "description": "This action cannot be undone. The game's data will be permanently deleted.",
+        "agreeBtnText": "Yes, remove",
+        "cancelBtnText": "Cancel"
+      }
     },
     "list": {
       "title": "Games",
@@ -64,7 +80,8 @@
       "completed": "completed",
       "cancelled": "cancelled"
     },
-    "minutes": "m"
+    "minutes": "m",
+    "locationsFetchError": "Failed to fetch location list"
   },
   "players": {
     "new": {

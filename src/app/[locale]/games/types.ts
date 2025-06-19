@@ -2,15 +2,28 @@ import { GAME_STATUS } from "@/config";
 import { z } from "zod";
 import { ILocation } from "../locations/types";
 
-export const gameFormSchema = (t: (key: string) => string) =>
+export const gameFormSchema = (
+  t: (key: string, param?: Record<string, string | number>) => string
+) =>
   z.object({
-    description: z.string().min(10, t("validation.required")),
-    location_id: z.string().min(10, t("validation.required")),
-    date: z.string().min(3, t("validation.required")), // January 10
-    duration: z.number().min(1, t("validation.required")), // 90 minutes
-    reserved: z.boolean(),
+    description: z
+      .string({ message: t("validation.required") })
+      .min(10, t("validation.minLengthFew", { minLength: 10 })),
+    location_id: z
+      .string({ message: t("validation.required") })
+      .min(10, t("validation.required")),
+    date: z
+      .string({ message: t("validation.required") })
+      .min(3, t("validation.required")), // January 10
+    duration: z
+      .number({ message: t("validation.required") })
+      .min(1, t("validation.required")), // 90 minutes
+    reserved: z.boolean({ message: t("validation.required") }),
     status: z.nativeEnum(GAME_STATUS),
-    cancelled_reason: z.string().min(10, t("validation.required")).nullable(),
+    cancelled_reason: z
+      .string({ message: t("validation.required") })
+      .min(10, t("validation.minLengthFew", { minLength: 10 }))
+      .nullable(),
   });
 
 export type IGameForm = z.infer<ReturnType<typeof gameFormSchema>>;

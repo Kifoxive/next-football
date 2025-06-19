@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json(
-    { message: "Game created", user: data?.[0] ?? null },
+    { message: "Game created", game: data?.[0] ?? null },
     { status: 201 }
   );
 }

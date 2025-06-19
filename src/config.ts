@@ -38,7 +38,7 @@ export const config = {
     games: {
       new: "/games/new",
       detail: "/games/:id",
-      edit: "/games/id:/edit",
+      edit: "/games/:id/edit",
       list: "/games",
     },
     players: {
