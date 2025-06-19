@@ -66,7 +66,7 @@ export const AddPictures: React.FC<AddPicturesProps> = ({
             <Box
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="flex gap-2 overflow-auto h-[160px] py-[20px]"
+              className="flex gap-2 overflow-auto h-[120px]"
             >
               {pictures.map((picture, index) => (
                 <Draggable

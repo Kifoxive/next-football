@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FieldErrors, FormProvider, useForm } from "react-hook-form";
 
-import { SelectField, TextField } from "@/components/form";
+import { SelectField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IGameForm, IGame, gameFormSchema } from "@/app/[locale]/games/types";
 
@@ -19,6 +19,7 @@ import { axiosClient } from "@/utils/axiosClient";
 import { OptionType } from "@/types";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
+import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
 
 // import { LocationEditorMap } from "./LocationEditorMap";
 
@@ -36,7 +37,7 @@ export const GameForm: React.FC<GameFormProps> = ({
   const [locationOptions, setLocationOptions] = useState<OptionType[]>([]);
 
   const formDefaultValues = {
-    description: "",
+    description: "**Hello everyone**",
     location_id: undefined,
     date: undefined,
     time: undefined,
@@ -84,7 +85,7 @@ export const GameForm: React.FC<GameFormProps> = ({
   return (
     <FormProvider {...methods}>
       <form id="game_form" onSubmit={handleSubmit(onSubmit, onError)}>
-        <Container maxWidth="sm" disableGutters>
+        <Container maxWidth="md" disableGutters>
           <Grid
             container
             spacing={2}
@@ -93,12 +94,9 @@ export const GameForm: React.FC<GameFormProps> = ({
             className="h-fit"
           >
             <Grid size={3}>
-              <TextField
+              <MarkdownEditor
                 name="description"
                 label={t("games.form.description")}
-                fullWidth
-                multiline
-                rows={4}
               />
             </Grid>
             <Grid size={1}>

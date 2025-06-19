@@ -23,7 +23,7 @@ export const LocationEditorMap: React.FC<LocationEditorMapProps> = ({
   const t = useTranslations();
 
   return (
-    <div style={{ height: "100%" }}>
+    <Box className="h-full">
       <Map
         initialViewState={{
           latitude: latitude || 50.08,
@@ -81,7 +81,7 @@ export const LocationEditorMap: React.FC<LocationEditorMapProps> = ({
           {t("basic.noLocation")}
         </Typography>
       )}
-    </div>
+    </Box>
   );
 };
 

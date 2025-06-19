@@ -8,6 +8,7 @@ import { USER_ROLE } from "@/store/auth";
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userFormSchema, IUserForm, IUser } from "@/app/[locale]/players/types";
+import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
 
 type UserFormProps = {
   fetchedData?: IUser;
@@ -28,6 +29,7 @@ export const UserForm: React.FC<UserFormProps> = ({
     first_name: "",
     last_name: "",
     role: USER_ROLE.player,
+    description: null,
   };
 
   const methods = useForm<IUserForm>({
@@ -43,7 +45,7 @@ export const UserForm: React.FC<UserFormProps> = ({
     { label: t("players.role.moderator"), value: USER_ROLE.moderator },
   ];
 
-  const onSubmit = async (formData: IUserForm) => {
+  const onSubmit = (formData: IUserForm) => {
     onSubmitData(formData);
   };
 
@@ -53,7 +55,7 @@ export const UserForm: React.FC<UserFormProps> = ({
         id="player_form"
         onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
       >
-        <Container maxWidth="sm" sx={{ padding: "0" }}>
+        <Container maxWidth="sm" disableGutters>
           <Grid container spacing={2} columns={{ xs: 1, sm: 2 }}>
             <Grid size={1}>
               <TextField
@@ -93,6 +95,12 @@ export const UserForm: React.FC<UserFormProps> = ({
                 />
               </Grid>
             )}
+            <Grid size={2}>
+              <MarkdownEditor
+                name="description"
+                label={t("games.form.description")}
+              />
+            </Grid>
           </Grid>
         </Container>
       </form>

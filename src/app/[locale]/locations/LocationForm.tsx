@@ -17,6 +17,7 @@ import { AddPictures, IPictureItem } from "@/components/AddPictures";
 import { BUILDING_TYPE_ENUM, config, FLOOR_TYPE_ENUM } from "@/config";
 import { createClient } from "@/utils/supabase/client";
 import { LocationEditorMap } from "./LocationEditorMap";
+import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
 
 type LocationFormProps = {
   fetchedData?: ILocation;
@@ -85,7 +86,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     });
   };
 
-  const onSubmit = async (formData: ILocationForm) => {
+  const onSubmit = (formData: ILocationForm) => {
     onSubmitData(formData, pictures);
   };
   // on first render, add supabase pictures to local state
@@ -129,17 +130,11 @@ export const LocationForm: React.FC<LocationFormProps> = ({
   return (
     <FormProvider {...methods}>
       <form id="location_form" onSubmit={handleSubmit(onSubmit, onError)}>
-        <Container className="w-full" disableGutters>
+        <Container maxWidth="md" className="flex flex-col gap-4" disableGutters>
           {/* <Container maxWidth="md" disableGutters> */}
-          <Grid container spacing={4} columns={{ xs: 1, md: 2 }}>
+          <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 1, md: 2 }}>
             {/* left side (form) */}
-            <Grid
-              container
-              spacing={2}
-              columns={{ xs: 1, sm: 2 }}
-              size={1}
-              className="h-fit"
-            >
+            <Grid container spacing={2} columns={1} size={1} className="h-fit">
               <Grid size={1}>
                 <TextField
                   name="name"
@@ -178,18 +173,9 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                   fullWidth
                 />
               </Grid>
-              <Grid size={2}>
-                <TextField
-                  name="description"
-                  label={t("locations.form.description")}
-                  fullWidth
-                  multiline
-                  rows={4}
-                />
-              </Grid>
             </Grid>
             {/* right side (img) */}
-            <Grid size={1}>
+            <Grid size={1} className="h-[400px] md:h-full">
               <LocationEditorMap
                 latitude={latitude}
                 longitude={longitude}
@@ -203,6 +189,12 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                 // mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN!}
               />
             </Grid>
+          </Grid>
+          <Grid size={3}>
+            <MarkdownEditor
+              name="description"
+              label={t("games.form.description")}
+            />
           </Grid>
           <AddPictures
             locationName={getValues("name")}

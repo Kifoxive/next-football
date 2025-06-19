@@ -9,7 +9,8 @@ export const userFormSchema = (t: (key: string) => string) =>
     email: z.string().nullable(),
     first_name: z.string().nullable(),
     last_name: z.string().nullable(),
-    role: z.nativeEnum(USER_ROLE).default(USER_ROLE.player),
+    description: z.string().nullable(),
+    role: z.nativeEnum(USER_ROLE),
   });
 
 export type IUserForm = z.infer<ReturnType<typeof userFormSchema>>;
@@ -23,8 +24,9 @@ export interface IUser {
   email: string | null;
   first_name: string | null;
   last_name: string | null;
-  avatar_url: string | null;
   role: USER_ROLE;
+  avatar_url: string | null;
+  description: string | null;
   // info
   created_by: string;
   created_at: string;
