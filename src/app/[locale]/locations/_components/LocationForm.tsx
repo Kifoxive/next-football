@@ -16,8 +16,8 @@ import { useEffect, useState } from "react";
 import { AddPictures, IPictureItem } from "@/components/AddPictures";
 import { BUILDING_TYPE_ENUM, config, FLOOR_TYPE_ENUM } from "@/config";
 import { createClient } from "@/utils/supabase/client";
-import { LocationEditorMap } from "./LocationEditorMap";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
+import { LocationEditorMap } from "./LocationEditorMap";
 
 type LocationFormProps = {
   fetchedData?: ILocation;
@@ -89,6 +89,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({
   const onSubmit = (formData: ILocationForm) => {
     onSubmitData(formData, pictures);
   };
+
   // on first render, add supabase pictures to local state
   useEffect(() => {
     if (!fetchedData) return;
@@ -131,10 +132,9 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     <FormProvider {...methods}>
       <form id="location_form" onSubmit={handleSubmit(onSubmit, onError)}>
         <Container maxWidth="md" className="flex flex-col gap-4" disableGutters>
-          {/* <Container maxWidth="md" disableGutters> */}
           <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 1, md: 2 }}>
             {/* left side (form) */}
-            <Grid container spacing={2} columns={1} size={1} className="h-fit">
+            <Grid container spacing={2} columns={1} size={1}>
               <Grid size={1}>
                 <TextField
                   name="name"
@@ -174,8 +174,8 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                 />
               </Grid>
             </Grid>
-            {/* right side (img) */}
-            <Grid size={1} className="h-[400px] md:h-full">
+            {/* right side (map) */}
+            <Grid size={1}>
               <LocationEditorMap
                 latitude={latitude}
                 longitude={longitude}
@@ -186,7 +186,6 @@ export const LocationForm: React.FC<LocationFormProps> = ({
                   setValue("latitude", newLat);
                   setValue("longitude", newLng);
                 }}
-                // mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN!}
               />
             </Grid>
           </Grid>

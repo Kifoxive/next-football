@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IGameForm, IGame, gameFormSchema } from "@/app/[locale]/games/types";
 
 import { config, GAME_STATUS } from "@/config";
-import { CheckboxField } from "@/components/form/components/CheckboxFIeld";
+
 import { DateTimePickerField } from "@/components/form/components/DateTimePickerField.tsx";
 import { AutocompleteField } from "@/components/form/components/AutocompleteField";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ import { OptionType } from "@/types";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
+import { CheckboxField } from "@/components/form/components/CheckboxField";
 
 // import { LocationEditorMap } from "./LocationEditorMap";
 

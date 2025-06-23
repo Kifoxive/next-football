@@ -8,9 +8,9 @@ import {
   CheckboxProps,
 } from "@mui/material";
 
-import { BaseFieldProps } from "../../types";
+import { BaseFieldProps } from "../types";
 
-type TextFieldProps = BaseFieldProps & CheckboxProps & {};
+type TextFieldProps = BaseFieldProps & CheckboxProps;
 
 export const CheckboxField: React.FC<TextFieldProps> = ({
   name,
@@ -28,8 +28,7 @@ export const CheckboxField: React.FC<TextFieldProps> = ({
                 <Checkbox
                   {...props}
                   id={name}
-                  defaultChecked
-                  value={value}
+                  checked={value}
                   onChange={onChange}
                 />
               }

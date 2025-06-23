@@ -8,6 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { BackButton } from "./BackButton";
 
 interface IContentLayout {
   children: React.ReactNode;
@@ -27,17 +28,20 @@ export default function ContentLayout({
   useDocumentTitle(title);
 
   return (
-    <Box className="flex flex-col items-center full-width full-height flex-1 overflow-auto p-[16px] sm:p-[24px]">
-      <Box className="flex justify-center sm:justify-between w-full bg-gray-400 mb-4 sm:mb-10">
-        <Typography variant="h4" fontWeight="bold">
-          {title}
-        </Typography>
+    <Box className="flex flex-col items-center full-width full-height flex-1 overflow-auto p-4 sm:p-6">
+      <Box className="flex justify-center sm:justify-between w-full bg-gray-400 mb-4 sm:mb-6">
+        <Box className="flex w-full md:w-fit items-center gap-2">
+          <BackButton />
+          <Typography variant="h6" fontWeight="bold" component="h1">
+            {title}
+          </Typography>
+        </Box>
         {endContent && (
           <>
             <Box className="hidden md:flex gap-4">
               {endContent
                 .filter(({ show = true }) => show)
-                .map((button, index) => (
+                .map(({ show, ...button }, index) => (
                   <Button
                     startIcon={button.icon}
                     key={index}
@@ -49,10 +53,10 @@ export default function ContentLayout({
                   </Button>
                 ))}
             </Box>
-            <Box className="flex md:hidden fixed right-[20px] bottom-[20px] gap-4 z-10">
+            <Box className="flex flex-col-reverse md:hidden fixed right-[20px] bottom-[20px] gap-4 z-10">
               {endContent
                 .filter(({ show = true }) => show)
-                .map(({ loading, ...button }, index) => (
+                .map(({ show, loading, ...button }, index) => (
                   <Fab
                     onClick={button.onClick}
                     aria-label={button.text}

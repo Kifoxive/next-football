@@ -16,29 +16,28 @@ import {
 } from "@mui/material";
 import { config, permissions } from "@/config";
 import { useRouter } from "next/navigation";
+import { UserRoleChip } from "@/components/UserRoleChip";
 import EditIcon from "@mui/icons-material/Edit";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { GetGames } from "./types";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
+import { IUser } from "./../types";
 import { useAuthStore } from "@/store/auth";
-import { GameStatusChip } from "@/components/GameStatusChip";
-import { format } from "date-fns";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import TimerIcon from "@mui/icons-material/Timer";
 
-type GamesTableProps = {
-  data?: GetGames["response"];
+type UsersTableProps = {
+  data?: IUser[];
 };
 
-export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
-  const t = useTranslations("games");
+export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
+  const t = useTranslations("players");
   const authUser = useAuthStore((s) => s.user);
   const router = useRouter();
-
-  const onEditButtonClick = (id: string) => {
-    router.push(config.routes.games.edit.replace(":id", id));
-  };
-  const onOpenButtonClick = (id: string) => {
-    router.push(config.routes.games.detail.replace(":id", id));
+  const onEditButtonClick = (user_id: string) => {
+    router.push(
+      authUser?.id === user_id
+        ? config.routes.profile
+        : config.routes.players.edit.replace(":id", user_id)
+    );
   };
 
   return (
@@ -51,10 +50,9 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
           <TableHead>
             <TableRow>
               <TableCell align="left">{t("form.id")}</TableCell>
-              <TableCell align="left">{t("form.location_id")}</TableCell>
-              <TableCell align="left">{t("form.date")}</TableCell>
-              <TableCell align="left">{t("form.duration")}</TableCell>
-              <TableCell align="left">{t("form.status")}</TableCell>
+              <TableCell align="left">{t("form.user_name")}</TableCell>
+              <TableCell align="left">{t("form.email")}</TableCell>
+              <TableCell align="left">{t("form.role")}</TableCell>
               <TableCell align="right" />
             </TableRow>
           </TableHead>
@@ -72,27 +70,29 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                 <TableCell sx={{ textWrap: "nowrap" }}>
                   <Typography color="primary">{row.id}</Typography>
                 </TableCell>
-                <TableCell align="left">{row.locations.name}</TableCell>
-                <TableCell align="left">
-                  <Box className="flex items-center">
-                    <CalendarMonthIcon className="mr-1" />
-                    {format(row.date, "EEEE, d MMMM")}
-                  </Box>
+                <TableCell align="left" className="flex flex-col">
+                  <Typography fontWeight="600">
+                    {row.first_name} {row.last_name}
+                    {!row.auth_user_id && (
+                      <PersonOffIcon
+                        fontSize="small"
+                        color="action"
+                        className="ml-2"
+                      />
+                    )}
+                    {row.invited_at && !row.auth_user_id && (
+                      <HourglassTopIcon
+                        fontSize="small"
+                        color="action"
+                        className="ml-2"
+                      />
+                    )}
+                  </Typography>
+                  <Box>{row.user_name}</Box>
                 </TableCell>
+                <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">
-                  <Box className="flex items-center">
-                    <TimerIcon className="mr-1" />
-                    {row.duration}
-                    {t("minutes")}
-                  </Box>
-                </TableCell>
-                <TableCell align="left">
-                  <GameStatusChip value={row.status} />
-                  {/* <GameStatusChip value={GAME_STATUS["initialization"]} />
-                  <GameStatusChip value={GAME_STATUS["voting"]} />
-                  <GameStatusChip value={GAME_STATUS["confirmed"]} />
-                  <GameStatusChip value={GAME_STATUS["completed"]} />
-                  <GameStatusChip value={GAME_STATUS["cancelled"]} /> */}
+                  <UserRoleChip value={row.role} />
                 </TableCell>
                 <TableCell align="right">
                   <Box className="flex justify-end">
@@ -117,7 +117,11 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                       )}
                     <IconButton
                       aria-label="view"
-                      onClick={() => onOpenButtonClick(row.id)}
+                      onClick={() =>
+                        router.push(
+                          config.routes.players.list.replace(":id", row.id)
+                        )
+                      }
                     >
                       <LaunchIcon fontSize="small" />
                     </IconButton>

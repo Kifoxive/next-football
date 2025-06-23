@@ -1,3 +1,4 @@
+import { BUILDING_TYPE_ENUM, FLOOR_TYPE_ENUM } from "@/config";
 import { z } from "zod";
 
 export const locationFormSchema = (t: (key: string) => string) =>
@@ -6,8 +7,8 @@ export const locationFormSchema = (t: (key: string) => string) =>
     description: z.string().min(10, t("validation.required")),
     address: z.string().min(10, t("validation.required")),
     price_per_hour: z.number(),
-    floor_type: z.string().min(1, t("validation.required")),
-    building_type: z.string().min(1, t("validation.required")),
+    floor_type: z.nativeEnum(FLOOR_TYPE_ENUM),
+    building_type: z.nativeEnum(BUILDING_TYPE_ENUM),
     latitude: z.number({ message: t("validation.required") }),
     longitude: z.number({ message: t("validation.required") }),
     image_list: z.array(z.string()),
@@ -23,8 +24,8 @@ export interface ILocation {
   description: string;
   address: string;
   price_per_hour: number;
-  floor_type: string;
-  building_type: string;
+  floor_type: FLOOR_TYPE_ENUM;
+  building_type: BUILDING_TYPE_ENUM;
   latitude: number;
   longitude: number;
   image_list: string[];

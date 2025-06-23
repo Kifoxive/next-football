@@ -48,6 +48,10 @@ export type GetGames = {
   request: null;
   response: (IGame & { locations: Pick<ILocation, "name"> })[];
 };
+export type GetOneGame = {
+  request: null;
+  response: IGame & { locations: ILocation };
+};
 export type PostGame = {
   request: IGameForm;
   response: IGame;

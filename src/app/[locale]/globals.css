@@ -26,6 +26,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* overwrite markdown background color */
+.wmde-markdown-color {
+  background-color: transparent !important;
+}
+.wmde-markdown-var {
+  background-color: transparent !important;
+}
+.w-md-editor-toolbar {
+  background-color: transparent !important;
+}
+
 @theme inline {
   /* Material UI typography */
   --font-h1: var(--mui-font-h1);

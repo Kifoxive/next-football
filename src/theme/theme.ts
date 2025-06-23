@@ -12,6 +12,15 @@ export const lightTheme = createTheme({
       color: "#000000",
     },
   },
+  // components: {
+  //   MuiSvgIcon: {
+  //     styleOverrides: {
+  //       root: {
+  //         color: "#777",
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export const darkTheme = createTheme({

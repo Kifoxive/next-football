@@ -44,6 +44,7 @@
     },
     "edit": {
       "title": "Edit game",
+      "viewButton": "View game",
       "updateButton": "Update game",
       "updateSuccess": "Game was updated successfully",
       "updateError": "Unable to update game",
@@ -57,6 +58,11 @@
         "agreeBtnText": "Yes, remove",
         "cancelBtnText": "Cancel"
       }
+    },
+    "detail": {
+      "title": "Game details",
+      "reserved": "Field reserved",
+      "editButton": "Edit game"
     },
     "list": {
       "title": "Games",
@@ -80,7 +86,7 @@
       "completed": "completed",
       "cancelled": "cancelled"
     },
-    "minutes": "m",
+    "minutes": "minutes",
     "locationsFetchError": "Failed to fetch location list"
   },
   "players": {
@@ -189,6 +195,8 @@
     "picture_remove": "Remove picture",
     "size_too_big": "File size exceeds {value}MB",
     "czk_hour": "{value} CZK / h",
-    "noLocation": "Please select a location on the map"
+    "noLocation": "Please select a location on the map",
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

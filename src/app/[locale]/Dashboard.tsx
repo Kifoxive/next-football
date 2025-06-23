@@ -4,38 +4,40 @@ import PeopleIcon from "@mui/icons-material/People";
 import HomeIcon from "@mui/icons-material/Home";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import MapIcon from "@mui/icons-material/Map";
-import { Box } from "@mui/material";
+import { Box, Theme, useTheme } from "@mui/material";
 import Navbar from "@/components/Navbar";
 import { config } from "@/config";
 import { useTranslations } from "next-intl";
 import React from "react";
 import NavItem from "@/components/NavItem";
+import { getThemedColor } from "@/utils/getThemedColor";
 
-export const navItems = [
+export const navItems = (theme: Theme) => [
   {
     pathname: config.routes.home,
     name: "home",
-    icon: <HomeIcon />,
+    icon: <HomeIcon sx={{ color: getThemedColor(theme) }} />,
   },
   {
     pathname: config.routes.games.list,
     name: "games",
-    icon: <SportsSoccerIcon />,
+    icon: <SportsSoccerIcon sx={{ color: getThemedColor(theme) }} />,
   },
   {
     pathname: config.routes.players.list,
     name: "players",
-    icon: <PeopleIcon />,
+    icon: <PeopleIcon sx={{ color: getThemedColor(theme) }} />,
   },
   {
     pathname: config.routes.locations.list,
     name: "locations",
-    icon: <MapIcon />,
+    icon: <MapIcon sx={{ color: getThemedColor(theme) }} />,
   },
 ];
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   const t = useTranslations("navbar");
+  const theme = useTheme();
 
   return (
     <Box className="flex flex-col h-screen">
@@ -72,7 +74,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             overflowY: "auto",
           })}
         >
-          {navItems.map(({ pathname, name, icon }) => (
+          {navItems(theme).map(({ pathname, name, icon }) => (
             <Box component="li" key={name} className="w-full">
               <NavItem pathname={pathname} label={t(name)} icon={icon} />
             </Box>

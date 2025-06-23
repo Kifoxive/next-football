@@ -6,11 +6,12 @@ import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LaunchIcon from "@mui/icons-material/Launch";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { axiosClient } from "@/utils/axiosClient";
-import { GameForm } from "../../GameForm";
+import { GameForm } from "../../_components/GameForm";
 import { IGame, IGameForm } from "../../types";
 import { Box, CircularProgress } from "@mui/material";
 import Dialog from "@/components/Dialog";
@@ -29,7 +30,7 @@ export default function GamesEditPage() {
     useState<boolean>(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchGame = async () => {
       try {
         const { data } = await axiosClient.get(
           `${config.endpoints.games}/${id}`
@@ -41,7 +42,7 @@ export default function GamesEditPage() {
       } finally {
       }
     };
-    fetchUser();
+    fetchGame();
   }, [id]);
 
   const onSubmit = async (newGameData: IGameForm) => {
@@ -70,6 +71,8 @@ export default function GamesEditPage() {
     }
   };
 
+  if (typeof id !== "string") return;
+
   return (
     <ContentLayout
       title={t("title")}
@@ -81,6 +84,14 @@ export default function GamesEditPage() {
           color: "error",
           loading: isRemoveLoading,
           onClick: () => setIsRemoveConfirmationDialogOpen(true),
+        },
+        {
+          text: t("viewButton"),
+          icon: <LaunchIcon />,
+          variant: "contained",
+          color: "inherit",
+          onClick: () =>
+            router.push(config.routes.games.detail.replace(":id", id)),
         },
         {
           text: t("updateButton"),

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { GameForm } from "../GameForm";
+import { GameForm } from "../_components/GameForm";
 import { IGameForm } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
 

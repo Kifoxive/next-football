@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { UserForm } from "@/app/[locale]/players/UserForm";
+import { UserForm } from "@/app/[locale]/players/_components/UserForm";
 import { IUser, IUserForm } from "../../types";
 import { createClient } from "@/utils/supabase/client";
 import { useAuthStore, USER_ROLE } from "@/store/auth";

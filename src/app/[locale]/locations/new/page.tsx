@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { LocationForm } from "../LocationForm";
+import { LocationForm } from "../_components/LocationForm";
 import { ILocationForm } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
 import { IPictureItem } from "@/components/AddPictures";

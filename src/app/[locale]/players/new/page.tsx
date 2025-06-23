@@ -6,7 +6,7 @@ import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { UserForm } from "@/app/[locale]/players/UserForm";
+import { UserForm } from "@/app/[locale]/players/_components/UserForm";
 import { IUserForm } from "../types";
 import { useRouter } from "next/navigation";
 import { useAuthStore, USER_ROLE } from "@/store/auth";

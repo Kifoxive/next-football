@@ -51,7 +51,7 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({ isOpen, setIsOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {navItems.map(({ pathname, name, icon }) => {
+        {navItems(theme).map(({ pathname, name, icon }) => {
           const isActive =
             currentPath === pathname || currentPath.startsWith(`${pathname}/`);
           return (

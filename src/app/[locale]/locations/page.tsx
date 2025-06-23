@@ -10,7 +10,7 @@ import { useDocumentTitle } from "@/hooks";
 import { useEffect, useState } from "react";
 import { ILocation } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
-import { LocationCard } from "./LocationCard";
+import { LocationCard } from "./_components/LocationCard";
 import { useAuthStore } from "@/store/auth";
 
 export default function LocationsListPage() {

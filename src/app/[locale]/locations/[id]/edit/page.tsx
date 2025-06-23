@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
 import { ILocation, ILocationForm } from "../../types";
-import { LocationForm } from "../../LocationForm";
+import { LocationForm } from "../../_components/LocationForm";
 // import { useAuthStore } from "@/store/auth";
 import Dialog from "@/components/Dialog";
 import { createClient } from "@/utils/supabase/client";

@@ -72,7 +72,14 @@ export async function GET(
 
   const { data, error } = await supabase
     .from("games")
-    .select("*")
+    .select(
+      `
+        *,
+        locations (
+        *
+        )
+  `
+    )
     .eq("id", targetId)
     .single();
 

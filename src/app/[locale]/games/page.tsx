@@ -10,7 +10,7 @@ import SportsIcon from "@mui/icons-material/Sports";
 import { axiosClient } from "@/utils/axiosClient";
 import { redirect } from "next/navigation";
 import { config } from "@/config";
-import { GamesTable } from "./GamesTable";
+import { GamesTable } from "./_components/GamesTable";
 
 export default function QuestPage() {
   const t = useTranslations("games.list");
