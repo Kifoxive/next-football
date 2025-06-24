@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FieldErrors, FormProvider, useForm } from "react-hook-form";
 
-import { SelectField } from "@/components/form";
+import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IGameForm, IGame, gameFormSchema } from "@/app/[locale]/games/types";
 
@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
 import { CheckboxField } from "@/components/form/components/CheckboxField";
+import { GameStatusChip } from "@/components/GameStatusChip";
 
 // import { LocationEditorMap } from "./LocationEditorMap";
 
@@ -43,6 +44,7 @@ export const GameForm: React.FC<GameFormProps> = ({
     date: undefined,
     time: undefined,
     duration: 90,
+    min_yes_votes_count: 10,
     reserved: false,
     status: GAME_STATUS.initialization,
     cancelled_reason: null,
@@ -54,10 +56,17 @@ export const GameForm: React.FC<GameFormProps> = ({
     reValidateMode: "onChange",
     resolver: zodResolver(gameFormSchema(t)),
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
+
+  const selectedStatus = watch("status");
 
   const durationOptions = [30, 45, 60, 90, 120].map((value) => ({
-    label: String(value),
+    label: `${value} ${t("games.minutes")}`,
+    value,
+  }));
+
+  const gameStatusOptions = Object.values(GAME_STATUS).map((value) => ({
+    label: <GameStatusChip value={value} />,
     value,
   }));
 
@@ -72,9 +81,7 @@ export const GameForm: React.FC<GameFormProps> = ({
   useEffect(() => {
     const fetchLocationList = async () => {
       try {
-        const res = await axiosClient.get(
-          `${config.endpoints.locations}/options`
-        );
+        const res = await axiosClient.get(config.endpoints.locations.options);
         setLocationOptions(res.data);
       } catch {
         toast.error(t("games.locationsFetchError"));
@@ -90,11 +97,11 @@ export const GameForm: React.FC<GameFormProps> = ({
           <Grid
             container
             spacing={2}
-            columns={{ xs: 1, sm: 3 }}
+            columns={{ xs: 1, sm: 2, md: 4 }}
             size={1}
             className="h-fit"
           >
-            <Grid size={3}>
+            <Grid size={4}>
               <MarkdownEditor
                 name="description"
                 label={t("games.form.description")}
@@ -117,6 +124,13 @@ export const GameForm: React.FC<GameFormProps> = ({
               />
             </Grid>
             <Grid size={1}>
+              <TextField
+                name="min_yes_votes_count"
+                label={t("games.form.min_yes_votes_count")}
+                fullWidth
+              />
+            </Grid>
+            <Grid size={1}>
               <SelectField
                 name="location_id"
                 label={t("games.form.location_id")}
@@ -124,7 +138,24 @@ export const GameForm: React.FC<GameFormProps> = ({
                 fullWidth
               />
             </Grid>
-            <Grid size={3}>
+            <Grid size={1}>
+              <SelectField
+                name="status"
+                label={t("games.form.status")}
+                options={gameStatusOptions}
+                fullWidth
+              />
+            </Grid>
+            {selectedStatus === "cancelled" && (
+              <Grid size={1}>
+                <TextField
+                  name="cancelled_reason"
+                  label={t("games.form.cancelled_reason")}
+                  fullWidth
+                />
+              </Grid>
+            )}
+            <Grid size={1}>
               <Box className="flex justify-end">
                 <CheckboxField
                   name="reserved"

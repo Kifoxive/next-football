@@ -33,7 +33,7 @@ export default function LocationsNewPage() {
     });
 
     try {
-      await axiosClient.post(config.endpoints.locations, formData, {
+      await axiosClient.post(config.endpoints.locations.new, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

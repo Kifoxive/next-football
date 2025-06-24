@@ -13,6 +13,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { config, permissions } from "@/config";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ import { GameStatusChip } from "@/components/GameStatusChip";
 import { format } from "date-fns";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TimerIcon from "@mui/icons-material/Timer";
+import { getThemedColor } from "@/utils/getThemedColor";
 
 type GamesTableProps = {
   data?: GetGames["response"];
@@ -31,8 +33,10 @@ type GamesTableProps = {
 
 export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
   const t = useTranslations("games");
+
   const authUser = useAuthStore((s) => s.user);
   const router = useRouter();
+  const theme = useTheme();
 
   const onEditButtonClick = (id: string) => {
     router.push(config.routes.games.edit.replace(":id", id));
@@ -74,14 +78,20 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                 </TableCell>
                 <TableCell align="left">{row.locations.name}</TableCell>
                 <TableCell align="left">
-                  <Box className="flex items-center">
-                    <CalendarMonthIcon className="mr-1" />
+                  <Box className="flex items-center gap-2">
+                    <CalendarMonthIcon
+                      sx={{ color: getThemedColor(theme) }}
+                      fontSize="small"
+                    />
                     {format(row.date, "EEEE, d MMMM")}
                   </Box>
                 </TableCell>
                 <TableCell align="left">
-                  <Box className="flex items-center">
-                    <TimerIcon className="mr-1" />
+                  <Box className="flex items-center gap-2">
+                    <TimerIcon
+                      sx={{ color: getThemedColor(theme) }}
+                      fontSize="small"
+                    />
                     {row.duration} {t("minutes")}
                   </Box>
                 </TableCell>

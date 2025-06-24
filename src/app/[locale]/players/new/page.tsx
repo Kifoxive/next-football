@@ -24,7 +24,7 @@ export default function PlayersNewPage() {
   const onSubmit = async (newUserData: IUserForm) => {
     setIsCreateLoading(true);
     try {
-      await axiosClient.post(config.endpoints.players, newUserData);
+      await axiosClient.post(config.endpoints.players.new, newUserData);
       toast.success(t("createSuccess"));
       router.push(config.routes.players.list);
     } catch {

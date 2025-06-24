@@ -26,7 +26,7 @@ export default function QuestPage() {
     const fetchPlayers = async () => {
       try {
         const res = await axiosClient.get<GetGames["response"]>(
-          config.endpoints.games
+          config.endpoints.games.list
         );
         setGamesData(res.data);
       } catch (error) {

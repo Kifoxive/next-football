@@ -8,16 +8,12 @@ import { useParams, useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-
 import { useEffect, useState } from "react";
-
 import { Box, CircularProgress } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
-import { ILocation, ILocationForm } from "../../types";
+import { GetOneLocation, ILocation, ILocationForm } from "../../types";
 import { LocationForm } from "../../_components/LocationForm";
-// import { useAuthStore } from "@/store/auth";
 import Dialog from "@/components/Dialog";
-import { createClient } from "@/utils/supabase/client";
 import { IPictureItem } from "@/components/AddPictures";
 
 export default function LocationsEditPage() {
@@ -25,7 +21,7 @@ export default function LocationsEditPage() {
   useDocumentTitle(t("title"));
 
   const { id } = useParams();
-  const supabase = createClient();
+
   // const authUser = useAuthStore((s) => s.user);
   const [location, setLocation] = useState<ILocation>();
   const router = useRouter();
@@ -35,14 +31,19 @@ export default function LocationsEditPage() {
     useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof id !== "string") return;
+
     const fetchLocation = async () => {
-      const { data, error } = await supabase
-        .from("locations")
-        .select("*")
-        .eq("id", id)
-        .single();
-      if (error) return toast.error(t("fetchError"));
-      setLocation(data);
+      try {
+        const { data } = await axiosClient.get<GetOneLocation["response"]>(
+          config.endpoints.locations.edit.replace(":id", id)
+        );
+
+        setLocation(data);
+      } catch (e) {
+        console.error(e);
+      } finally {
+      }
     };
     fetchLocation();
   }, [id]);

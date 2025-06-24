@@ -76,15 +76,28 @@
       "date": "Date",
       "duration": "Duration",
       "reserved": "Is reserved",
+      "min_yes_votes_count": "Minimum yes votes count",
       "status": "Game status",
-      "cancelledReason": "Cancelled reason"
+      "cancelled_reason": "Cancelled reason"
     },
     "game_status": {
       "initialization": "Initialization",
-      "voting": "voting",
-      "confirmed": "confirmed",
-      "completed": "completed",
-      "cancelled": "cancelled"
+      "voting": "Voting",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "voting": {
+      "alert": {
+        "title": "Voting - can you participate in this game?"
+      },
+      "result": "Current vote result",
+      "myVoteResult": "You voted {vote}",
+      "yes": "Yes",
+      "no": "No",
+      "maybe": "Maybe",
+      "updateSuccess": "Vote updated successfully",
+      "updateError": "Unable to vote"
     },
     "minutes": "minutes",
     "locationsFetchError": "Failed to fetch location list"
@@ -133,7 +146,7 @@
       "joined_at": "Joined at"
     },
     "role": {
-      "admin": "Admin",
+      "admin": "Developer",
       "moderator": "Moderator",
       "player": "Player"
     }

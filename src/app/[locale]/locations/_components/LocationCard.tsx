@@ -7,16 +7,19 @@ import {
   //   CardActionArea,
   IconButton,
   Tooltip,
+  useTheme,
 } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import { ILocation } from "./types";
+
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { config } from "@/config";
 import { useTranslations } from "next-intl";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/navigation";
+import { ILocation } from "../types";
+import { getThemedColor } from "@/utils/getThemedColor";
 
 type LocationCardProps = {
   location: ILocation;
@@ -25,10 +28,12 @@ type LocationCardProps = {
 
 export const LocationCard = ({ location, isModerator }: LocationCardProps) => {
   const t = useTranslations();
-  const { name, address, price_per_hour, image_list } = location;
-  const [imageUrl, setImageUrl] = useState<string>();
+
   const supabase = createClient();
   const router = useRouter();
+  const theme = useTheme();
+  const { name, address, price_per_hour, image_list } = location;
+  const [imageUrl, setImageUrl] = useState<string>();
 
   useEffect(() => {
     const fetchSignedUrl = async () => {
@@ -83,14 +88,17 @@ export const LocationCard = ({ location, isModerator }: LocationCardProps) => {
         <Typography variant="h6" component="div" gutterBottom>
           {name}
         </Typography>
-        <Box display="flex" mb={1}>
-          <PlaceIcon fontSize="small" sx={{ mr: 1 }} />
+        <Box className="flex items-center gap-2" mb={1}>
+          <PlaceIcon fontSize="small" sx={{ color: getThemedColor(theme) }} />
           <Typography variant="body2" color="text.secondary">
             {address}
           </Typography>
         </Box>
-        <Box display="flex">
-          <LocalOfferIcon fontSize="small" sx={{ mr: 1 }} />
+        <Box className="flex items-center gap-2">
+          <LocalOfferIcon
+            fontSize="small"
+            sx={{ color: getThemedColor(theme) }}
+          />
           <Typography variant="body2" color="text.secondary">
             {t("basic.czk_hour", { value: price_per_hour })}
           </Typography>

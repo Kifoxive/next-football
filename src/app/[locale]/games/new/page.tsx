@@ -23,7 +23,7 @@ export default function GamesNewPage() {
     setIsCreateLoading(true);
 
     try {
-      await axiosClient.post(config.endpoints.games, newGameData);
+      await axiosClient.post(config.endpoints.games.new, newGameData);
       toast.success(t("createSuccess"));
       router.push(config.routes.games.list);
     } catch {

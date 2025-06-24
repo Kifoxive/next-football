@@ -24,7 +24,7 @@ export default function PlayersListPage() {
     const fetchPlayers = async () => {
       try {
         const res = await axiosClient.get<GetUsers["response"]>(
-          config.endpoints.players
+          config.endpoints.players.list
         );
         setPlayersData(res.data);
       } catch (error) {

@@ -41,12 +41,12 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
 
   return (
     <Box className="flex flex-col h-screen">
-      {/* Navbar — sticky до верху */}
+      {/* Navbar — sticky to the top */}
       <Box
         sx={{
           position: "sticky",
           top: 0,
-          zIndex: 1100, // щоб був над іншим контентом
+          zIndex: 20, // to be above other content
           borderBottom: "1px solid",
           borderColor: "divider",
           backgroundColor: (theme) =>
@@ -57,14 +57,14 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       >
         <Navbar />
       </Box>
-      {/* Контентна частина з сайдбаром і основною частиною */}
+      {/* Content part with sidebar and main part */}
       <Box className="flex flex-1 overflow-hidden">
-        {/* Сайдбар */}
+        {/* Sidebar */}
         <Box
           component="ul"
           className="hidden sm:flex flex-col p-2 gap-2"
           sx={(theme) => ({
-            width: 100, // або 240px — залежно від дизайну
+            width: 100, // or 240px — depending on the design
             borderRight: "1px solid",
             borderColor: "divider",
             backgroundColor:
@@ -80,7 +80,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             </Box>
           ))}
         </Box>
-        {/* Основна скрольована зона */}
+        {/* Main scrollable area */}
         {children}
       </Box>
     </Box>

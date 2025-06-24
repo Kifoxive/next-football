@@ -8,7 +8,7 @@ import { config, permissions } from "@/config";
 import { redirect } from "next/navigation";
 import { useDocumentTitle } from "@/hooks";
 import { useEffect, useState } from "react";
-import { ILocation } from "./types";
+import { GetLocations, ILocation } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
 import { LocationCard } from "./_components/LocationCard";
 import { useAuthStore } from "@/store/auth";
@@ -27,8 +27,8 @@ export default function LocationsListPage() {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const res = await axiosClient.get<ILocation[]>(
-          config.endpoints.locations
+        const res = await axiosClient.get<GetLocations["response"]>(
+          config.endpoints.locations.list
         );
         setLocationsData(res.data);
       } catch (error) {

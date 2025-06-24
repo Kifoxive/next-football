@@ -34,3 +34,20 @@ export interface ILocation {
   updated_at: string | null;
   created_by: string;
 }
+
+export type GetLocations = {
+  request: null;
+  response: ILocation[];
+};
+export type GetOneLocation = {
+  request: null;
+  response: ILocation;
+};
+export type PostLocation = {
+  request: ILocationForm;
+  response: ILocation;
+};
+export type PutLocation = {
+  request: ILocationForm;
+  response: ILocation;
+};

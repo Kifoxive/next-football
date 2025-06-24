@@ -31,6 +31,12 @@ export enum GAME_STATUS {
   cancelled = "cancelled",
 }
 
+export enum VOTE_OPTION {
+  yes = "yes",
+  no = "no",
+  maybe = "maybe",
+}
+
 export const config = {
   routes: {
     home: "/",
@@ -56,9 +62,27 @@ export const config = {
     login: "/login",
   },
   endpoints: {
-    games: "/games",
-    players: "/players",
-    locations: "/locations",
+    games: {
+      new: "/games",
+      detail: "/games/:id",
+      edit: "/games/:id",
+      list: "/games",
+      vote: "/games/:id/votes",
+    },
+    players: {
+      new: "/players",
+      detail: "/players/:id",
+      edit: "/players/:id",
+      list: "/players",
+    },
+    locations: {
+      new: "/locations",
+      detail: "/locations/:id",
+      edit: "/locations/:id",
+      list: "/locations",
+      options: "/locations/options",
+    },
+    login: "/login",
   },
   buckets: {
     locations: "locations-bucket",

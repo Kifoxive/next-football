@@ -1,7 +1,6 @@
 "use client";
 
 import { IconButton, Typography } from "@mui/material";
-import Link from "next/link";
 import { usePathname } from "@/i18n/navigation";
 import React, { ReactElement } from "react";
 import { redirect } from "next/navigation";

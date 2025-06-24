@@ -6,4 +6,4 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export type ILocales = "en" | "uk" | "cz";
 
-export type OptionType = { label: string; value: string | number };
+export type OptionType = { label: React.ReactNode; value: string | number };

@@ -51,9 +51,9 @@ export const PictureSection: React.FC<PictureSectionProps> = ({
         const filledPictures =
           nonNullSignedUrls.length > 0
             ? [...nonNullSignedUrls]
-            : [{ url: fallbackImage, file: null }]; // копія
+            : [{ url: fallbackImage, file: null }]; // copy
 
-        // Додаємо заглушки, якщо менше 3 фото
+        // add stubs if there are less than 3 photos
         while (filledPictures.length < 3) {
           filledPictures.push({ url: fallbackImage, file: null });
         }

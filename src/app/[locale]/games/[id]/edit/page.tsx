@@ -30,10 +30,11 @@ export default function GamesEditPage() {
     useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof id !== "string") return;
     const fetchGame = async () => {
       try {
         const { data } = await axiosClient.get(
-          `${config.endpoints.games}/${id}`
+          config.endpoints.games.edit.replace(":id", id)
         );
 
         setGame(data);
@@ -46,9 +47,13 @@ export default function GamesEditPage() {
   }, [id]);
 
   const onSubmit = async (newGameData: IGameForm) => {
+    if (typeof id !== "string") return;
     setIsUpdateLoading(true);
     try {
-      await axiosClient.put(`${config.endpoints.games}/${id}`, newGameData);
+      await axiosClient.put(
+        config.endpoints.games.edit.replace(":id", id),
+        newGameData
+      );
       toast.success(t("updateSuccess"));
       router.push(config.routes.games.list);
     } catch {

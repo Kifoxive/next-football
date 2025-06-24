@@ -76,7 +76,10 @@ export async function GET(
       `
         *,
         locations (
-        *
+          *
+        ),
+        votes (
+          vote, user_id
         )
   `
     )
