@@ -96,7 +96,7 @@ export const VotingSection: React.FC<VotingSectionProps> = ({
             <Typography variant="caption">{t(option)}</Typography>
           </Button>
         ))}
-        {isVoteLoading && <CircularProgress size="small" />}
+        {isVoteLoading && <CircularProgress size={24} />}
       </Box>
       {/* )} */}
       <Divider />

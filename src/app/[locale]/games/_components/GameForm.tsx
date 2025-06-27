@@ -3,7 +3,7 @@
 import { Box, Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
-import { FieldErrors, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,10 +74,6 @@ export const GameForm: React.FC<GameFormProps> = ({
     onSubmitData(formData);
   };
 
-  const onError = (errors: FieldErrors<IGameForm>) => {
-    console.log(errors);
-  };
-
   useEffect(() => {
     const fetchLocationList = async () => {
       try {
@@ -92,7 +88,10 @@ export const GameForm: React.FC<GameFormProps> = ({
 
   return (
     <FormProvider {...methods}>
-      <form id="game_form" onSubmit={handleSubmit(onSubmit, onError)}>
+      <form
+        id="game_form"
+        onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
+      >
         <Container maxWidth="md" disableGutters>
           <Grid
             container

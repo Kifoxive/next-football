@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   ButtonProps,
+  CircularProgress,
   Fab,
   Tooltip,
   Typography,
@@ -11,19 +12,21 @@ import {
 import { BackButton } from "./BackButton";
 
 interface IContentLayout {
-  children: React.ReactNode;
   title: string;
+  isLoading?: boolean;
   endContent?: (ButtonProps & {
     show?: boolean;
     text: string;
     icon: React.ReactElement;
   })[];
+  children: React.ReactNode;
 }
 
 export default function ContentLayout({
   title,
-  children,
+  isLoading,
   endContent,
+  children,
 }: IContentLayout) {
   useDocumentTitle(title);
 
@@ -75,8 +78,14 @@ export default function ContentLayout({
         )}
       </Box>
       {/* <Container component="main">{children}</Container> */}
-      <Box component="main" className="w-full">
-        {children}
+      <Box component="main" className="w-full flex-1">
+        {isLoading ? (
+          <Box className="flex justify-center items-center h-full pb-20">
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          children
+        )}
       </Box>
     </Box>
   );

@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useTransition } from "react";
 import { LocationForm } from "../_components/LocationForm";
-import { ILocationForm } from "../types";
+import { ILocationForm, PostLocation } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
 import { IPictureItem } from "@/components/AddPictures";
 
@@ -18,33 +18,36 @@ export default function LocationsNewPage() {
   useDocumentTitle(t("title"));
 
   const router = useRouter();
-  const [isCreateLoading, setIsCreateLoading] = useState<boolean>(false);
+  const [isCreatePending, startCreateTransition] = useTransition();
 
-  const onSubmit = async (
+  const onSubmit = (
     newLocationData: ILocationForm,
     attachedPictures: IPictureItem[]
   ) => {
-    setIsCreateLoading(true);
-
-    const formData = new FormData();
-    formData.append("location", JSON.stringify(newLocationData));
-    attachedPictures.forEach((pic, index) => {
-      if (pic.file) formData.append(`file_${index}`, pic.file);
-    });
-
-    try {
-      await axiosClient.post(config.endpoints.locations.new, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    startCreateTransition(async () => {
+      const formData = new FormData();
+      formData.append("location", JSON.stringify(newLocationData));
+      attachedPictures.forEach((pic, index) => {
+        if (pic.file) formData.append(`file_${index}`, pic.file);
       });
-      toast.success(t("createSuccess"));
-      router.push(config.routes.locations.list);
-    } catch {
-      toast.error(t("createError"));
-    } finally {
-      setIsCreateLoading(false);
-    }
+
+      try {
+        await axiosClient.post<PostLocation["response"]>(
+          config.endpoints.locations.new,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        toast.success(t("createSuccess"));
+        router.push(config.routes.locations.list);
+      } catch (e) {
+        toast.error(t("createError"));
+        console.error(e);
+      }
+    });
   };
 
   return (
@@ -58,11 +61,11 @@ export default function LocationsNewPage() {
           color: "success",
           type: "submit",
           form: "location_form",
-          loading: isCreateLoading,
+          loading: isCreatePending,
         },
       ]}
     >
-      <LocationForm onSubmitData={onSubmit} isLoading={isCreateLoading} />
+      <LocationForm onSubmitData={onSubmit} />
     </ContentLayout>
   );
 }

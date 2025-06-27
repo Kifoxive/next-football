@@ -8,18 +8,20 @@ import { useEffect, useState } from "react";
 import { GetGames } from "./types";
 import SportsIcon from "@mui/icons-material/Sports";
 import { axiosClient } from "@/utils/axiosClient";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { config } from "@/config";
 import { GamesTable } from "./_components/GamesTable";
+import toast from "react-hot-toast";
 
-export default function QuestPage() {
+export default function GamesListPage() {
   const t = useTranslations("games.list");
   useDocumentTitle(t("title"));
 
+  const router = useRouter();
   const [gamesData, setGamesData] = useState<GetGames["response"]>();
 
   const onAddNewGameButtonClick = () => {
-    redirect(config.routes.games.new);
+    router.push(config.routes.games.new);
   };
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export default function QuestPage() {
         setGamesData(res.data);
       } catch (error) {
         console.error(error);
+        toast.error(t("fetchError"));
       }
     };
 
@@ -40,6 +43,7 @@ export default function QuestPage() {
   return (
     <ContentLayout
       title={t("title")}
+      isLoading={!gamesData}
       endContent={[
         {
           text: t("add"),

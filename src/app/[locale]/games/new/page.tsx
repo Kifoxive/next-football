@@ -7,9 +7,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useTransition } from "react";
 import { GameForm } from "../_components/GameForm";
-import { IGameForm } from "../types";
+import { IGameForm, PostGame } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
 
 export default function GamesNewPage() {
@@ -17,20 +17,22 @@ export default function GamesNewPage() {
   useDocumentTitle(t("title"));
 
   const router = useRouter();
-  const [isCreateLoading, setIsCreateLoading] = useState<boolean>(false);
+  const [isCreatePending, startCreateTransition] = useTransition();
 
-  const onSubmit = async (newGameData: IGameForm) => {
-    setIsCreateLoading(true);
-
-    try {
-      await axiosClient.post(config.endpoints.games.new, newGameData);
-      toast.success(t("createSuccess"));
-      router.push(config.routes.games.list);
-    } catch {
-      toast.error(t("createError"));
-    } finally {
-      setIsCreateLoading(false);
-    }
+  const onSubmit = (newGameData: IGameForm) => {
+    startCreateTransition(async () => {
+      try {
+        await axiosClient.post<PostGame["response"]>(
+          config.endpoints.games.new,
+          newGameData
+        );
+        toast.success(t("createSuccess"));
+        router.push(config.routes.games.list);
+      } catch (e) {
+        toast.error(t("createError"));
+        console.error(e);
+      }
+    });
   };
 
   return (
@@ -44,11 +46,11 @@ export default function GamesNewPage() {
           color: "success",
           type: "submit",
           form: "game_form",
-          loading: isCreateLoading,
+          loading: isCreatePending,
         },
       ]}
     >
-      <GameForm onSubmitData={onSubmit} isLoading={isCreateLoading} />
+      <GameForm onSubmitData={onSubmit} />
     </ContentLayout>
   );
 }

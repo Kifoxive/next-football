@@ -5,23 +5,25 @@ import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { config, permissions } from "@/config";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDocumentTitle } from "@/hooks";
 import { useEffect, useState } from "react";
 import { GetLocations, ILocation } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
 import { LocationCard } from "./_components/LocationCard";
 import { useAuthStore } from "@/store/auth";
+import toast from "react-hot-toast";
 
 export default function LocationsListPage() {
   const t = useTranslations("locations.list");
   useDocumentTitle(t("title"));
 
-  const [locationsData, setLocationsData] = useState<ILocation[]>([]);
   const authUser = useAuthStore((s) => s.user);
+  const router = useRouter();
+  const [locationsData, setLocationsData] = useState<ILocation[]>([]);
 
   const onAddNewLocationButtonClick = () => {
-    redirect(config.routes.locations.new);
+    router.push(config.routes.locations.new);
   };
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function LocationsListPage() {
         setLocationsData(res.data);
       } catch (error) {
         console.error(error);
+        toast.error(t("fetchError"));
       }
     };
 
@@ -42,6 +45,7 @@ export default function LocationsListPage() {
   return (
     <ContentLayout
       title={t("title")}
+      isLoading={!locationsData}
       endContent={[
         {
           text: t("add"),

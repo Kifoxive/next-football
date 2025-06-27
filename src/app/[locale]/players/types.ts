@@ -39,6 +39,10 @@ export type GetUsers = {
   request: null;
   response: IUser[];
 };
+export type GetOneUser = {
+  request: null;
+  response: IUser;
+};
 export type PostUser = {
   request: IUserForm;
   response: IUser;

@@ -62,12 +62,14 @@
     "detail": {
       "title": "Game details",
       "reserved": "Field reserved",
-      "editButton": "Edit game"
+      "editButton": "Edit game",
+      "fetchError": "Unable to fetch game"
     },
     "list": {
       "title": "Games",
       "add": "Add a new game",
-      "id": "Game ID"
+      "id": "Game ID",
+      "fetchError": "Unable to fetch games"
     },
     "form": {
       "id": "Game ID",
@@ -131,7 +133,8 @@
     },
     "list": {
       "title": "Players",
-      "add": "Add a new player"
+      "add": "Add a new player",
+      "fetchError": "Unable to fetch players"
     },
     "form": {
       "id": "User ID",
@@ -177,7 +180,8 @@
     "list": {
       "title": "Locations",
       "add": "Add a new location",
-      "edit": "Edit location"
+      "edit": "Edit location",
+      "fetchError": "Unable to fetch locations"
     },
     "form": {
       "name": "Name",

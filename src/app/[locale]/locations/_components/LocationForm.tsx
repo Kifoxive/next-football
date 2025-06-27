@@ -3,7 +3,7 @@
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
-import { FieldErrors, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,7 @@ import { LocationEditorMap } from "./LocationEditorMap";
 
 type LocationFormProps = {
   fetchedData?: ILocation;
-  isLoading: boolean;
+
   onSubmitData: (data: ILocationForm, attachedPictures: IPictureItem[]) => void;
 };
 
@@ -40,8 +40,8 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     description: "",
     address: "",
     price_per_hour: 0,
-    floor_type: "",
-    building_type: "",
+    // floor_type: "",
+    // building_type: "",
     // latitude: 0,
     // longitude: 0,
     image_list: [],
@@ -121,16 +121,15 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     fetchImages();
   }, [fetchedData]);
 
-  const onError = (errors: FieldErrors<ILocationForm>) => {
-    console.log(errors);
-  };
-
   const latitude = watch("latitude");
   const longitude = watch("longitude");
 
   return (
     <FormProvider {...methods}>
-      <form id="location_form" onSubmit={handleSubmit(onSubmit, onError)}>
+      <form
+        id="location_form"
+        onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
+      >
         <Container maxWidth="md" className="flex flex-col gap-4" disableGutters>
           <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 1, md: 2 }}>
             {/* left side (form) */}

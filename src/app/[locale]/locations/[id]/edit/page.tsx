@@ -8,10 +8,10 @@ import { useParams, useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
-import { GetOneLocation, ILocation, ILocationForm } from "../../types";
+import { GetOneLocation, ILocationForm } from "../../types";
 import { LocationForm } from "../../_components/LocationForm";
 import Dialog from "@/components/Dialog";
 import { IPictureItem } from "@/components/AddPictures";
@@ -20,19 +20,15 @@ export default function LocationsEditPage() {
   const t = useTranslations("locations.edit");
   useDocumentTitle(t("title"));
 
-  const { id } = useParams();
-
-  // const authUser = useAuthStore((s) => s.user);
-  const [location, setLocation] = useState<ILocation>();
+  const { id }: { id: string } = useParams();
   const router = useRouter();
-  const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false);
-  const [isRemoveLoading, setIsRemoveLoading] = useState<boolean>(false);
+  const [isUpdatePending, startUpdateTransition] = useTransition();
+  const [isRemovePending, startRemoveTransition] = useTransition();
   const [isRemoveConfirmationDialogOpen, setIsRemoveConfirmationDialogOpen] =
     useState<boolean>(false);
+  const [location, setLocation] = useState<GetOneLocation["response"]>();
 
   useEffect(() => {
-    if (typeof id !== "string") return;
-
     const fetchLocation = async () => {
       try {
         const { data } = await axiosClient.get<GetOneLocation["response"]>(
@@ -41,8 +37,8 @@ export default function LocationsEditPage() {
 
         setLocation(data);
       } catch (e) {
+        toast.error(t("fetchError"));
         console.error(e);
-      } finally {
       }
     };
     fetchLocation();
@@ -52,8 +48,6 @@ export default function LocationsEditPage() {
     newLocationData: ILocationForm,
     attachedPictures: IPictureItem[]
   ) => {
-    setIsUpdateLoading(true);
-
     const formData = new FormData();
     formData.append("location", JSON.stringify(newLocationData));
 
@@ -66,68 +60,70 @@ export default function LocationsEditPage() {
       }
     });
 
-    try {
-      await axiosClient.put(`${config.endpoints.locations}/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    startUpdateTransition(async () => {
+      try {
+        await axiosClient.put(
+          config.endpoints.locations.edit.replace(":id", id),
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-      toast.success(t("updateSuccess"));
-      router.push(config.routes.locations.list);
-    } catch (e) {
-      console.error(e);
-      toast.error(t("updateError"));
-    } finally {
-      setIsUpdateLoading(false);
-    }
+        toast.success(t("updateSuccess"));
+        router.push(config.routes.locations.list);
+      } catch (e) {
+        console.error(e);
+        toast.error(t("updateError"));
+      }
+    });
   };
 
   const onRemove = async () => {
-    setIsRemoveLoading(true);
-    try {
-      await axiosClient.delete(`${config.endpoints.locations}/${id}`);
-      toast.success(t("removeSuccess"));
-      router.push(config.routes.locations.list);
-    } catch {
-      toast.error(t("removeError"));
-    } finally {
-      setIsRemoveLoading(false);
-    }
+    startRemoveTransition(async () => {
+      try {
+        await axiosClient.delete(
+          config.endpoints.locations.delete.replace(":id", id)
+        );
+        toast.success(t("removeSuccess"));
+        router.push(config.routes.locations.list);
+      } catch {
+        toast.error(t("removeError"));
+      }
+    });
   };
 
   return (
     <ContentLayout
       title={t("title")}
-      endContent={
-        // authUser &&
-        // permissions.moderator.includes(authUser.role) &&
-        [
-          {
-            text: t("removeButton"),
-            icon: <DeleteIcon />,
-            variant: "outlined",
-            color: "error",
-            loading: isRemoveLoading,
-            onClick: () => setIsRemoveConfirmationDialogOpen(true),
-          },
-          {
-            text: t("updateButton"),
-            icon: <UpgradeIcon />,
-            variant: "contained",
-            color: "success",
-            type: "submit",
-            form: "location_form",
-            loading: isUpdateLoading,
-          },
-        ]
-      }
+      isLoading={!location}
+      endContent={[
+        {
+          text: t("removeButton"),
+          icon: <DeleteIcon />,
+          variant: "outlined",
+          color: "error",
+          loading: isRemovePending,
+          onClick: () => setIsRemoveConfirmationDialogOpen(true),
+        },
+        {
+          text: t("updateButton"),
+          icon: <UpgradeIcon />,
+          variant: "contained",
+          color: "success",
+          type: "submit",
+          form: "location_form",
+          loading: isUpdatePending,
+        },
+      ]}
     >
       {location ? (
         <LocationForm
           fetchedData={location}
           onSubmitData={onSubmit}
-          isLoading={isUpdateLoading}
+          isLoading={isUpdatePending}
         />
       ) : (
         <Box className="flex justify-center items-center flex-1 mb-[10%]">

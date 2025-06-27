@@ -9,28 +9,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import LaunchIcon from "@mui/icons-material/Launch";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 import { GameForm } from "../../_components/GameForm";
-import { IGame, IGameForm } from "../../types";
-import { Box, CircularProgress } from "@mui/material";
+import { GetOneGame, IGameForm } from "../../types";
 import Dialog from "@/components/Dialog";
 
 export default function GamesEditPage() {
   const t = useTranslations("games.edit");
   useDocumentTitle(t("title"));
 
-  const { id } = useParams();
+  const { id }: { id: string } = useParams();
   const router = useRouter();
-  const [game, setGame] = useState<IGame>();
-  const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false);
-  const [isRemoveLoading, setIsRemoveLoading] = useState<boolean>(false);
+  const [isUpdatePending, startUpdateTransition] = useTransition();
+  const [isRemovePending, startRemoveTransition] = useTransition();
+  const [game, setGame] = useState<GetOneGame["response"]>();
 
   const [isRemoveConfirmationDialogOpen, setIsRemoveConfirmationDialogOpen] =
     useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof id !== "string") return;
     const fetchGame = async () => {
       try {
         const { data } = await axiosClient.get(
@@ -39,55 +37,51 @@ export default function GamesEditPage() {
 
         setGame(data);
       } catch (e) {
-        console.error(e);
-      } finally {
+        toast.error(t("fetchError"));
+        console.log(e);
       }
     };
     fetchGame();
   }, [id]);
 
-  const onSubmit = async (newGameData: IGameForm) => {
-    if (typeof id !== "string") return;
-    setIsUpdateLoading(true);
-    try {
-      await axiosClient.put(
-        config.endpoints.games.edit.replace(":id", id),
-        newGameData
-      );
-      toast.success(t("updateSuccess"));
-      router.push(config.routes.games.list);
-    } catch {
-      toast.error(t("updateError"));
-    } finally {
-      setIsUpdateLoading(false);
-    }
+  const onSubmit = (newGameData: IGameForm) => {
+    startUpdateTransition(async () => {
+      try {
+        await axiosClient.put(
+          config.endpoints.games.edit.replace(":id", id),
+          newGameData
+        );
+        toast.success(t("updateSuccess"));
+        router.push(config.routes.games.list);
+      } catch {
+        toast.error(t("updateError"));
+      }
+    });
   };
 
-  const onRemove = async () => {
-    setIsRemoveLoading(true);
-    try {
-      await axiosClient.delete(`${config.endpoints.games}/${id}`);
-      toast.success(t("removeSuccess"));
-      router.push(config.routes.games.list);
-    } catch {
-      toast.error(t("removeError"));
-    } finally {
-      setIsRemoveLoading(false);
-    }
+  const onRemove = () => {
+    startRemoveTransition(async () => {
+      try {
+        await axiosClient.delete(`${config.endpoints.games}/${id}`);
+        toast.success(t("removeSuccess"));
+        router.push(config.routes.games.list);
+      } catch {
+        toast.error(t("removeError"));
+      }
+    });
   };
-
-  if (typeof id !== "string") return;
 
   return (
     <ContentLayout
       title={t("title")}
+      isLoading={!game}
       endContent={[
         {
           text: t("removeButton"),
           icon: <DeleteIcon />,
           variant: "outlined",
           color: "error",
-          loading: isRemoveLoading,
+          loading: isRemovePending,
           onClick: () => setIsRemoveConfirmationDialogOpen(true),
         },
         {
@@ -105,17 +99,11 @@ export default function GamesEditPage() {
           color: "success",
           type: "submit",
           form: "game_form",
-          loading: isUpdateLoading,
+          loading: isUpdatePending,
         },
       ]}
     >
-      {game ? (
-        <GameForm fetchedData={game} onSubmitData={onSubmit} />
-      ) : (
-        <Box className="flex justify-center items-center flex-1 mb-[10%]">
-          <CircularProgress color="inherit" />
-        </Box>
-      )}
+      <GameForm fetchedData={game} onSubmitData={onSubmit} />
       <Dialog
         isOpen={isRemoveConfirmationDialogOpen}
         title={t("removeDialog.title")}

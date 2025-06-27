@@ -148,6 +148,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: targetId } = await params;
+
   const { user_id, role, isAllowed, errorMessage, status } = await getIsAllowed(
     {
       permission: USER_ROLE.moderator,
@@ -156,12 +158,6 @@ export async function DELETE(
 
   if (!isAllowed || !user_id || !role) {
     return NextResponse.json({ error: errorMessage }, { status });
-  }
-
-  const { id: targetId } = await params;
-
-  if (!targetId) {
-    return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
   }
 
   const supabase = await createClient();

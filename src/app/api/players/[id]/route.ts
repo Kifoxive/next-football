@@ -4,6 +4,38 @@ import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
+// get one player
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id: targetId } = await params;
+
+  const { isAllowed, errorMessage, status } = await getIsAllowed({
+    permission: USER_ROLE.player,
+  });
+
+  if (!isAllowed) {
+    return NextResponse.json({ error: errorMessage }, { status });
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", targetId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Fetch error" }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
+}
+
 // update player
 export async function PUT(
   request: Request,
@@ -11,7 +43,7 @@ export async function PUT(
 ) {
   const { user_id, role, isAllowed, errorMessage, status } = await getIsAllowed(
     {
-      permission: USER_ROLE.player, // мінімальна роль — player
+      permission: USER_ROLE.player,
     }
   );
 
@@ -137,10 +169,6 @@ export async function DELETE(
   }
 
   const { id: targetId } = await params;
-
-  if (!targetId) {
-    return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
-  }
 
   const supabase = await createClient();
 

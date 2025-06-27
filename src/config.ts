@@ -67,12 +67,14 @@ export const config = {
       detail: "/games/:id",
       edit: "/games/:id",
       list: "/games",
+      delete: "/games/:id",
       vote: "/games/:id/votes",
     },
     players: {
       new: "/players",
       detail: "/players/:id",
       edit: "/players/:id",
+      delete: "/players/:id",
       list: "/players",
     },
     locations: {
@@ -80,6 +82,7 @@ export const config = {
       detail: "/locations/:id",
       edit: "/locations/:id",
       list: "/locations",
+      delete: "/locations/:id",
       options: "/locations/options",
     },
     login: "/login",
