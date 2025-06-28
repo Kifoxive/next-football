@@ -21,7 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { GetGames } from "../types";
 import { useAuthStore } from "@/store/auth";
-import { GameStatusChip } from "@/components/GameStatusChip";
+import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
 import { format } from "date-fns";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TimerIcon from "@mui/icons-material/Timer";

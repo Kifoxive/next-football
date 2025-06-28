@@ -20,8 +20,9 @@ import { notFound } from "next/navigation";
 // import Footer from "@/components/Footer";
 import AuthLayout from "@/components/AuthProvider";
 import { Metadata } from "next";
-import { Providers } from "../themeRegistry";
+import { Providers } from "../Providers";
 import DashboardLayoutWrapper from "./Dashboard";
+import { LocalesType } from "@/utils/types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,7 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: "en" | "uk" | "cz" };
+  params: { locale: LocalesType };
 }) {
   const { locale } = await params;
 
@@ -51,19 +52,10 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen antialiased`}
       >
-        <Providers>
-          {/* <AppRouterCacheProvider options={{ enableCssLayer: true }}> */}
-          <NextIntlClientProvider locale={locale}>
-            <AuthLayout>
-              <>
-                {/* <Navbar />
-                {children}
-                <Footer /> */}
-                <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>
-              </>
-            </AuthLayout>
-          </NextIntlClientProvider>
-          {/* </AppRouterCacheProvider> */}
+        <Providers locale={locale}>
+          <AuthLayout>
+            <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>
+          </AuthLayout>
         </Providers>
       </body>
     </html>

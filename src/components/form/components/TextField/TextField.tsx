@@ -8,7 +8,7 @@ import {
 
 import { BaseFieldProps } from "../../types";
 
-type TextFieldProps = BaseFieldProps &
+export type TextFieldProps = BaseFieldProps &
   MuiTextFieldProps & {
     type?: "text" | "number" | "password" | "array";
     isLoading?: boolean;

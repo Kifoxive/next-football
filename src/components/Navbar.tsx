@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { usePathname, Link } from "@/i18n/navigation";
-import LocaleSwitcher from "./LocaleSwitcher";
 import { useTranslations } from "next-intl";
 import { config } from "@/config";
 import { useAuthStore, USER_ROLE } from "@/store/auth";

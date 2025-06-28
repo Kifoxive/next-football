@@ -1,5 +1,5 @@
 "use client";
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 

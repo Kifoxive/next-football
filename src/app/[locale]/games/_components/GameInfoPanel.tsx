@@ -9,7 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box, Chip, Paper } from "@mui/material";
 
 import { format } from "date-fns";
-import { GameStatusChip } from "@/components/GameStatusChip";
+import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
 
 import { useTranslations } from "next-intl";
 import { GAME_STATUS } from "@/config";

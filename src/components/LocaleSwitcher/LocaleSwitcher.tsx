@@ -10,7 +10,7 @@ const locales = [
   { code: "cz", label: "Čeština" },
 ];
 
-export default function LocaleSwitcher() {
+export const LocaleSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1];
@@ -19,7 +19,7 @@ export default function LocaleSwitcher() {
   const handleChange = (event: SelectChangeEvent) => {
     const newLocale = event.target.value;
 
-    // Змінюємо /cz/some-page → /uk/some-page
+    // Change /cz/some-page → /uk/some-page
     const segments = pathname.split("/");
     segments[1] = newLocale;
     const newPath = segments.join("/");
@@ -44,4 +44,4 @@ export default function LocaleSwitcher() {
       ))}
     </Select>
   );
-}
+};

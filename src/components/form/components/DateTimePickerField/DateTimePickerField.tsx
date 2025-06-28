@@ -8,7 +8,6 @@ import {
 } from "@mui/x-date-pickers/DateTimePicker";
 
 import { BaseFieldProps } from "../../types";
-// import { FormControl } from "@mui/material";
 
 type DateTimePickerFieldProps = BaseFieldProps & DateTimePickerProps & {};
 
@@ -26,7 +25,6 @@ export const DateTimePickerField: React.FC<DateTimePickerFieldProps> = ({
         };
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/* <FormControl error={Boolean(error?.message)}> */}
             <DateTimePicker
               {...props}
               label={label}
@@ -42,7 +40,6 @@ export const DateTimePickerField: React.FC<DateTimePickerFieldProps> = ({
                 },
               }}
             />
-            {/* </FormControl> */}
           </LocalizationProvider>
         );
       }}

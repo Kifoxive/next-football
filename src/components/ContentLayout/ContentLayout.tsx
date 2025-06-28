@@ -1,5 +1,5 @@
 "use client";
-import { useDocumentTitle } from "@/hooks";
+// import { useDocumentTitle } from "@/hooks";
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { BackButton } from "./BackButton";
+import { BackButton } from "../BackButton";
 
 interface IContentLayout {
   title: string;
@@ -28,7 +28,7 @@ export default function ContentLayout({
   endContent,
   children,
 }: IContentLayout) {
-  useDocumentTitle(title);
+  // useDocumentTitle(title);
 
   return (
     <Box className="flex flex-col items-center full-width full-height flex-1 overflow-auto p-4 sm:p-6">

@@ -11,7 +11,7 @@ import { LocationInfoSection } from "../_components/LocationInfoSection";
 import { ReservationInfoSection } from "../_components/ReservationInfoSection";
 import { VotingSection } from "../_components/VotingSection";
 import { GetOneGame } from "../../types";
-import { GameStatusChip } from "@/components/GameStatusChip";
+import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
 
 type GameDetailProps = GetOneGame["response"] & {
   isVoteLoading: boolean;

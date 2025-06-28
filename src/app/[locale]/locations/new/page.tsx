@@ -1,6 +1,6 @@
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
@@ -11,7 +11,7 @@ import { useTransition } from "react";
 import { LocationForm } from "../_components/LocationForm";
 import { ILocationForm, PostLocation } from "../types";
 import { axiosClient } from "@/utils/axiosClient";
-import { IPictureItem } from "@/components/AddPictures";
+import { IPictureItem } from "@/components/AddPictures/AddPictures";
 
 export default function LocationsNewPage() {
   const t = useTranslations("locations.new");

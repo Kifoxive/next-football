@@ -215,5 +215,9 @@
     "noLocation": "Please select a location on the map",
     "copy": "Copy",
     "copied": "Copied"
+  },
+  "showcase": {
+    "title": "Showcase",
+    "inputs": "Inputs"
   }
 }

@@ -1,7 +1,7 @@
 // import Navbar from "@/components/Navbar";
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";

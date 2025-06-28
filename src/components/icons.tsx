@@ -1,4 +1,4 @@
-import { IconSvgProps } from "@/types";
+import { IconSvgProps } from "@/utils/types";
 import * as React from "react";
 
 export const Logo: React.FC<IconSvgProps & { light: boolean }> = ({

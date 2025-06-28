@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -32,6 +34,7 @@
     "formidable": "^3.5.4",
     "github-markdown-css": "^5.8.1",
     "graphql": "^16.10.0",
+    "jest": "^30.0.3",
     "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^3.12.0",
     "maplibre-gl": "^5.5.0",
@@ -51,7 +54,13 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^4.0.1",
     "@eslint/eslintrc": "^3",
+    "@storybook/addon-a11y": "^9.0.14",
+    "@storybook/addon-docs": "^9.0.14",
+    "@storybook/addon-onboarding": "^9.0.14",
+    "@storybook/addon-vitest": "^9.0.14",
+    "@storybook/nextjs-vite": "^9.0.14",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/mapbox-gl": "^3.4.1",
@@ -59,10 +68,16 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-map-gl": "^6.1.7",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "eslint-plugin-storybook": "^9.0.14",
+    "playwright": "^1.53.1",
     "prisma": "^6.6.0",
+    "storybook": "^9.0.14",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

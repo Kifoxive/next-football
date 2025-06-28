@@ -1,6 +1,6 @@
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
@@ -13,7 +13,7 @@ import { useEffect, useState, useTransition } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 import { GameForm } from "../../_components/GameForm";
 import { GetOneGame, IGameForm } from "../../types";
-import Dialog from "@/components/Dialog";
+import Dialog from "@/components/Dialog/Dialog";
 
 export default function GamesEditPage() {
   const t = useTranslations("games.edit");

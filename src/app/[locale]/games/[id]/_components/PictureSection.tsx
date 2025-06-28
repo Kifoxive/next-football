@@ -1,4 +1,4 @@
-import { IPictureItem } from "@/components/AddPictures";
+import { IPictureItem } from "@/components/AddPictures/AddPictures";
 import { config } from "@/config";
 
 import { createClient } from "@/utils/supabase/client";

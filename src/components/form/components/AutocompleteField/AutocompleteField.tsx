@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 import { BaseFieldProps } from "../../types";
-import { OptionType } from "@/types";
+import { OptionType } from "@/utils/types";
 
 type AutocompleteFieldProps = BaseFieldProps &
   Omit<AutocompleteProps<OptionType, false, false, false>, "renderInput"> & {

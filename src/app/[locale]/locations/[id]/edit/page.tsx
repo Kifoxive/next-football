@@ -1,6 +1,6 @@
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
@@ -13,8 +13,8 @@ import { Box, CircularProgress } from "@mui/material";
 import { axiosClient } from "@/utils/axiosClient";
 import { GetOneLocation, ILocationForm } from "../../types";
 import { LocationForm } from "../../_components/LocationForm";
-import Dialog from "@/components/Dialog";
-import { IPictureItem } from "@/components/AddPictures";
+import Dialog from "@/components/Dialog/Dialog";
+import { IPictureItem } from "@/components/AddPictures/AddPictures";
 
 export default function LocationsEditPage() {
   const t = useTranslations("locations.edit");

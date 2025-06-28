@@ -13,10 +13,13 @@ import {
   locationFormSchema,
 } from "@/app/[locale]/locations/types";
 import { useEffect, useState } from "react";
-import { AddPictures, IPictureItem } from "@/components/AddPictures";
+import {
+  AddPictures,
+  IPictureItem,
+} from "@/components/AddPictures/AddPictures";
 import { BUILDING_TYPE_ENUM, config, FLOOR_TYPE_ENUM } from "@/config";
 import { createClient } from "@/utils/supabase/client";
-import { MarkdownEditor } from "@/components/form/components/MarkdownEditor";
+import { MarkdownEditor } from "@/components/form/components/MarkdownEditor/MarkdownEditor";
 import { LocationEditorMap } from "./LocationEditorMap";
 
 type LocationFormProps = {

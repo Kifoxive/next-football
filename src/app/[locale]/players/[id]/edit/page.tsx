@@ -1,6 +1,6 @@
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { config } from "@/config";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
@@ -14,7 +14,7 @@ import { useAuthStore, USER_ROLE } from "@/store/auth";
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { axiosClient } from "@/utils/axiosClient";
-import Dialog from "@/components/Dialog";
+import Dialog from "@/components/Dialog/Dialog";
 
 export default function PlayersEditPage() {
   const t = useTranslations("players.edit");

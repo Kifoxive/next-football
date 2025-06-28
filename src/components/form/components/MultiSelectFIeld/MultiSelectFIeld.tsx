@@ -13,7 +13,7 @@ import Chip from "@mui/material/Chip";
 import { BaseFieldProps } from "../../types";
 
 type MultiSelectFieldProps = BaseFieldProps &
-  BaseSelectProps & {
+  Omit<BaseSelectProps, "variant" | "defaultValue"> & {
     options: { label: string; value: string | number }[];
   };
 
@@ -34,7 +34,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
           >
             <InputLabel id={name + "-label"}>{label}</InputLabel>
             <Select
-              // {...props}
+              {...props}
               labelId={name + "-label"}
               id={name}
               value={Array.isArray(value) ? value : []}

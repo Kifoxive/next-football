@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { Controller } from "react-hook-form";
-import { BaseFieldProps } from "../types";
+import { BaseFieldProps } from "../../types";
 import { Box, FormHelperText, Typography, useTheme } from "@mui/material";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });

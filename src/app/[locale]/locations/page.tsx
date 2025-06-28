@@ -1,6 +1,6 @@
 "use client";
 
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";

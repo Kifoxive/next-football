@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { config, permissions } from "@/config";
 import { useRouter } from "next/navigation";
-import { UserRoleChip } from "@/components/UserRoleChip";
+import { UserRoleChip } from "@/components/UserRoleChip/UserRoleChip";
 import EditIcon from "@mui/icons-material/Edit";
 import LaunchIcon from "@mui/icons-material/Launch";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";

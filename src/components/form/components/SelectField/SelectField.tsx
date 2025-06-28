@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { BaseFieldProps } from "../../types";
-import { OptionType } from "@/types";
+import { OptionType } from "@/utils/types";
 
 type SelectFieldProps = BaseFieldProps &
   BaseSelectProps & {

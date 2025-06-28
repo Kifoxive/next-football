@@ -1,7 +1,7 @@
 // import Navbar from "@/components/Navbar";
 // import Hero from "@/components/Hero";
 // import { getMe } from "./login/actions";
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { useTranslations } from "next-intl";
 
 export default function HomePage() {

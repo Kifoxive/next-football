@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import {
-  // Box,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -8,11 +7,11 @@ import {
   CheckboxProps,
 } from "@mui/material";
 
-import { BaseFieldProps } from "../types";
+import { BaseFieldProps } from "../../types";
 
-type TextFieldProps = BaseFieldProps & CheckboxProps;
+type CheckboxFieldProps = BaseFieldProps & CheckboxProps;
 
-export const CheckboxField: React.FC<TextFieldProps> = ({
+export const CheckboxField: React.FC<CheckboxFieldProps> = ({
   name,
   label,
   ...props
