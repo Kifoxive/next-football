@@ -1,29 +1,26 @@
 "use client";
 
-import { Box, Container } from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
-
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IGameForm, IGame, gameFormSchema } from "@/app/[locale]/games/types";
-
 import { config, GAME_STATUS } from "@/config";
-
 import { DateTimePickerField } from "@/components/form/components/DateTimePickerField";
 import { AutocompleteField } from "@/components/form/components/AutocompleteField";
 import { useEffect, useState } from "react";
 import { axiosClient } from "@/utils/axiosClient";
-// import toast from "react-hot-toast";
 import { OptionType } from "@/utils/types";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor/MarkdownEditor";
 import { CheckboxField } from "@/components/form/components/CheckboxField/CheckboxField";
 import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
-
-// import { LocationEditorMap } from "./LocationEditorMap";
+import { useRouter } from "next/navigation";
+// import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import AddIcon from "@mui/icons-material/Add";
 
 type GameFormProps = {
   fetchedData?: IGame;
@@ -35,6 +32,7 @@ export const GameForm: React.FC<GameFormProps> = ({
   onSubmitData,
 }) => {
   const t = useTranslations();
+  const router = useRouter();
 
   const [locationOptions, setLocationOptions] = useState<OptionType[]>([]);
 
@@ -133,7 +131,17 @@ export const GameForm: React.FC<GameFormProps> = ({
               <SelectField
                 name="location_id"
                 label={t("games.form.location_id")}
+                startAdornment={
+                  !locationOptions.length ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : null
+                }
                 options={locationOptions}
+                additionalOption={{
+                  label: t("locations.list.add"),
+                  icon: <AddIcon />,
+                  onClick: () => router.push(config.routes.locations.new),
+                }}
                 fullWidth
               />
             </Grid>
@@ -143,6 +151,7 @@ export const GameForm: React.FC<GameFormProps> = ({
                 label={t("games.form.status")}
                 options={gameStatusOptions}
                 fullWidth
+                style={{ height: "56px" }}
               />
             </Grid>
             {selectedStatus === "cancelled" && (
@@ -155,7 +164,7 @@ export const GameForm: React.FC<GameFormProps> = ({
               </Grid>
             )}
             <Grid size={1}>
-              <Box className="flex justify-end">
+              <Box className="flex h-full items-center justify-center">
                 <CheckboxField
                   name="reserved"
                   label={t("games.form.reserved")}

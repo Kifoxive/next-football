@@ -44,18 +44,35 @@ export default function GamesEditPage() {
     fetchGame();
   }, [id]);
 
+  // const onSubmit = (newGameData: IGameForm) => {
+  //   startUpdateTransition(async () => {
+  //     try {
+  //       await axiosClient.put(
+  //         config.endpoints.games.edit.replace(":id", id),
+  //         newGameData
+  //       );
+  //       toast.success(t("updateSuccess"));
+  //       router.push(config.routes.games.list);
+  //     } catch (e) {
+  //       console.error(e);
+  //       toast.error(t("updateError"));
+  //     }
+  //   });
+  // };
+
+  // this code do not wait till router.push is executed
   const onSubmit = (newGameData: IGameForm) => {
-    startUpdateTransition(async () => {
-      try {
-        await axiosClient.put(
-          config.endpoints.games.edit.replace(":id", id),
-          newGameData
-        );
-        toast.success(t("updateSuccess"));
-        router.push(config.routes.games.list);
-      } catch {
-        toast.error(t("updateError"));
-      }
+    startUpdateTransition(() => {
+      toast.promise(
+        axiosClient
+          .put(config.endpoints.games.edit.replace(":id", id), newGameData)
+          .then(() => router.push(config.routes.games.list)),
+        {
+          loading: null,
+          success: t("updateSuccess"),
+          error: t("updateError"),
+        }
+      );
     });
   };
 
@@ -65,7 +82,8 @@ export default function GamesEditPage() {
         await axiosClient.delete(`${config.endpoints.games}/${id}`);
         toast.success(t("removeSuccess"));
         router.push(config.routes.games.list);
-      } catch {
+      } catch (e) {
+        console.error(e);
         toast.error(t("removeError"));
       }
     });

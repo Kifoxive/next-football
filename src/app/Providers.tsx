@@ -8,6 +8,12 @@ import { Toaster } from "react-hot-toast";
 import { NextIntlClientProvider } from "next-intl";
 import { LocalesType } from "@/utils/types";
 
+import en from "../../messages/en.json";
+import uk from "../../messages/uk.json";
+import cz from "../../messages/cz.json";
+
+const LOCALES = { en, cz, uk };
+
 function ThemeRegistry({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -34,8 +40,10 @@ export function Providers({
   children: React.ReactNode;
   locale: LocalesType;
 }) {
+  const messages = LOCALES[locale] || LOCALES.en;
+
   return (
-    <NextIntlClientProvider locale={locale}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <NextThemesProvider attribute="class">
         <ThemeRegistry>
           {children}

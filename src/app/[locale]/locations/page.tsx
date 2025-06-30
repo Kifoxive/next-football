@@ -8,7 +8,7 @@ import { config, permissions } from "@/config";
 import { useRouter } from "next/navigation";
 import { useDocumentTitle } from "@/hooks";
 import { useEffect, useState } from "react";
-import { GetLocations, ILocation } from "./types";
+import { GetLocations } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
 import { LocationCard } from "./_components/LocationCard";
 import { useAuthStore } from "@/store/auth";
@@ -20,7 +20,9 @@ export default function LocationsListPage() {
 
   const authUser = useAuthStore((s) => s.user);
   const router = useRouter();
-  const [locationsData, setLocationsData] = useState<ILocation[]>([]);
+  const [locationsData, setLocationsData] = useState<GetLocations["response"]>(
+    []
+  );
 
   const onAddNewLocationButtonClick = () => {
     router.push(config.routes.locations.new);
@@ -45,7 +47,7 @@ export default function LocationsListPage() {
   return (
     <ContentLayout
       title={t("title")}
-      isLoading={!locationsData}
+      isLoading={!locationsData.length}
       endContent={[
         {
           text: t("add"),

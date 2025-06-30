@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UsersTable } from "@/app/[locale]/players/_components/UsersTable";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { GetUsers, IUser } from "./types";
+import { GetUsers } from "./types";
 import { axiosClient } from "@/utils/axiosClient";
 import toast from "react-hot-toast";
 
@@ -17,7 +17,7 @@ export default function PlayersListPage() {
   useDocumentTitle(t("title"));
 
   const router = useRouter();
-  const [playersData, setPlayersData] = useState<IUser[]>();
+  const [playersData, setPlayersData] = useState<GetUsers["response"]>([]);
 
   const onAddNewPlayerButtonClick = () => {
     router.push(config.routes.players.new);
@@ -42,7 +42,7 @@ export default function PlayersListPage() {
   return (
     <ContentLayout
       title={t("title")}
-      isLoading={!playersData}
+      isLoading={!playersData.length}
       endContent={[
         {
           text: t("add"),

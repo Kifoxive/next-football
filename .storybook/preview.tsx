@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { NextIntlClientProvider } from "next-intl";
 import { darkTheme, lightTheme } from "../src/theme/theme";
 import type { Preview } from "@storybook/nextjs-vite";
+import type { Decorator } from "@storybook/react";
 
 import "../src/app/[locale]/globals.css";
 
@@ -38,7 +39,7 @@ export const globalTypes = {
   },
 };
 
-const preview: Preview = {
+export const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
@@ -65,13 +66,10 @@ const THEMES = {
   dark: darkTheme,
 };
 
-export const withMuiTheme = (Story, context) => {
-  // The theme global we just declared
+export const WithMuiTheme: Decorator = (Story, context) => {
   const { theme: themeKey, locale } = context.globals;
 
-  // only recompute the theme if the themeKey changes
   const theme = useMemo(() => THEMES[themeKey] || THEMES["light"], [themeKey]);
-
   const messages = LOCALES[locale] || LOCALES.en;
 
   return (
@@ -84,5 +82,4 @@ export const withMuiTheme = (Story, context) => {
   );
 };
 
-export default preview;
-export const decorators = [withMuiTheme];
+export const decorators = [WithMuiTheme];

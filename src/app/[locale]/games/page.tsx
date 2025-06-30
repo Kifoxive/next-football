@@ -18,7 +18,7 @@ export default function GamesListPage() {
   useDocumentTitle(t("title"));
 
   const router = useRouter();
-  const [gamesData, setGamesData] = useState<GetGames["response"]>();
+  const [gamesData, setGamesData] = useState<GetGames["response"]>([]);
 
   const onAddNewGameButtonClick = () => {
     router.push(config.routes.games.new);
@@ -43,7 +43,7 @@ export default function GamesListPage() {
   return (
     <ContentLayout
       title={t("title")}
-      isLoading={!gamesData}
+      isLoading={!gamesData.length}
       endContent={[
         {
           text: t("add"),
