@@ -6,7 +6,8 @@
     "home": "Home",
     "games": "Games",
     "players": "Players",
-    "locations": "Locations"
+    "locations": "Locations",
+    "profile": "Profile"
   },
   "validation": {
     "required": "This field is required",
@@ -33,7 +34,10 @@
   },
   "login": {
     "title": "Sign in",
-    "google": "Sign in with Google"
+    "google": "Sign in with Google",
+    "loading": "Logging in...",
+    "success": "Log in is successful",
+    "error": "Failed to log in"
   },
   "games": {
     "new": {
@@ -207,6 +211,17 @@
       "covered_outdoor": "Covered Outdoor"
     }
   },
+  "profile": {
+    "edit": {
+      "title": "Edit profile",
+      "fetchError": "Unable to fetch profile",
+      "updateButton": "Update profile",
+      "updateLoading": "Updating profile...",
+      "updateSuccess": "Profile was updated successfully",
+      "updateError": "Unable to update profile",
+      "uploadAvatar": "Upload avatar"
+    }
+  },
   "basic": {
     "picture_add": "Upload picture",
     "picture_remove": "Remove picture",
@@ -214,10 +229,18 @@
     "czk_hour": "{value} CZK / h",
     "noLocation": "Please select a location on the map",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "interfaceLanguage": "Language of interface"
   },
-  "showcase": {
-    "title": "Showcase",
-    "inputs": "Inputs"
+  "logout": {
+    "logoutButton": "Log out",
+    "loading": "Logout...",
+    "success": "Logout successful",
+    "error": "Failed to logout",
+    "logoutDialog": {
+      "title": "Do you really want to log out?",
+      "agreeBtnText": "Yes, log out",
+      "cancelBtnText": "Cancel"
+    }
   }
 }

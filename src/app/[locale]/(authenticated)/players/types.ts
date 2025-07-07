@@ -1,5 +1,6 @@
 // import { phoneRegex } from 'utils';
 
+import { LANGUAGE } from "@/config";
 import { USER_ROLE } from "@/store/auth";
 import { z } from "zod";
 
@@ -9,7 +10,8 @@ export const userFormSchema = (t: (key: string) => string) =>
     email: z.string().nullable(),
     first_name: z.string().nullable(),
     last_name: z.string().nullable(),
-    description: z.string().nullable(),
+    bio: z.string().nullable(),
+    // language: z.nativeEnum(LANGUAGE),
     role: z.nativeEnum(USER_ROLE),
   });
 
@@ -26,7 +28,8 @@ export interface IUser {
   last_name: string | null;
   role: USER_ROLE;
   avatar_url: string | null;
-  description: string | null;
+  bio: string | null;
+  language: LANGUAGE;
   // info
   created_by: string;
   created_at: string;

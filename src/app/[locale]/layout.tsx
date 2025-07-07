@@ -9,19 +9,15 @@ export const metadata: Metadata = {
   manifest: "/favicon/site.webmanifest.json",
 };
 
-// import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// import Navbar from "@/components/Navbar";
 import { locales } from "@/i18n/i18n";
 
 import { notFound } from "next/navigation";
-// import Footer from "@/components/Footer";
-import AuthLayout from "@/components/AuthProvider";
 import { Metadata } from "next";
 import { Providers } from "../Providers";
-import DashboardLayoutWrapper from "./Dashboard";
 import { LocalesType } from "@/utils/types";
+import AuthProvider from "@/components/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,9 +48,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen antialiased`}
       >
         <Providers locale={locale}>
-          <AuthLayout>
-            <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>
-          </AuthLayout>
+          <AuthProvider>{children}</AuthProvider>
         </Providers>
       </body>
     </html>

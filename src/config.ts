@@ -37,10 +37,18 @@ export enum VOTE_OPTION {
   maybe = "maybe",
 }
 
+export enum LANGUAGE {
+  en = "en",
+  uk = "uk",
+  cz = "cz",
+}
+
 export const config = {
   routes: {
     home: "/",
-    profile: "/profile",
+    profile: {
+      edit: "/profile/edit",
+    },
     games: {
       new: "/games/new",
       detail: "/games/:id",
@@ -76,6 +84,7 @@ export const config = {
       edit: "/players/:id",
       delete: "/players/:id",
       list: "/players",
+      me: "/players/me",
     },
     locations: {
       new: "/locations",
@@ -89,5 +98,6 @@ export const config = {
   },
   buckets: {
     locations: "locations-bucket",
+    profiles: "profiles-bucket",
   },
 };

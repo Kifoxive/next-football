@@ -6,7 +6,7 @@ import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UsersTable } from "@/app/[locale]/players/_components/UsersTable";
+import { UsersTable } from "@/app/[locale]/(authenticated)/players/_components/UsersTable";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { GetUsers } from "./types";
 import { axiosClient } from "@/utils/axiosClient";

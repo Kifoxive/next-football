@@ -35,7 +35,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
   const onEditButtonClick = (user_id: string) => {
     router.push(
       authUser?.id === user_id
-        ? config.routes.profile
+        ? config.routes.profile.edit
         : config.routes.players.edit.replace(":id", user_id)
     );
   };

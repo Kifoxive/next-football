@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import { config } from "@/config";
 import { Provider } from "@supabase/supabase-js";
 
 export async function loginUser(provider: Provider) {
@@ -19,7 +18,7 @@ export async function loginUser(provider: Provider) {
 
     if (error) throw Error;
     return { errorMessage: null, url: data.url };
-  } catch (e) {
+  } catch {
     return { errorMessage: "Login failed" };
   }
 }
@@ -32,7 +31,7 @@ export async function getMe() {
 
     if (error) throw Error;
     return { errorMessage: null, user: data.user };
-  } catch (e) {
+  } catch {
     return { errorMessage: "Can't get current user", user: null };
   }
 }

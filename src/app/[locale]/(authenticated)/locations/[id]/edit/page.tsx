@@ -120,11 +120,7 @@ export default function LocationsEditPage() {
       ]}
     >
       {location ? (
-        <LocationForm
-          fetchedData={location}
-          onSubmitData={onSubmit}
-          isLoading={isUpdatePending}
-        />
+        <LocationForm fetchedData={location} onSubmitData={onSubmit} />
       ) : (
         <Box className="flex justify-center items-center flex-1 mb-[10%]">
           <CircularProgress color="inherit" />

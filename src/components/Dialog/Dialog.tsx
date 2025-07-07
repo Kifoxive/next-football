@@ -22,7 +22,7 @@ const BootstrapDialog = styled(MuiDialog)(({ theme }) => ({
 type DialogProps = {
   isOpen: boolean;
   title: string;
-  description: string;
+  description?: string;
   agreeBtnText: string;
   cancelBtnText: string;
   setIsOpen: (open: boolean) => void;
@@ -45,8 +45,13 @@ const Dialog: React.FC<DialogProps> = ({
       onClose={() => setIsOpen(false)}
       aria-labelledby="customized-dialog-title"
       open={isOpen}
+      className="overflow-hidden"
     >
-      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+      <DialogTitle
+        sx={{ m: 0, p: 2 }}
+        id="customized-dialog-title"
+        fontSize="medium"
+      >
         {title}
       </DialogTitle>
       <IconButton
@@ -54,22 +59,24 @@ const Dialog: React.FC<DialogProps> = ({
         onClick={() => setIsOpen(false)}
         sx={(theme) => ({
           position: "absolute",
-          right: 8,
-          top: 8,
+          right: -4,
+          top: -4,
           color: theme.palette.grey[500],
         })}
       >
         <CloseIcon />
       </IconButton>
       <Divider />
-      <DialogContent>
-        <Typography gutterBottom>{description}</Typography>
-      </DialogContent>
+      {description && (
+        <DialogContent>
+          <Typography gutterBottom>{description}</Typography>
+        </DialogContent>
+      )}
       <DialogActions>
-        <Button onClick={onCancel} variant="outlined">
+        <Button onClick={onCancel} variant="outlined" size="small">
           {cancelBtnText}
         </Button>
-        <Button autoFocus onClick={onAgree} variant="contained">
+        <Button autoFocus onClick={onAgree} variant="contained" size="small">
           {agreeBtnText}
         </Button>
       </DialogActions>

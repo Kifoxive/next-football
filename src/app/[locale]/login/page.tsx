@@ -1,39 +1,61 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import ContentLayout from "@/components/ContentLayout/ContentLayout";
+import { AppProvider } from "@toolpad/core/AppProvider";
+import { SignInPage } from "@toolpad/core/SignInPage";
+import { loginUser } from "./actions";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useTransition } from "react";
+
 import { useTranslations } from "next-intl";
-import { LoginButton } from "../../../components/LoginButton";
+import { useDocumentTitle } from "@/hooks";
+
+const providers = [
+  { id: "github", name: "GitHub" },
+  { id: "google", name: "Google" },
+  // { id: 'facebook', name: 'Facebook' },
+  // { id: 'twitter', name: 'Twitter' },
+  // { id: 'linkedin', name: 'LinkedIn' },
+];
 
 export default function LoginPage() {
-  const t = useTranslations("login");
+  const t = useTranslations();
+  useDocumentTitle(t("login.title"));
+
+  const router = useRouter();
+  const [isLoginPending, startLoginTransition] = useTransition();
+
+  //   const onLogin = async () => {
+  //   const { errorMessage, url } = await loginUser("google");
+  //   if (!errorMessage && url) {
+  //     router.push(url);
+  //   } else {
+  //     toast.error(errorMessage);
+  //   }
+  // };
+
+  const onLogin = () => {
+    startLoginTransition(() => {
+      toast.promise(
+        loginUser("google").then(({ errorMessage, url }) => {
+          if (!errorMessage && url) {
+            router.push(url);
+          } else {
+            toast.error(errorMessage);
+          }
+        }),
+        {
+          loading: t("logout.loading"),
+          success: t("logout.success"),
+          error: t("logout.error"),
+        }
+      );
+    });
+  };
 
   return (
-    <ContentLayout>
-      <Box className="bg-black px-8 py-4 border-2 rounded-lg w-[400px]">
-        <Typography variant="h5" mb={6}>
-          {t("title")}
-        </Typography>
-        <LoginButton />
-        {/* <TextField
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <Button variant="contained" onClick={handleLogin} fullWidth>
-          Log In
-        </Button> */}
-      </Box>
-    </ContentLayout>
+    <AppProvider>
+      <SignInPage providers={providers} signIn={onLogin} />
+    </AppProvider>
   );
 }

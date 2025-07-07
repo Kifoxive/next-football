@@ -24,7 +24,7 @@ export default function PlayersDetailPage() {
     const fetchUser = async () => {
       const { data, error } = await supabase
         .from("profiles")
-        .select("(user_name, email, first_name, last_name, role)")
+        .select("*")
         .eq("id", id)
         .single();
       if (error) return toast.error(t("fetchError"));

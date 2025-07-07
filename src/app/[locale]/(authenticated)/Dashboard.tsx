@@ -4,6 +4,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import HomeIcon from "@mui/icons-material/Home";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import MapIcon from "@mui/icons-material/Map";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box, Theme, useTheme } from "@mui/material";
 import Navbar from "@/components/Navbar";
 import { config } from "@/config";
@@ -33,9 +34,18 @@ export const navItems = (theme: Theme) => [
     name: "locations",
     icon: <MapIcon sx={{ color: getThemedColor(theme) }} />,
   },
+  {
+    pathname: config.routes.profile.edit,
+    name: "profile",
+    icon: <AccountCircleIcon sx={{ color: getThemedColor(theme) }} />,
+  },
 ];
 
-export default function Dashboard({ children }: { children: React.ReactNode }) {
+export function DashboardLayoutWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const t = useTranslations("navbar");
   const theme = useTheme();
 

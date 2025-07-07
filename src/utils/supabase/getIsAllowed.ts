@@ -22,7 +22,7 @@ export async function getIsAllowed({
 }: getUserRoleProps): Promise<getUserRoleResult> {
   const supabase = await createClient();
 
-  // Отримуємо користувача з cookie
+  // Get user from cookie
   const {
     data: { user },
     error: userError,
@@ -38,7 +38,7 @@ export async function getIsAllowed({
     };
   }
 
-  // Отримуємо роль з таблиці profiles
+  // Get role from profiles table
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("role, id")

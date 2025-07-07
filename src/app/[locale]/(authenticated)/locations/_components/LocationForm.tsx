@@ -11,7 +11,7 @@ import {
   ILocationForm,
   ILocation,
   locationFormSchema,
-} from "@/app/[locale]/locations/types";
+} from "@/app/[locale]/(authenticated)/locations/types";
 import { useEffect, useState } from "react";
 import {
   AddPictures,
@@ -24,7 +24,6 @@ import { LocationEditorMap } from "./LocationEditorMap";
 
 type LocationFormProps = {
   fetchedData?: ILocation;
-
   onSubmitData: (data: ILocationForm, attachedPictures: IPictureItem[]) => void;
 };
 
