@@ -23,9 +23,9 @@ export default function ProfileEditPage() {
   const [player, setPlayer] = useState<GetOneUser["response"]>();
 
   useEffect(() => {
-    const fetchGame = async () => {
+    const fetchProfile = async () => {
       try {
-        const { data } = await axiosClient.get(config.endpoints.players.me);
+        const { data } = await axiosClient.get(config.endpoints.auth.me);
 
         setPlayer(data);
       } catch (e) {
@@ -33,7 +33,7 @@ export default function ProfileEditPage() {
         console.log(e);
       }
     };
-    fetchGame();
+    fetchProfile();
   }, []);
 
   const onSubmit = (newProfileData: IProfileForm, avatar?: IPictureItem) => {

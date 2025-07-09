@@ -26,8 +26,8 @@ export const CopyCell: React.FC<CopyCellProps> = ({ text, maxLength = 40 }) => {
     text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="max-w-[200px] truncate" title={text}>
+    <div className="flex items-center gap-2 max-w-full">
+      <span className="truncate" title={text}>
         {truncatedText}
       </span>
       <Tooltip

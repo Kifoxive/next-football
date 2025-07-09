@@ -6,7 +6,11 @@ import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IGameForm, IGame, gameFormSchema } from "@/app/[locale]/games/types";
+import {
+  IGameForm,
+  IGame,
+  gameFormSchema,
+} from "@/app/[locale]/(authenticated)/games/types";
 import { config, GAME_STATUS } from "@/config";
 import { DateTimePickerField } from "@/components/form/components/DateTimePickerField";
 import { AutocompleteField } from "@/components/form/components/AutocompleteField";

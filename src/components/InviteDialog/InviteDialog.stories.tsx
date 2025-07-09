@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import React, { useState } from "react";
-import Dialog from "./Dialog";
+import Dialog from "./InviteDialog";
 
 const meta = {
-  title: "Feedback/Dialog",
+  title: "Feedback/InviteDialog",
   component: Dialog,
   parameters: {
     layout: "centered",
@@ -18,7 +18,7 @@ const Template = (args: any) => {
 
   return (
     <Dialog
-      {...args}
+      userId="7e3c842b-6fe3-4050-9111-c465575f89ec"
       isOpen={open}
       setIsOpen={setOpen}
       onAgree={() => {
@@ -35,12 +35,4 @@ const Template = (args: any) => {
 
 export const Default: Story = {
   render: (args) => <Template {...args} />,
-  // @ts-expect-error
-  args: {
-    title: "Delete Game?",
-    description:
-      "Are you sure you want to delete this game? This action cannot be undone.",
-    agreeBtnText: "Delete",
-    cancelBtnText: "Cancel",
-  },
 };

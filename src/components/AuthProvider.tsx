@@ -1,7 +1,7 @@
 import { AuthInitializer } from "@/components/AuthInitializer";
 import { ReactNode } from "react";
 
-import { getMe } from "@/app/[locale]/login/actions";
+import { getMe } from "@/app/[locale]/(anonymous)/login/actions";
 
 export default async function AuthProvider({
   children,

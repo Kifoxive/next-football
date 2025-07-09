@@ -43,11 +43,19 @@ export enum LANGUAGE {
   cz = "cz",
 }
 
+export type IActivationToken = {
+  userId: string;
+  inviterId: string;
+  iat: number;
+  exp: number;
+};
+
 export const config = {
   routes: {
     home: "/",
     profile: {
       edit: "/profile/edit",
+      activate: "/profile/activate",
     },
     games: {
       new: "/games/new",
@@ -70,6 +78,13 @@ export const config = {
     login: "/login",
   },
   endpoints: {
+    auth: {
+      me: "/auth/me",
+      invite: "/auth/activate",
+      checkActivated: "/auth/activate/:id",
+      generateActivationLink: "/auth/generate-activation-link",
+      activate: "/auth/activate",
+    },
     games: {
       new: "/games",
       detail: "/games/:id",
@@ -84,7 +99,6 @@ export const config = {
       edit: "/players/:id",
       delete: "/players/:id",
       list: "/players",
-      me: "/players/me",
     },
     locations: {
       new: "/locations",

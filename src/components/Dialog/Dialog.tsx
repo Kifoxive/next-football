@@ -45,8 +45,19 @@ const Dialog: React.FC<DialogProps> = ({
       onClose={() => setIsOpen(false)}
       aria-labelledby="customized-dialog-title"
       open={isOpen}
-      className="overflow-hidden"
     >
+      <IconButton
+        aria-label="close"
+        onClick={() => setIsOpen(false)}
+        sx={(theme) => ({
+          position: "absolute",
+          right: 0,
+          top: 0,
+          color: theme.palette.grey[500],
+        })}
+      >
+        <CloseIcon />
+      </IconButton>
       <DialogTitle
         sx={{ m: 0, p: 2 }}
         id="customized-dialog-title"
@@ -54,18 +65,6 @@ const Dialog: React.FC<DialogProps> = ({
       >
         {title}
       </DialogTitle>
-      <IconButton
-        aria-label="close"
-        onClick={() => setIsOpen(false)}
-        sx={(theme) => ({
-          position: "absolute",
-          right: -4,
-          top: -4,
-          color: theme.palette.grey[500],
-        })}
-      >
-        <CloseIcon />
-      </IconButton>
       <Divider />
       {description && (
         <DialogContent>

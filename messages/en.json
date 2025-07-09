@@ -34,6 +34,7 @@
   },
   "login": {
     "title": "Sign in",
+    "description": "Please sign in to continue",
     "google": "Sign in with Google",
     "loading": "Logging in...",
     "success": "Log in is successful",
@@ -133,6 +134,16 @@
         "description": "This action cannot be undone. The player's data will be permanently deleted.",
         "agreeBtnText": "Yes, remove",
         "cancelBtnText": "Cancel"
+      },
+      "inviteButton": "Invite player",
+      "inviteDialog": {
+        "title": "Activate user",
+        "description": "To allow the user to log in, generate and share a link or QR code with them.",
+        "agreeBtnText": "Generate link",
+        "cancelBtnText": "Close",
+        "createLoading": "Generating link...",
+        "createSuccess": "Link was generated successfully",
+        "createError": "Unable to generate link"
       }
     },
     "list": {
@@ -242,5 +253,23 @@
       "agreeBtnText": "Yes, log out",
       "cancelBtnText": "Cancel"
     }
+  },
+  "activate": {
+    "title": "Player activation",
+    "fetchError": "Unable to fetch player",
+    "alreadyActivated": {
+      "warning": "The user is already activated",
+      "solution": "Log in instead"
+    },
+    "expired": {
+      "warning": "The link is expired",
+      "solution": "Ask a moderator to resend the link"
+    },
+    "welcome": "Welcome, {username}",
+    "description": "Please sign up to continue",
+    "google": "Sign up with Google",
+    "loading": "Activating...",
+    "success": "Activation is successful",
+    "error": "Failed to activate player"
   }
 }

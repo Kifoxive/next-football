@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Button, Container, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
@@ -18,6 +25,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { config } from "@/config";
 import { IPictureItem } from "@/components/AddPictures";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 
 const fallbackImage = "/images/showcase-missing-avatar.webp";
 
@@ -135,12 +143,20 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
                 onChange={handleFileChange}
               />
               <Box className="absolute left-0 top-0 right-0 bottom-0 opacity-0 hover:opacity-100 bg-gray-800/50 flex justify-center items-center">
-                <Button
-                  onClick={() => fileInputRef.current?.click()}
-                  variant="outlined"
-                >
-                  {t("profile.edit.uploadAvatar")}
-                </Button>
+                <Box className="hidden md:block">
+                  <Button
+                    onClick={() => fileInputRef.current?.click()}
+                    variant="outlined"
+                    size="small"
+                  >
+                    {t("profile.edit.uploadAvatar")}
+                  </Button>
+                </Box>
+                <Box className="md:hidden">
+                  <IconButton onClick={() => fileInputRef.current?.click()}>
+                    <InsertPhotoIcon color="primary" />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
             <Grid container spacing={2} columns={{ xs: 1, sm: 3 }}>

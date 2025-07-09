@@ -7,7 +7,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { USER_ROLE } from "@/store/auth";
 import { SelectField, TextField } from "@/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userFormSchema, IUserForm, IUser } from "@/app/[locale]/players/types";
+import {
+  userFormSchema,
+  IUserForm,
+  IUser,
+} from "@/app/[locale]/(authenticated)/players/types";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor/MarkdownEditor";
 
 type UserFormProps = {

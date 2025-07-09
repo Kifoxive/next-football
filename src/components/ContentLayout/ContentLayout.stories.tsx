@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import ContentLayout from "./ContentLayout";
 import { Box, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";

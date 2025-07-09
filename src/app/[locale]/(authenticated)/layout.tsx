@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getMe } from "../login/actions";
+import { getMe } from "../(anonymous)/login/actions";
 import { DashboardLayoutWrapper } from "./Dashboard";
 import { config } from "@/config";
 
@@ -73,6 +73,7 @@ export default async function AuthenticatedLayout({
   children: React.ReactNode;
 }) {
   const { user } = await getMe();
+
   if (!user) redirect(config.routes.login);
 
   return <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>;

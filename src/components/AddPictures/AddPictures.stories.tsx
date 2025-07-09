@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { AddPictures, IPictureItem } from "./AddPictures";
-import { FormProvider, useForm } from "react-hook-form";
+
 import { useState } from "react";
 
 const meta = {

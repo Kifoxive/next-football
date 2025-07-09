@@ -42,7 +42,7 @@ export async function getIsAllowed({
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("role, id")
-    .eq("id", user.id)
+    .eq("auth_user_id", user.id)
     .single();
 
   if (profileError || !profile) {

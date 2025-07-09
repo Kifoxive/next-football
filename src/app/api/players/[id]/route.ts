@@ -7,7 +7,6 @@ import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 
 // get one player
-
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

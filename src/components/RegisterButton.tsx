@@ -1,13 +1,18 @@
 import { Typography, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { loginUser } from "@/app/[locale]/(anonymous)/login/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { GoogleLogo } from "./icons";
 import { useTransition } from "react";
 
-export const LoginButton = () => {
-  const t = useTranslations("login");
+import { activateUser } from "@/app/[locale]/(anonymous)/login/actions";
+
+type RegisterButtonProps = {
+  token: string;
+};
+
+export const RegisterButton: React.FC<RegisterButtonProps> = ({ token }) => {
+  const t = useTranslations("activate");
 
   const router = useRouter();
   const [isLoginPending, startLoginTransition] = useTransition();
@@ -15,13 +20,14 @@ export const LoginButton = () => {
   const onLogin = () => {
     startLoginTransition(() => {
       toast.promise(
-        loginUser("google").then(({ errorMessage, url }) => {
+        activateUser("google", token).then(({ errorMessage, url }) => {
           if (!errorMessage && url) {
             router.push(url);
           } else {
             toast.error(errorMessage);
           }
         }),
+        // axiosClient.post(config.endpoints.auth.activate, { token }),
         {
           loading: t("loading"),
           success: t("success"),

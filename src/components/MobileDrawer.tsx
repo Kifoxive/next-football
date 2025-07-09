@@ -15,11 +15,6 @@ import { redirect } from "next/navigation";
 import { usePathname } from "@/i18n/navigation";
 import { Divider, IconButton, styled, useTheme } from "@mui/material";
 
-type IMobileDrawerProps = {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
-};
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -28,6 +23,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: "flex-start",
 }));
+
+type IMobileDrawerProps = {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+};
 
 const MobileDrawer: React.FC<IMobileDrawerProps> = ({ isOpen, setIsOpen }) => {
   const t = useTranslations("navbar");

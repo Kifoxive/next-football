@@ -18,7 +18,7 @@ export const AuthInitializer = ({ id }: Props) => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", id)
+        .eq("auth_user_id", id)
         .single();
 
       if (data && !error) {
