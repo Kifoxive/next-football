@@ -9,14 +9,16 @@ import { GetGames } from "./types";
 import SportsIcon from "@mui/icons-material/Sports";
 import { axiosClient } from "@/utils/axiosClient";
 import { useRouter } from "next/navigation";
-import { config } from "@/config";
+import { config, permissions } from "@/config";
 import { GamesTable } from "./_components/GamesTable";
 import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/auth";
 
 export default function GamesListPage() {
   const t = useTranslations("games.list");
   useDocumentTitle(t("title"));
 
+  const authUser = useAuthStore((s) => s.user);
   const router = useRouter();
   const [gamesData, setGamesData] = useState<GetGames["response"]>([]);
 
@@ -25,7 +27,7 @@ export default function GamesListPage() {
   };
 
   useEffect(() => {
-    const fetchPlayers = async () => {
+    const fetchGames = async () => {
       try {
         const res = await axiosClient.get<GetGames["response"]>(
           config.endpoints.games.list
@@ -37,7 +39,7 @@ export default function GamesListPage() {
       }
     };
 
-    fetchPlayers();
+    fetchGames();
   }, []);
 
   return (
@@ -50,6 +52,7 @@ export default function GamesListPage() {
           icon: <SportsIcon color="inherit" />,
           variant: "contained",
           onClick: onAddNewGameButtonClick,
+          show: permissions.moderator.includes(authUser?.role),
         },
       ]}
     >

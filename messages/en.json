@@ -1,6 +1,13 @@
 {
   "home": {
-    "title": "Home"
+    "title": "Home",
+    "upcomingGamesSection": {
+      "title": "Upcoming games",
+      "fetchError": "Unable to fetch games",
+      "freshGame": {
+        "viewDetailsBtn": "View details"
+      }
+    }
   },
   "navbar": {
     "home": "Home",

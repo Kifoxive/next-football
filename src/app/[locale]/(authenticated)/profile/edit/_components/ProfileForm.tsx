@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, IconButton, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";

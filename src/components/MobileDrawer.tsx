@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { usePathname } from "@/i18n/navigation";
 import { Divider, IconButton, styled, useTheme } from "@mui/material";
+import { useAuthStore } from "@/store/auth";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,6 +32,8 @@ type IMobileDrawerProps = {
 
 const MobileDrawer: React.FC<IMobileDrawerProps> = ({ isOpen, setIsOpen }) => {
   const t = useTranslations("navbar");
+
+  const authUser = useAuthStore((s) => s.user);
   const currentPath = usePathname();
   const theme = useTheme();
 
@@ -51,7 +54,7 @@ const MobileDrawer: React.FC<IMobileDrawerProps> = ({ isOpen, setIsOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {navItems(theme).map(({ pathname, name, icon }) => {
+        {navItems(theme, authUser?.role).map(({ pathname, name, icon }) => {
           const isActive =
             currentPath === pathname || currentPath.startsWith(`${pathname}/`);
           return (

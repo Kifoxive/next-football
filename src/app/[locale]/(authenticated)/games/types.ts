@@ -64,6 +64,10 @@ export type PutGame = {
   request: IGameForm;
   response: IGame;
 };
+export type GetFreshGames = {
+  request: null;
+  response: (IGame & { locations: ILocation })[];
+};
 
 // voting
 export interface IVote {

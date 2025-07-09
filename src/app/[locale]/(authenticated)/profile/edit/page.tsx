@@ -19,7 +19,6 @@ export default function ProfileEditPage() {
   useDocumentTitle(t("profile.edit.title"));
 
   const [isUpdatePending, startUpdateTransition] = useTransition();
-
   const [player, setPlayer] = useState<GetOneUser["response"]>();
 
   useEffect(() => {

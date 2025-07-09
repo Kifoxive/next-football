@@ -57,7 +57,7 @@ export async function GET(
 
   const supabase = await createClient();
   const { isAllowed, errorMessage, status } = await getIsAllowed({
-    permission: USER_ROLE.moderator,
+    permission: USER_ROLE.player,
   });
 
   if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });

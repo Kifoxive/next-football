@@ -45,8 +45,13 @@ export async function POST(request: Request) {
   );
 }
 
+import { GAME_STATUS } from "@/config"; // якщо enum в іншому файлі
+
 // get all games
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const getFreshGames = searchParams.get("fresh") === "true";
+
   const supabase = await createClient();
   const { isAllowed, errorMessage, status } = await getIsAllowed({
     permission: USER_ROLE.player,
@@ -54,12 +59,17 @@ export async function GET() {
 
   if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });
 
-  const { data, error } = await supabase.from("games").select(`
-    *,
-    locations (
-      name
-    )
-  `);
+  const locationSelection = getFreshGames ? "locations(*)" : "locations(name)";
+
+  // Basic query
+  let query = supabase.from("games").select(`*, ${locationSelection}`);
+
+  // Only fresh games
+  if (getFreshGames) {
+    query = query.in("status", [GAME_STATUS.voting, GAME_STATUS.confirmed]);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error(error);

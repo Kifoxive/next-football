@@ -7,7 +7,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { CopyCell } from "@/components/CopyCell";
 import { getThemedColor } from "@/utils/getThemedColor";
-import { ILocation } from "@/app/[locale]/locations/types";
+import { ILocation } from "@/app/[locale]/(authenticated)/locations/types";
 
 type LocationInfoSectionProps = Pick<
   ILocation,

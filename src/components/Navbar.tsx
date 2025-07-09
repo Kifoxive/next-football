@@ -13,30 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MobileDrawer from "./MobileDrawer";
 import { useState } from "react";
 
-// const getAvailableRoutes = (role?: USER_ROLE): [string, string][] => {
-//     switch (role) {
-//         case AUTH_ROLE['admin']:
-//             return [
-//                 [config.nav.reservation.list, config.routes.reservation.list],
-//                 [config.nav.delivery.list, config.routes.delivery.list],
-//                 [config.nav.menu.list, config.routes.menu.list],
-//             ];
-//         case AUTH_ROLE['guest']:
-//             return [
-//                 [config.nav.reservation.list, config.routes.reservation.list],
-//                 [config.nav.delivery.list, config.routes.delivery.list],
-//             ];
-//         default:
-//             return [
-//                 [config.nav.home, config.routes.home],
-//                 [config.nav.menu.page, config.routes.menu.page],
-//                 [config.nav.reservation.page, config.routes.reservation.page],
-//                 [config.nav.delivery.page, config.routes.delivery.page],
-//                 [config.nav.contact, config.routes.contact],
-//             ];
-//     }
-// };
-
 type NavbarProps = {
   anonymous?: boolean;
 };
@@ -47,7 +23,6 @@ const Navbar: React.FC<NavbarProps> = ({ anonymous }) => {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   return (
-    // <AppBar position="fixed" color="default" elevation={1}>
     <AppBar
       position="static"
       color="default"
