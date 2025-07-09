@@ -66,6 +66,7 @@ export const PictureSection: React.FC<PictureSectionProps> = ({
       }
     };
     fetchPictures();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const realPictures = pictures.filter(({ originalId }) => originalId);

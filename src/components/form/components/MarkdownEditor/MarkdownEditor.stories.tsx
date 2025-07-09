@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -17,10 +17,10 @@ type Story = StoryObj<typeof meta>;
 /**
  * Wrapper to render the MarkdownEditor inside FormProvider
  */
-const WithForm = (args: any) => {
+const WithForm = (args: React.ComponentProps<typeof MarkdownEditor>) => {
   const methods = useForm({
     defaultValues: {
-      [args.name]: args.defaultValue || "**Description**",
+      [args.name]: "**Description**",
     },
   });
 

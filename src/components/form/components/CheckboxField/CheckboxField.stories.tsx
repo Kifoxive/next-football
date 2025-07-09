@@ -18,7 +18,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const WithForm = (args: any) => {
+const WithForm = (args: React.ComponentProps<typeof CheckboxField>) => {
   const methods = useForm({
     defaultValues: {
       [args.name]: args.defaultValue ?? false,

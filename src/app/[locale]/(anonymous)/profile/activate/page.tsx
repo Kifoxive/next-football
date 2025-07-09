@@ -43,6 +43,7 @@ export default function ProfileActivationPage() {
       }
     };
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!token) return router.push(config.routes.login);

@@ -48,6 +48,7 @@ export default function GameDetail({
       total: votes.length,
       results,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [votes]);
 
   return (

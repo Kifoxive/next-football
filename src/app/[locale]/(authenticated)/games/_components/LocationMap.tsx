@@ -1,9 +1,9 @@
 "use client";
 import Map, { Marker, StyleSpecification } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 // import { useTranslations } from "next-intl";
 
 interface LocationMapProps {
@@ -15,10 +15,7 @@ interface LocationMapProps {
 export const LocationMap: React.FC<LocationMapProps> = ({
   latitude,
   longitude,
-  address,
 }) => {
-  // const t = useTranslations();
-
   return (
     <Box className="h-full">
       <Map
@@ -38,13 +35,6 @@ export const LocationMap: React.FC<LocationMapProps> = ({
             <PlaceIcon fontSize="large" color="info" />
           </Marker>
         )}
-        {/* <Box
-          component={Paper}
-          className="absolute top-2 right-2 flex items-center gap-2 px-4 py-2 w-fit"
-        >
-          <LocationOnIcon />
-          <Typography>{address}</Typography>
-        </Box> */}
       </Map>
     </Box>
   );

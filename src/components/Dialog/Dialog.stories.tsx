@@ -13,7 +13,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Template = (args: any) => {
+import type { ComponentProps } from "react";
+
+const Template = (args: ComponentProps<typeof Dialog>) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -34,8 +36,6 @@ const Template = (args: any) => {
 };
 
 export const Default: Story = {
-  render: (args) => <Template {...args} />,
-  // @ts-expect-error
   args: {
     title: "Delete Game?",
     description:
@@ -43,4 +43,5 @@ export const Default: Story = {
     agreeBtnText: "Delete",
     cancelBtnText: "Cancel",
   },
+  render: (args) => <Template {...args} />,
 };

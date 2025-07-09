@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 /**
  * Wrapper to render the TextField inside FormProvider
  */
-const WithForm = (args: any) => {
+const WithForm = (args: React.ComponentProps<typeof TextField>) => {
   const methods = useForm({
     defaultValues: {
       [args.name]: args.defaultValue || "",

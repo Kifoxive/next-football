@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     );
 
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("profiles")
     .update({ joined_at: new Date().toISOString() })
     .eq("id", decoded.userId)

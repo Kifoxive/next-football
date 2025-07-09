@@ -287,11 +287,15 @@ export async function DELETE(
     );
   }
 
-  const { error } = await supabase.from("profiles").delete().eq("id", targetId);
-  if (error) {
-    console.error("Delete error:", error);
-    return NextResponse.json({ error: "Delete failed" }, { status: 500 });
-  }
+  // const { error } = await supabase.from("profiles").delete().eq("id", targetId);
+  // if (error) {
+  //   console.error("Delete error:", error);
+  //   return NextResponse.json({ error: "Delete failed" }, { status: 500 });
+
+  //   const { data, error } = await supabase.auth.admin.deleteUser(
+  //     "715ed5db-f090-4b8c-a067-640ecee36aa0"
+  //   );
+  // }
 
   return NextResponse.json(
     { message: "Your profile was deleted" },

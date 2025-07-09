@@ -28,7 +28,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const WithForm = (args: any) => {
+import type { ComponentProps } from "react";
+
+const WithForm = (args: ComponentProps<typeof AutocompleteField>) => {
   const methods = useForm({
     defaultValues: {
       [args.name]: args.defaultValue || "",
@@ -63,8 +65,7 @@ export const WithNumber: Story = {
 export const Preselected: Story = {
   render: (args) => <WithForm {...args} />,
   args: {
-    // @ts-ignore
-    defaultValue: "b",
+    defaultValue: { label: "Option B", value: "b" },
     options,
   },
 };

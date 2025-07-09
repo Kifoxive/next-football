@@ -44,6 +44,7 @@ export default function ContentLayout({
             <Box className="hidden md:flex gap-4">
               {endContent
                 .filter(({ show = true }) => show)
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 .map(({ show, ...button }, index) => (
                   <Button
                     startIcon={button.icon}
@@ -59,6 +60,7 @@ export default function ContentLayout({
             <Box className="flex flex-col-reverse md:hidden fixed right-[20px] bottom-[20px] gap-4 z-10">
               {endContent
                 .filter(({ show = true }) => show)
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 .map(({ show, loading, ...button }, index) => (
                   <Fab
                     onClick={button.onClick}

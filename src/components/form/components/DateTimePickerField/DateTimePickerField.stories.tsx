@@ -20,7 +20,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const WithForm = (args: any) => {
+const WithForm = (args: React.ComponentProps<typeof DateTimePickerField>) => {
   const methods = useForm({
     defaultValues: {
       [args.name]: args.defaultValue ?? null,
@@ -43,8 +43,7 @@ export const Default: Story = {
 export const WithInitialDate: Story = {
   render: (args) => <WithForm {...args} />,
   args: {
-    // @ts-ignore
-    defaultValue: dayjs().add(1, "day").toISOString(),
+    defaultValue: dayjs().add(1, "day"),
   },
 };
 

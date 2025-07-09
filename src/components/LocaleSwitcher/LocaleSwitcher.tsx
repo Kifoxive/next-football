@@ -23,6 +23,7 @@ export const LocaleSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPending, startTransition] = useTransition();
 
   const handleChange = (event: SelectChangeEvent) => {

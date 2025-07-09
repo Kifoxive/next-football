@@ -51,6 +51,7 @@ export const LocationCard = ({ location, isModerator }: LocationCardProps) => {
     if (image_list?.[0]) {
       fetchSignedUrl();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image_list]);
 
   return (

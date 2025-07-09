@@ -12,9 +12,22 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
+// npx eslint . --fix
+
 const eslintConfig = [
+  {
+    ignores: [
+      "node_modules",
+      ".next",
+      "dist",
+      "build",
+      "out",
+      "**/*.wasm.js",
+      "src/generated/**",
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
 ];
 
 export default eslintConfig;

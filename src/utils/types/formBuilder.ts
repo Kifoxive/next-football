@@ -11,7 +11,7 @@ export interface FieldConfig {
   type: FieldType;
   name: string;
   label: string;
-  defaultValue?: any;
-  options?: { label: string; value: any }[];
-  rules?: any;
+  defaultValue?: string | number | boolean | Date | string[] | number[] | null;
+  options?: { label: string; value: string | number }[];
+  rules?: string | number | boolean | Date | string[] | number[] | null;
 }

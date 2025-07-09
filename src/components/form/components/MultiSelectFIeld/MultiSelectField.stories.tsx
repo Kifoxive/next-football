@@ -27,17 +27,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const WithForm = (args: any) => {
+import type { ComponentProps } from "react";
+
+const WithForm = (
+  args: ComponentProps<typeof MultiSelectField> & {
+    defaultValue?: (string | number)[];
+  }
+) => {
+  const { defaultValue = [], ...restArgs } = args;
   const methods = useForm({
     defaultValues: {
-      [args.name]: args.defaultValue ?? [],
+      [restArgs.name]: defaultValue,
     },
   });
 
   return (
     <FormProvider {...methods}>
       <form className="p-4 min-w-[200px]">
-        <MultiSelectField {...args} />
+        <MultiSelectField {...restArgs} />
       </form>
     </FormProvider>
   );
@@ -48,11 +55,10 @@ export const Default: Story = {
 };
 
 export const Preselected: Story = {
-  render: (args) => <WithForm {...args} />,
-  args: {
-    // @ts-ignore
-    defaultValue: ["football", "tennis"],
-  },
+  render: (args) => (
+    <WithForm {...args} defaultValue={["football", "tennis"]} />
+  ),
+  args: {},
 };
 
 export const WithError: Story = {

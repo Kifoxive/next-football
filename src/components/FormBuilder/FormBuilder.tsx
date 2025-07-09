@@ -11,7 +11,7 @@ import { FieldConfig } from "@/utils/types/formBuilder";
 
 interface FormBuilderProps {
   fields: FieldConfig[];
-  onSubmit?: (data: any) => void;
+  onSubmit?: (data: Record<string, unknown>) => void;
 }
 
 export const FormBuilder: React.FC<FormBuilderProps> = ({
@@ -43,14 +43,17 @@ export const FormBuilder: React.FC<FormBuilderProps> = ({
       case "checkbox":
         return <CheckboxField {...props} />;
       case "select":
-        // @ts-ignore
-        return <SelectField {...props} />;
+        return <SelectField {...props} options={field.options ?? []} />;
       case "autocomplete":
-        // @ts-ignore
-        return <AutocompleteField {...props} number={false} />;
+        return (
+          <AutocompleteField
+            {...props}
+            options={field.options ?? []}
+            number={false}
+          />
+        );
       case "multiselect":
-        // @ts-ignore
-        return <MultiSelectField {...props} />;
+        return <MultiSelectField {...props} options={field.options ?? []} />;
       case "datetime":
         return <DateTimePickerField {...props} />;
       default:
