@@ -183,6 +183,9 @@
       "createSuccess": "Location was created successfully",
       "createError": "Unable to create location"
     },
+    "detail": {
+      "title": "Location card"
+    },
     "edit": {
       "title": "Edit location",
       "updateButton": "Update location",
