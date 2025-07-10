@@ -42,6 +42,10 @@ export const Default: Story = {
       "Are you sure you want to delete this game? This action cannot be undone.",
     agreeBtnText: "Delete",
     cancelBtnText: "Cancel",
+    isOpen: true,
+    setIsOpen: () => {},
+    onAgree: () => {},
+    onCancel: () => {},
   },
   render: (args) => <Template {...args} />,
 };

@@ -52,7 +52,7 @@ export default function GamesListPage() {
           icon: <SportsIcon color="inherit" />,
           variant: "contained",
           onClick: onAddNewGameButtonClick,
-          show: permissions.moderator.includes(authUser?.role),
+          show: !!authUser && permissions.moderator.includes(authUser?.role),
         },
       ]}
     >

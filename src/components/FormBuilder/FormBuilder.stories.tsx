@@ -40,15 +40,15 @@ const fields: FieldConfig[] = [
       { label: "Ukraine", value: "ua" },
     ],
   },
-  {
-    type: "multiselect",
-    name: "sports",
-    label: "Sports",
-    options: [
-      { label: "Football", value: "football" },
-      { label: "Basketball", value: "basketball" },
-    ],
-  },
+  // {
+  //   type: "multiselect",
+  //   name: "sports",
+  //   label: "Sports",
+  //   options: [
+  //     { label: "Football", value: "football" },
+  //     { label: "Basketball", value: "basketball" },
+  //   ],
+  // },
   {
     type: "datetime",
     name: "meeting",

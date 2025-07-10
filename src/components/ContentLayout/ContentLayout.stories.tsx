@@ -64,5 +64,6 @@ export const Loading: Story = {
   args: {
     title: "Loading...",
     isLoading: true,
+    children: <div></div>,
   },
 };
