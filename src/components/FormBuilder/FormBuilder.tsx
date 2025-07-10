@@ -4,7 +4,7 @@ import {
   CheckboxField,
   SelectField,
   AutocompleteField,
-  MultiSelectField,
+  // MultiSelectField,
   DateTimePickerField,
 } from "../form";
 import { FieldConfig } from "@/utils/types/formBuilder";
@@ -52,8 +52,8 @@ export const FormBuilder: React.FC<FormBuilderProps> = ({
             number={false}
           />
         );
-      case "multiselect":
-        return <MultiSelectField {...props} options={field.options ?? []} />;
+      // case "multiselect":
+      //   return <MultiSelectField {...props} options={field.options ?? []} />;
       case "datetime":
         return <DateTimePickerField {...props} />;
       default:

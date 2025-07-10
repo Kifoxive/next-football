@@ -4,8 +4,8 @@ export type FieldType =
   | "select"
   | "checkbox"
   | "datetime"
-  | "autocomplete"
-  | "multiselect";
+  | "autocomplete";
+// | "multiselect";
 
 export interface FieldConfig {
   type: FieldType;
