@@ -24,7 +24,7 @@ export async function GET(
       } = await supabase.auth.getUser();
 
       if (!error && user) {
-        const result = await supabase
+        await supabase
           .from("profiles")
           .update({
             auth_user_id: user.id,

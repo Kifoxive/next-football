@@ -47,24 +47,28 @@ export const WithInitialDate: Story = {
   },
 };
 
+const WithErrorForm = (
+  args: React.ComponentProps<typeof DateTimePickerField>
+) => {
+  const methods = useForm({
+    defaultValues: {
+      [args.name]: null,
+    },
+  });
+
+  useEffect(() => {
+    methods.setError(args.name, { message: "Error message" });
+  }, [args.name, methods]);
+
+  return (
+    <FormProvider {...methods}>
+      <form className="p-4 w-[200px]">
+        <DateTimePickerField {...args} />
+      </form>
+    </FormProvider>
+  );
+};
+
 export const WithError: Story = {
-  render: (args) => {
-    const methods = useForm({
-      defaultValues: {
-        [args.name]: null,
-      },
-    });
-
-    useEffect(() => {
-      methods.setError(args.name, { message: "Error message" });
-    }, []);
-
-    return (
-      <FormProvider {...methods}>
-        <form className="p-4 w-[200px]">
-          <DateTimePickerField {...args} />
-        </form>
-      </FormProvider>
-    );
-  },
+  render: (args) => <WithErrorForm {...args} />,
 };

@@ -58,27 +58,29 @@ export const Number: Story = {
   },
 };
 
-export const WithError: Story = {
-  render: (args) => {
-    const methods = useForm({
-      defaultValues: {
-        [args.name]: "",
-      },
-      mode: "onSubmit",
-      reValidateMode: "onSubmit",
-    });
-    useEffect(() => {
-      methods.setError(args.name, { message: "Error message" });
-    }, []);
+const WithErrorForm = (args: React.ComponentProps<typeof TextField>) => {
+  const methods = useForm({
+    defaultValues: {
+      [args.name]: "",
+    },
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
+  useEffect(() => {
+    methods.setError(args.name, { message: "Error message" });
+  }, []);
 
-    return (
-      <FormProvider {...methods}>
-        <form className="p-4 min-w-[200px]">
-          <TextField {...args} />
-        </form>
-      </FormProvider>
-    );
-  },
+  return (
+    <FormProvider {...methods}>
+      <form className="p-4 min-w-[200px]">
+        <TextField {...args} />
+      </form>
+    </FormProvider>
+  );
+};
+
+export const WithError: Story = {
+  render: WithErrorForm,
 };
 
 // export const ArrayType: Story = {

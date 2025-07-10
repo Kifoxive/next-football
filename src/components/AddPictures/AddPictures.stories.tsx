@@ -15,7 +15,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const WithState = (args: any) => {
+const WithState = () => {
   // pictures state to manipulate then locally
   const [pictures, setPictures] = useState<IPictureItem[]>([
     {
@@ -61,7 +61,21 @@ const WithState = (args: any) => {
 };
 
 export const Default: Story = {
-  render: (args) => <WithState {...args} />,
-  // @ts-ignore
-  args: {},
+  render: () => <WithState />,
+  args: {
+    locationName: "Stadium",
+    pictures: [
+      {
+        url: "https://prazacka.cz/data/image/file/prazacka-vtk-8927.jpg",
+        file: null,
+      },
+      {
+        url: "https://prazacka.cz/data/image/file/prazacka-vtk-8921.jpg",
+        file: null,
+      },
+    ],
+    onAddPicture: () => {},
+    onRemovePicture: () => {},
+    onReorderPictures: () => {},
+  },
 };

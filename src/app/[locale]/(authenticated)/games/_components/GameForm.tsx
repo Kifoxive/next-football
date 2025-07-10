@@ -86,7 +86,7 @@ export const GameForm: React.FC<GameFormProps> = ({
       }
     };
     fetchLocationList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   return (

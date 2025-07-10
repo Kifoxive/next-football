@@ -1,30 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import React, { useState } from "react";
-import Dialog from "./InviteDialog";
+import InviteDialog from "./InviteDialog";
 
 const meta = {
   title: "Feedback/InviteDialog",
-  component: Dialog,
+  component: InviteDialog,
   parameters: {
     layout: "centered",
   },
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta<typeof InviteDialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Template = (args: any) => {
+const Template = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <Dialog
+    <InviteDialog
+      inviterId="1e3c842b-6fe3-4050-9111-c465575f89ec"
       userId="7e3c842b-6fe3-4050-9111-c465575f89ec"
       isOpen={open}
       setIsOpen={setOpen}
-      onAgree={() => {
-        alert("Agreed");
-        setOpen(false);
-      }}
       onCancel={() => {
         alert("Cancelled");
         setOpen(false);
@@ -34,5 +31,12 @@ const Template = (args: any) => {
 };
 
 export const Default: Story = {
-  render: (args) => <Template {...args} />,
+  render: () => <Template />,
+  args: {
+    inviterId: "1e3c842b-6fe3-4050-9111-c465575f89ec",
+    userId: "7e3c842b-6fe3-4050-9111-c465575f89ec",
+    isOpen: true,
+    setIsOpen: () => {},
+    onCancel: () => {},
+  },
 };

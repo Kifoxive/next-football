@@ -70,27 +70,29 @@ export const WithIcons: Story = {
   },
 };
 
-export const WithError: Story = {
-  render: (args) => {
-    const methods = useForm({
-      defaultValues: {
-        [args.name]: "",
-      },
+const WithErrorForm = (args: React.ComponentProps<typeof SelectField>) => {
+  const methods = useForm({
+    defaultValues: {
+      [args.name]: "",
+    },
+  });
+
+  useEffect(() => {
+    methods.setError(args.name, {
+      type: "manual",
+      message: "Please select a color",
     });
+  }, [args.name, methods]);
 
-    useEffect(() => {
-      methods.setError(args.name, {
-        type: "manual",
-        message: "Please select a color",
-      });
-    }, [args.name, methods]);
+  return (
+    <FormProvider {...methods}>
+      <form className="p-4 min-w-[220px]">
+        <SelectField {...args} />
+      </form>
+    </FormProvider>
+  );
+};
 
-    return (
-      <FormProvider {...methods}>
-        <form className="p-4 min-w-[220px]">
-          <SelectField {...args} />
-        </form>
-      </FormProvider>
-    );
-  },
+export const WithError: Story = {
+  render: (args) => <WithErrorForm {...args} />,
 };

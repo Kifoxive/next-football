@@ -45,24 +45,28 @@ export const CheckedByDefault: Story = {
   },
 };
 
+const WithErrorComponent = (
+  args: React.ComponentProps<typeof CheckboxField>
+) => {
+  const methods = useForm({
+    defaultValues: {
+      [args.name]: false,
+    },
+  });
+
+  useEffect(() => {
+    methods.setError(args.name, { message: "Error message" });
+  }, [args.name, methods]);
+
+  return (
+    <FormProvider {...methods}>
+      <form className="p-4 max-w-sm">
+        <CheckboxField {...args} />
+      </form>
+    </FormProvider>
+  );
+};
+
 export const WithError: Story = {
-  render: (args) => {
-    const methods = useForm({
-      defaultValues: {
-        [args.name]: false,
-      },
-    });
-
-    useEffect(() => {
-      methods.setError(args.name, { message: "Error message" });
-    }, []);
-
-    return (
-      <FormProvider {...methods}>
-        <form className="p-4 max-w-sm">
-          <CheckboxField {...args} />
-        </form>
-      </FormProvider>
-    );
-  },
+  render: (args) => <WithErrorComponent {...args} />,
 };

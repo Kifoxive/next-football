@@ -70,24 +70,26 @@ export const Preselected: Story = {
   },
 };
 
+const WithErrorForm = (args: ComponentProps<typeof AutocompleteField>) => {
+  const methods = useForm({
+    defaultValues: {
+      [args.name]: "",
+    },
+  });
+
+  useEffect(() => {
+    methods.setError(args.name, { message: "Error message" });
+  }, []);
+
+  return (
+    <FormProvider {...methods}>
+      <form className="p-4 w-[200px]">
+        <AutocompleteField {...args} />
+      </form>
+    </FormProvider>
+  );
+};
+
 export const WithError: Story = {
-  render: (args) => {
-    const methods = useForm({
-      defaultValues: {
-        [args.name]: "",
-      },
-    });
-
-    useEffect(() => {
-      methods.setError(args.name, { message: "Error message" });
-    }, []);
-
-    return (
-      <FormProvider {...methods}>
-        <form className="p-4 w-[200px]">
-          <AutocompleteField {...args} />
-        </form>
-      </FormProvider>
-    );
-  },
+  render: (args) => <WithErrorForm {...args} />,
 };

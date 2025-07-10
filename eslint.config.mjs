@@ -28,6 +28,12 @@ const eslintConfig = [
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   ...storybook.configs["flat/recommended"],
+  ...compat.config({
+    extends: ["next"],
+    rules: {
+      "react-hooks/exhaustive-deps": "off",
+    },
+  }),
 ];
 
 export default eslintConfig;
