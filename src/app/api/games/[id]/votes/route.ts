@@ -1,6 +1,6 @@
 "use server";
 
-import { IVote } from "@/app/[locale]/games/types";
+import { IVote } from "@/app/[locale]/(authenticated)/games/types";
 import { USER_ROLE } from "@/store/auth";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";

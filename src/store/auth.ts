@@ -1,4 +1,4 @@
-import { IUser } from "@/app/[locale]/players/types";
+import { IUser } from "@/app/[locale]/(authenticated)/players/types";
 import { create } from "zustand";
 
 export enum USER_ROLE {
