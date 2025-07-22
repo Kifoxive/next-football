@@ -281,5 +281,11 @@
     "loading": "Activating...",
     "success": "Activation is successful",
     "error": "Failed to activate player"
+  },
+  "unauthorized": {
+    "title": "Unauthorized",
+    "warning": "The user is not allowed to log in",
+    "description": "Ask a moderator to send the invite link",
+    "solution": "Go to login page"
   }
 }

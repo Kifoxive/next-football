@@ -34,6 +34,21 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
   const t = useTranslations();
   const [avatar, setAvatar] = useState<IPictureItem>();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const supabase = createClient();
+  const [isLogoutPending, startLogoutTransition] = useTransition();
+  const [isLogoutConfirmationDialogOpen, setIsLogoutConfirmationDialogOpen] =
+    useState<boolean>(false);
+
+  const methods = useForm<IProfileForm>({
+    defaultValues: fetchedData,
+    mode: "onChange",
+    reValidateMode: "onChange",
+    resolver: zodResolver(profileFormSchema(t)),
+  });
+  const { handleSubmit } = methods;
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
       if (e.target.files[0].size > 5242880) {
@@ -50,21 +65,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
       e.target.value = "";
     }
   };
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
-  const supabase = createClient();
-  const [isLogoutPending, startLogoutTransition] = useTransition();
-  const [isLogoutConfirmationDialogOpen, setIsLogoutConfirmationDialogOpen] =
-    useState<boolean>(false);
-
-  const methods = useForm<IProfileForm>({
-    defaultValues: fetchedData,
-    mode: "onChange",
-    reValidateMode: "onChange",
-    resolver: zodResolver(profileFormSchema(t)),
-  });
-  const { handleSubmit } = methods;
 
   const onSubmit = async (formData: IProfileForm) => {
     onSubmitData(formData, avatar);

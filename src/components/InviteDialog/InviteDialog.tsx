@@ -111,8 +111,8 @@ const InviteDialog: React.FC<InviteDialogProps> = ({
               value={activationLink}
               imageSettings={{
                 src: "/favicon/logo.svg",
-                height: 40,
-                width: 40,
+                height: 30,
+                width: 30,
                 excavate: true,
               }}
             />

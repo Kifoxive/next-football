@@ -5,11 +5,6 @@ import { useDocumentTitle } from "@/hooks";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import { LoginButton } from "@/components/LoginButton";
 
-// const providers = [
-//   { id: "github", name: "GitHub" },
-//   { id: "google", name: "Google" },
-// ];
-
 export default function LoginPage() {
   const t = useTranslations();
   useDocumentTitle(t("login.title"));

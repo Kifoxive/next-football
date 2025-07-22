@@ -76,6 +76,8 @@ export const config = {
       list: "/locations",
     },
     login: "/login",
+    unauthorized: "/unauthorized",
+    logout: "/logout",
   },
   endpoints: {
     auth: {
@@ -108,7 +110,6 @@ export const config = {
       delete: "/locations/:id",
       options: "/locations/options",
     },
-    login: "/login",
   },
   buckets: {
     locations: "locations-bucket",

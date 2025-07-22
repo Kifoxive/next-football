@@ -7,6 +7,7 @@ import { verify } from "jsonwebtoken";
 export async function loginUser(provider: Provider) {
   try {
     const supabase = await createClient();
+
     const { error, data } = await supabase.auth.signInWithOAuth({
       provider: provider,
       options: {
@@ -39,18 +40,22 @@ export async function activateUser(provider: Provider, token: string) {
     const decoded = verify(token, process.env.NEXT_PUBLIC_JWT_SECRET!) as {
       userId: string;
     };
-    if (!decoded) return { errorMessage: "Invalid or expired token" };
+
+    if (!decoded?.userId) return { errorMessage: "Invalid or expired token" };
 
     const supabase = await createClient();
 
     // find associated profile
     const { data: profileData, error: findError } = await supabase
       .from("profiles")
-      .select("id, joined_at")
+      .select("id, joined_at, auth_user_id")
       .eq("id", decoded.userId)
       .single();
 
-    if (findError) return { errorMessage: "Can't find profile ", user: null };
+    if (findError) return { errorMessage: "Can't find profile", user: null };
+
+    if (profileData?.joined_at || profileData?.auth_user_id)
+      return { errorMessage: "User is already activated", user: profileData };
 
     // create auth user
     const { data: authUserData } = await supabase.auth.signInWithOAuth({

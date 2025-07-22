@@ -14,20 +14,20 @@ export const LoginButton = () => {
 
   const onLogin = () => {
     startLoginTransition(() => {
-      toast.promise(
-        loginUser("google").then(({ errorMessage, url }) => {
-          if (!errorMessage && url) {
-            router.push(url);
-          } else {
-            toast.error(errorMessage);
-          }
-        }),
-        {
-          loading: t("loading"),
-          success: t("success"),
-          error: t("error"),
+      // toast.promise(
+      loginUser("google").then(({ errorMessage, url }) => {
+        if (!errorMessage && url) {
+          router.push(url);
+        } else {
+          toast.error(errorMessage);
         }
-      );
+      });
+      // {
+      //   loading: t("loading"),
+      //   success: t("success"),
+      //   error: t("error"),
+      // }
+      // );
     });
   };
 
