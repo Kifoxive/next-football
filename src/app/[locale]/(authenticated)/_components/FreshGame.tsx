@@ -95,7 +95,7 @@ export const FreshGame: React.FC<FreshGameProps> = ({
             src={picture?.url || fallbackImage}
             fill
             alt={locations.name}
-            priority
+            // priority
             className="object-cover"
           />
         </Box>

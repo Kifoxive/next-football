@@ -125,7 +125,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
                 src={avatar?.url || fallbackImage}
                 fill
                 alt={fetchedData.user_name}
-                priority
+                // priority
                 className="object-cover"
               />
               <input

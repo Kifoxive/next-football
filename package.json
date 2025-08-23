@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "ngrok": "ngrok http --url=nice-satyr-lovely.ngrok-free.app 3000"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",

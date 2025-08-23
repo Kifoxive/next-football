@@ -88,7 +88,7 @@ export const AddPictures: React.FC<AddPicturesProps> = ({
                         fill
                         className="object-cover"
                         sizes="240 120"
-                        priority={index === 0}
+                        // priority={index === 0}
                       />
                       <Box className="absolute right-1 top-1">
                         <Tooltip title={t("basic.picture_remove")}>
