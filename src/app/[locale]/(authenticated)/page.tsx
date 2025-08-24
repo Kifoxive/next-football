@@ -24,7 +24,7 @@ export default function HomePage() {
           { params: { fresh: true } }
         );
         setGamesData(res.data);
-      } catch (error) {
+      } catch {
         toast.error(t("upcomingGamesSection.fetchError"));
       }
     };

@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { IPictureItem } from "@/components/AddPictures";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { MarkdownEditor } from "@/components/form";
 
 const fallbackImage = "/images/showcase-missing-image.webp";
 
