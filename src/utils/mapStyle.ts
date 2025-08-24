@@ -12,7 +12,7 @@ export const mapStyleJson = {
   sources: {
     openmaptiles: {
       type: "vector",
-      url: "https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
+      url: `https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`,
     },
     natural_earth_shaded_relief: {
       maxzoom: 6,

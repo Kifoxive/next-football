@@ -5,8 +5,6 @@ import { Box } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import { mapStyleJson } from "@/utils/mapStyle";
 
-// import { useTranslations } from "next-intl";
-
 interface LocationMapProps {
   latitude: number;
   longitude: number;
@@ -30,6 +28,7 @@ export const LocationMap: React.FC<LocationMapProps> = ({
         // mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         // mapStyle="https://tiles.stadiamaps.com/styles/alidade_smooth.json"
         mapStyle={mapStyleJson}
+        key=""
       >
         {latitude && longitude && (
           <Marker latitude={latitude} longitude={longitude} anchor="bottom">

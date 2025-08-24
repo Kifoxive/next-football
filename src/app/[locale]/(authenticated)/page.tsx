@@ -25,8 +25,6 @@ export default function HomePage() {
         );
         setGamesData(res.data);
       } catch (error) {
-        toast.error(error as string);
-        console.error(error);
         toast.error(t("upcomingGamesSection.fetchError"));
       }
     };
