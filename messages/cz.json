@@ -1,17 +1,292 @@
 {
   "home": {
-    "title": "Vítejte v lese Klanovice"
+    "title": "Domů",
+    "upcomingGamesSection": {
+      "title": "Nadcházející hry",
+      "fetchError": "Nelze načíst hry",
+      "freshGame": {
+        "viewDetailsBtn": "Zobrazit podrobnosti"
+      }
+    }
   },
   "navbar": {
     "home": "Domů",
-    "games": "Zápasy",
-    "players": "Hráči"
+    "games": "Hry",
+    "players": "Hráči",
+    "locations": "Místa",
+    "profile": "Profil"
+  },
+  "validation": {
+    "required": "Toto pole je povinné",
+    "emailFormat": "Zadejte platný formát e-mailu",
+    "numberFormat": "Zadejte platné číslo",
+    "phoneFormat": "Zadejte platné telefonní číslo",
+    "stringFormat": "Zadejte správný formát",
+    "exactlyLength": "Musí mít přesně {length} znaků",
+    "notDigits": "Nesmí obsahovat číslice",
+    "firstNameRequired": "Musíte zadat křestní jméno",
+    "lastNameRequired": "Musíte zadat příjmení",
+    "minLengthOther": "Položka musí mít alespoň {minLength} znaků",
+    "minLengthOne": "Položka musí mít alespoň {minLength} znaků",
+    "minLengthFew": "Položka musí mít alespoň {minLength} znaků",
+    "maxLengthOther": "Položka musí mít maximálně {maxLength} znaků",
+    "maxLengthOne": "Položka musí mít maximálně {maxLength} znaků",
+    "maxLengthFew": "Položka musí mít maximálně {maxLength} znaků",
+    "exactlyLengthOther": "Položka musí mít přesně {length} znaků",
+    "exactlyLengthOne": "Položka musí mít přesně {length} znaků",
+    "exactlyLengthFew": "Položka musí mít přesně {length} znaků",
+    "minValue": "Zadejte číslo větší nebo rovné {value}",
+    "maxValue": "Zadejte číslo menší nebo rovné {value}",
+    "passwordLength": "Heslo musí mít alespoň {minLength} znaků"
   },
   "login": {
-    "title": "Přihlášení",
-    "google": "Přihlásit se pomocí Googlu"
+    "title": "Přihlásit se",
+    "description": "Pro pokračování se prosím přihlaste",
+    "google": "Přihlásit se pomocí Google",
+    "loading": "Přihlašování...",
+    "success": "Přihlášení proběhlo úspěšně",
+    "error": "Přihlášení se nezdařilo"
+  },
+
+  "games": {
+    "new": {
+      "title": "Přidat novou hru",
+      "addButton": "Vytvořit hru",
+      "createSuccess": "Hra byla úspěšně vytvořena",
+      "createError": "Nelze vytvořit hru"
+    },
+    "edit": {
+      "title": "Upravit hru",
+      "viewButton": "Zobrazit hru",
+      "updateButton": "Aktualizovat hru",
+      "updateSuccess": "Hra byla úspěšně aktualizována",
+      "updateError": "Nelze aktualizovat hru",
+      "fetchError": "Nelze načíst hru",
+      "removeButton": "Odebrat hru",
+      "removeSuccess": "Hra byla úspěšně odebrána",
+      "removeError": "Nelze odebrat hru",
+      "removeDialog": {
+        "title": "Opravdu chcete tuto hru odebrat?",
+        "description": "Tuto akci nelze vrátit zpět. Data hry budou trvale smazána.",
+        "agreeBtnText": "Ano, odebrat",
+        "cancelBtnText": "Zrušit"
+      }
+    },
+    "detail": {
+      "title": "Podrobnosti o hře",
+      "reserved": "Pole rezervováno",
+      "editButton": "Upravit hru",
+      "fetchError": "Nelze načíst hru"
+    },
+    "list": {
+      "title": "Hry",
+      "add": "Přidat novou hru",
+      "id": "ID hry",
+      "fetchError": "Nelze načíst hry"
+    },
+    "form": {
+      "id": "ID hry",
+      "location_id": "Umístění",
+      "description": "Popis",
+      "date": "Datum",
+      "duration": "Trvání",
+      "reserved": "Rezervováno",
+      "min_yes_votes_count": "Minimální počet hlasů ano",
+      "status": "Stav hry",
+      "cancelled_reason": "Důvod zrušení"
+    },
+    "game_status": {
+      "initialization": "Inicializace",
+      "voting": "Hlasování",
+      "confirmed": "Potvrzeno",
+      "completed": "Dokončeno",
+      "cancelled": "Zrušeno"
+    },
+    "voting": {
+      "alert": {
+        "title": "Hlasování - můžete se této hry zúčastnit?"
+      },
+      "result": "Aktuální výsledek hlasování",
+      "myVoteResult": "Hlasovali jste {vote}",
+      "yes": "Ano",
+      "no": "Ne",
+      "maybe": "Možná",
+      "updateSuccess": "Hlasování bylo úspěšně aktualizováno",
+      "updateError": "Nelze hlasovat"
+    },
+    "minutes": "minutes",
+    "locationsFetchError": "Nepodařilo se načíst seznam lokací"
+  },
+  "players": {
+    "new": {
+      "title": "Přidat nového hráče",
+      "addButton": "Vytvořit hráče",
+      "createSuccess": "Hráč byl úspěšně vytvořen",
+      "createError": "Nelze vytvořit hráče"
+    },
+    "detail": {
+      "title": "Karta hráče",
+      "fetchError": "Nelze načíst uživatele"
+    },
+    "edit": {
+      "title": "Upravit hráče",
+      "updateButton": "Aktualizovat hráče",
+      "updateSuccess": "Hráč byl úspěšně aktualizován",
+      "updateError": "Nelze aktualizovat hráče",
+      "fetchError": "Nelze načíst hráče",
+      "removeButton": "Odebrat hráče",
+      "removeSuccess": "Hráč byl úspěšně odstraněn",
+      "removeError": "Nelze odebrat hráče",
+      "removeDialog": {
+        "title": "Opravdu chcete tohoto hráče odstranit?",
+        "description": "Tuto akci nelze vrátit zpět. Data hráče budou trvale smazána.",
+        "agreeBtnText": "Ano, odstranit",
+        "cancelBtnText": "Zrušit"
+      },
+      "inviteButton": "Pozvat hráče",
+      "inviteDialog": {
+        "title": "Aktivovat uživatele",
+        "description": "Chcete-li uživateli umožnit přihlášení, vygenerujte a sdílejte s ním odkaz nebo QR kód.",
+        "agreeBtnText": "Generovat odkaz",
+        "cancelBtnText": "Zavřít",
+        "createLoading": "Generování odkazu...",
+        "createSuccess": "Odkaz byl úspěšně vygenerován",
+        "createError": "Nelze vygenerovat odkaz"
+      }
+    },
+    "list": {
+      "title": "Hráči",
+      "add": "Přidat nového hráče",
+      "fetchError": "Nelze načíst hráče"
+    },
+    "form": {
+      "id": "ID uživatele",
+      "user_name": "Uživatelské jméno",
+      "email": "E-mail",
+      "first_name": "Jméno",
+      "last_name": "Příjmení",
+      "role": "Uživatelská role",
+      "created_by": "Vytvořil/a",
+      "updated_at": "Aktualizováno v",
+      "invited_at": "Pozván/a v",
+      "joined_at": "Připojil/a se v"
+    },
+    "role": {
+      "admin": "Vývojář",
+      "moderator": "Moderátor",
+      "player": "Hráč"
+    }
   },
   "locations": {
-    "add": "Add new location"
+    "new": {
+      "title": "Přidat novou lokaci",
+      "addButton": "Vytvořit lokaci",
+      "createSuccess": "Lokaci bylo úspěšně vytvořeno",
+      "createError": "Nelze vytvořit lokaci"
+    },
+    "detail": {
+      "title": "Karta lokace"
+    },
+    "edit": {
+      "title": "Upravit lokaci",
+      "updateButton": "Aktualizovat lokaci",
+      "updateSuccess": "Poloha byla úspěšně aktualizována",
+      "updateError": "Nelze aktualizovat polohu",
+      "fetchError": "Nelze načíst polohu",
+      "removeButton": "Odebrat polohu",
+      "removeSuccess": "Poloha byla úspěšně odstraněna",
+      "removeError": "Nelze odebrat polohu",
+      "removeDialog": {
+        "title": "Opravdu chcete tuto polohu odstranit?",
+        "description": "Tuto akci nelze vrátit zpět. Data o poloze budou trvale smazána.",
+        "agreeBtnText": "Ano, odstranit",
+        "cancelBtnText": "Zrušit"
+      }
+    },
+    "list": {
+      "title": "Polohy",
+      "add": "Přidat novou polohu",
+      "edit": "Upravit polohu",
+      "fetchError": "Nelze načíst polohy"
+    },
+    "form": {
+      "name": "Název",
+      "description": "Popis",
+      "address": "Adresa",
+      "price_per_hour": "Cena za hodinu",
+      "floor_type": "Typ podlahy",
+      "building_type": "Typ budovy",
+      "latitude": "zeměpisná šířka",
+      "longitude": "zeměpisná délka"
+    },
+    "floor_type": {
+      "artificial_grass": "Umělá tráva",
+      "natural_grass": "Přírodní tráva",
+      "parquet": "Parkety",
+      "rubber": "Guma",
+      "sand": "Písek",
+      "asphalt": "Asfalt"
+    },
+    "building_type": {
+      "indoor": "Vnitřní",
+      "outdoor": "Venkovní",
+      "covered_outdoor": "Krytá venkovní"
+    }
+  },
+  "profile": {
+    "edit": {
+      "title": "Upravit profil",
+      "fetchError": "Nelze načíst profil",
+      "updateButton": "Aktualizovat profil",
+      "updateLoading": "Aktualizace profilu...",
+      "updateSuccess": "Profil byl úspěšně aktualizován",
+      "updateError": "Nelze aktualizovat profil",
+      "uploadAvatar": "Nahrát avatara"
+    }
+  },
+  "basic": {
+    "picture_add": "Nahrát obrázek",
+    "picture_remove": "Odebrat obrázek",
+    "size_too_big": "Velikost souboru přesahuje {value}MB",
+    "czk_hour": "{value} Kč / h",
+    "noLocation": "Vyberte prosím místo na mapě",
+    "copy": "Kopírovat",
+    "copied": "Zkopírováno",
+    "interfaceLanguage": "Jazyk rozhraní"
+  },
+  "logout": {
+    "logoutButton": "Odhlásit se",
+    "loading": "Odhlásit se...",
+    "success": "Odhlášení úspěšné",
+    "error": "Odhlášení se nezdařilo",
+    "logoutDialog": {
+      "title": "Opravdu se chcete odhlásit?",
+      "agreeBtnText": "Ano, odhlásit se",
+      "cancelBtnText": "Zrušit"
+    }
+  },
+  "activate": {
+    "title": "Aktivace hráče",
+    "fetchError": "Nelze načíst hráče",
+    "alreadyActivated": {
+      "warning": "Uživatel je již aktivován",
+      "solution": "Přihlásit se"
+    },
+    "expired": {
+      "warning": "Odkaz je již aktivován",
+      "solution": "Požádejte moderátora o opětovné odeslání odkazu"
+    },
+    "welcome": "Vítejte, {username}",
+    "description": "Pro pokračování se prosím zaregistrujte",
+    "google": "Registrace u Googlu",
+    "loading": "Aktivace...",
+    "success": "Aktivace proběhla úspěšně",
+    "error": "Aktivace hráče se nezdařilo"
+  },
+  "unauthorized": {
+    "title": "Neoprávněný",
+    "warning": "Uživatel se nemůže přihlásit",
+    "description": "Požádejte moderátora o zaslání odkazu s pozvánkou",
+    "solution": "Přejít na přihlašovací stránku"
   }
 }
