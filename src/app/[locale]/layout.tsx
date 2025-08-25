@@ -17,7 +17,6 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Providers } from "../Providers";
 import { LocalesType } from "@/utils/types";
-import AuthProvider from "@/components/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

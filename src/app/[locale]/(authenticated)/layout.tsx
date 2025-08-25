@@ -1,7 +1,4 @@
-import { redirect } from "next/navigation";
-import { getMe } from "../(anonymous)/login/actions";
 import { DashboardLayoutWrapper } from "./Dashboard";
-import { config } from "@/config";
 import AuthProvider from "@/components/AuthProvider";
 
 // export const metadata: Metadata = {

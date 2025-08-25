@@ -1,7 +1,3 @@
-import { redirect } from "next/navigation";
-import { getMe } from "./login/actions";
-import { config } from "@/config";
-
 import { AnonymousLayoutWrapper } from "./AnonymousLayoutWrapper";
 import AuthProvider from "@/components/AuthProvider";
 
