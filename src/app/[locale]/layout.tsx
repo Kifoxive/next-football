@@ -47,9 +47,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen antialiased`}
       >
-        <Providers locale={locale}>
-          <AuthProvider>{children}</AuthProvider>
-        </Providers>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   );

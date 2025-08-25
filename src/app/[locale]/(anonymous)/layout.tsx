@@ -3,15 +3,16 @@ import { getMe } from "./login/actions";
 import { config } from "@/config";
 
 import { AnonymousLayoutWrapper } from "./AnonymousLayoutWrapper";
+import AuthProvider from "@/components/AuthProvider";
 
 export default async function AnonymousLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await getMe();
-
-  if (user) redirect(config.routes.home);
-
-  return <AnonymousLayoutWrapper>{children}</AnonymousLayoutWrapper>;
+  return (
+    <AnonymousLayoutWrapper>
+      <AuthProvider isAuthenticatedLayout={false}>{children}</AuthProvider>
+    </AnonymousLayoutWrapper>
+  );
 }

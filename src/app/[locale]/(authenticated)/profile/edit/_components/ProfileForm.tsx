@@ -176,7 +176,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
               </Grid>
               <Grid size={3}>
                 <MarkdownEditor
-                  name="description"
+                  name="bio"
                   label={t("games.form.description")}
                 />
               </Grid>

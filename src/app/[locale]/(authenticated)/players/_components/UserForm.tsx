@@ -33,7 +33,7 @@ export const UserForm: React.FC<UserFormProps> = ({
     first_name: "",
     last_name: "",
     role: USER_ROLE.player,
-    description: null,
+    bio: null,
   };
 
   const methods = useForm<IUserForm>({
@@ -100,10 +100,7 @@ export const UserForm: React.FC<UserFormProps> = ({
               </Grid>
             )}
             <Grid size={2}>
-              <MarkdownEditor
-                name="description"
-                label={t("games.form.description")}
-              />
+              <MarkdownEditor name="bio" label={t("games.form.description")} />
             </Grid>
           </Grid>
         </Container>

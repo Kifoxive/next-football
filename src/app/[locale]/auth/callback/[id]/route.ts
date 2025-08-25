@@ -28,6 +28,7 @@ export async function GET(
           .from("profiles")
           .update({
             auth_user_id: user.id,
+            email: user.email,
             joined_at: new Date().toISOString(),
           })
           .eq("id", profileId);

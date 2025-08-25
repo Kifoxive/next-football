@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getMe } from "../(anonymous)/login/actions";
 import { DashboardLayoutWrapper } from "./Dashboard";
 import { config } from "@/config";
+import AuthProvider from "@/components/AuthProvider";
 
 // export const metadata: Metadata = {
 //   title: "Next Football",
@@ -72,9 +73,9 @@ export default async function AuthenticatedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await getMe();
-
-  if (!user) redirect(config.routes.login);
-
-  return <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>;
+  return (
+    <DashboardLayoutWrapper>
+      <AuthProvider isAuthenticatedLayout={true}>{children}</AuthProvider>
+    </DashboardLayoutWrapper>
+  );
 }
