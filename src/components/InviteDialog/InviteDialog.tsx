@@ -111,10 +111,11 @@ const InviteDialog: React.FC<InviteDialogProps> = ({
               value={activationLink}
               imageSettings={{
                 src: "/favicon/logo.svg",
-                height: 30,
-                width: 30,
+                height: 25,
+                width: 25,
                 excavate: true,
               }}
+              marginSize={1}
             />
             <CopyCell text={activationLink} />
           </Box>

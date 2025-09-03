@@ -53,10 +53,6 @@ export type IActivationToken = {
 export const config = {
   routes: {
     home: "/",
-    profile: {
-      edit: "/profile/edit",
-      activate: "/profile/activate",
-    },
     games: {
       new: "/games/new",
       detail: "/games/:id",
@@ -74,6 +70,13 @@ export const config = {
       detail: "/locations/:id",
       edit: "/locations/:id/edit",
       list: "/locations",
+    },
+    chats: {
+      main: "/chats",
+    },
+    profile: {
+      edit: "/profile/edit",
+      activate: "/profile/activate",
     },
     login: "/login",
     unauthorized: "/unauthorized",
@@ -109,6 +112,12 @@ export const config = {
       list: "/locations",
       delete: "/locations/:id",
       options: "/locations/options",
+    },
+    messages: {
+      main: {
+        new: "/messages",
+        list: "/messages",
+      },
     },
   },
   buckets: {

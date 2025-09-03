@@ -121,7 +121,6 @@ export const LocationForm: React.FC<LocationFormProps> = ({
     };
 
     fetchImages();
-     
   }, [fetchedData]);
 
   const latitude = watch("latitude");

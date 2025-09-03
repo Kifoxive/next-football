@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { BackButton } from "../BackButton";
+import { BackButton } from "./BackButton";
 
 interface IContentLayout {
   title: string;
@@ -20,6 +20,7 @@ interface IContentLayout {
     icon: React.ReactElement;
   })[];
   children: React.ReactNode;
+  overwriteStyles?: string;
 }
 
 export default function ContentLayout({
@@ -27,11 +28,14 @@ export default function ContentLayout({
   isLoading,
   endContent,
   children,
+  overwriteStyles,
 }: IContentLayout) {
   // useDocumentTitle(title);
 
   return (
-    <Box className="relative flex flex-col items-center flex-1 overflow-auto p-4 sm:p-6">
+    <Box
+      className={`relative flex flex-col items-center full-width full-height flex-1 overflow-auto p-4 sm:p-6 ${overwriteStyles}`}
+    >
       <Box className="sticky top-0 flex justify-center sm:justify-between w-full mb-4 sm:mb-6 z-10">
         <Box className="flex w-full md:w-fit items-center gap-2 backdrop-blur-sm bg-white/20 rounded-md px-3 py-1 z-40">
           <BackButton />

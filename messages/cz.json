@@ -47,7 +47,6 @@
     "success": "Přihlášení proběhlo úspěšně",
     "error": "Přihlášení se nezdařilo"
   },
-
   "games": {
     "new": {
       "title": "Přidat novou hru",
@@ -169,7 +168,8 @@
       "created_by": "Vytvořil/a",
       "updated_at": "Aktualizováno v",
       "invited_at": "Pozván/a v",
-      "joined_at": "Připojil/a se v"
+      "joined_at": "Připojil/a se v",
+      "bio": "Bio"
     },
     "role": {
       "admin": "Vývojář",

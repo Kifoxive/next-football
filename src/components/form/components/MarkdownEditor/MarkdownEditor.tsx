@@ -29,7 +29,7 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
     if (typeof navigator === "undefined") return false;
     const ua = navigator.userAgent;
     // Check for Safari (ignore Chrome/iOS Chrome, etc.)
-    const isSafari = /^((?!chrome|android).)*safari/i.test(ua)
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
     if (!isSafari) return true; // Non-Safari browsers are modern
     // Extract Safari version
     const match = ua.match(/Version\/(\d+)\./);

@@ -46,16 +46,12 @@ export async function GET(request: Request) {
 
     if (!error) {
       const forwardedHost = request.headers.get("x-forwarded-host");
-      // const isLocalEnv = process.env.NODE_ENV === "development";
+      const isLocalEnv = process.env.NODE_ENV === "development";
 
-      // console.log(isLocalEnv);
-      // console.log(origin);
-      // console.log(next);
-      // console.log(forwardedHost);
-      // // In development, use the original origin directly
-      // if (isLocalEnv) {
-      //   return NextResponse.redirect(`${origin}${next}`);
-      // }
+      // In development, use the original origin directly
+      if (isLocalEnv) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
 
       // In production, use forwarded host to construct the correct domain
       if (forwardedHost) {

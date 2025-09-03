@@ -100,7 +100,7 @@ export const UserForm: React.FC<UserFormProps> = ({
               </Grid>
             )}
             <Grid size={2}>
-              <MarkdownEditor name="bio" label={t("games.form.description")} />
+              <MarkdownEditor name="bio" label={t("players.form.bio")} />
             </Grid>
           </Grid>
         </Container>

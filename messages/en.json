@@ -14,6 +14,7 @@
     "games": "Games",
     "players": "Players",
     "locations": "Locations",
+    "chat": "Chat",
     "profile": "Profile"
   },
   "validation": {
@@ -168,7 +169,8 @@
       "created_by": "Created by",
       "updated_at": "Updated at",
       "invited_at": "Invited at",
-      "joined_at": "Joined at"
+      "joined_at": "Joined at",
+      "bio": "Bio"
     },
     "role": {
       "admin": "Developer",
@@ -231,6 +233,13 @@
       "outdoor": "Outdoor",
       "covered_outdoor": "Covered Outdoor"
     }
+  },
+  "chats": {
+    "title": "Chat",
+    "messages": {
+      "error": "Failed to send message"
+    },
+    "fetchError": "Unable to fetch messages"
   },
   "profile": {
     "edit": {

@@ -13,7 +13,7 @@ import { OptionType } from "@/utils/types";
 type AutocompleteFieldProps = BaseFieldProps &
   Omit<AutocompleteProps<OptionType, false, false, false>, "renderInput"> & {
     options: OptionType[];
-    number: boolean;
+    number?: boolean;
   };
 
 export const AutocompleteField: React.FC<AutocompleteFieldProps> = ({

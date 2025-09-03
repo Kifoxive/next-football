@@ -86,7 +86,6 @@ export const GameForm: React.FC<GameFormProps> = ({
       }
     };
     fetchLocationList();
-     
   }, []);
 
   return (
@@ -130,6 +129,7 @@ export const GameForm: React.FC<GameFormProps> = ({
                 name="min_yes_votes_count"
                 label={t("games.form.min_yes_votes_count")}
                 fullWidth
+                type="number"
               />
             </Grid>
             <Grid size={1}>

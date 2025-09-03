@@ -175,10 +175,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
                 />
               </Grid>
               <Grid size={3}>
-                <MarkdownEditor
-                  name="bio"
-                  label={t("games.form.description")}
-                />
+                <MarkdownEditor name="bio" label={t("players.form.bio")} />
               </Grid>
               <Grid>
                 <LocaleSwitcher />

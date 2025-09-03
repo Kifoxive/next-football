@@ -42,7 +42,7 @@ export const LocationInfoSection = ({
           sx={{ color: getThemedColor(theme) }}
           fontSize="small"
         />
-        <Typography variant="body2" component="div">
+        <Typography variant="body2" component="div" className="truncate">
           <CopyCell text={address} maxLength={100} />
         </Typography>
       </Box>
