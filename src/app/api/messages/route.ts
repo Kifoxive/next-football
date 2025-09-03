@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { USER_ROLE } from "@/store/auth";
+import { sendNotification } from "@/actions";
 
 // add message
 export async function POST(request: Request) {
@@ -41,6 +42,8 @@ export async function POST(request: Request) {
     console.error("Insert error:", error);
     return NextResponse.json({ error: "Insert failed" }, { status: 500 });
   }
+
+  await sendNotification(body.text);
 
   return NextResponse.json(data, { status: 201 });
 }

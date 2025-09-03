@@ -5,7 +5,7 @@ import { useDocumentTitle } from "@/hooks";
 import { useAuthStore } from "@/store/auth";
 import { ChatBody } from "./_components/ChatBody";
 import { GetMessages, IMessage, PostMessage } from "./types";
-import { Box, useTheme } from "@mui/material";
+import { Badge, Box, IconButton, useTheme } from "@mui/material";
 import { MessageInput } from "./_components/MessageInput";
 import { useEffect, useState } from "react";
 import { axiosClient } from "@/utils/axiosClient";
@@ -13,6 +13,18 @@ import { config } from "@/config";
 import toast from "react-hot-toast";
 import { useRealtimeMessages } from "@/utils/supabase/client";
 import { BackButton } from "@/components/BackButton";
+import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { subscribeUser, unsubscribeUser } from "@/actions";
+
+function urlBase64ToUint8Array(base64: string) {
+  const padding = "=".repeat((4 - (base64.length % 4)) % 4);
+  const base64Safe = (base64 + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = window.atob(base64Safe);
+  const arr = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return arr;
+}
 
 export default function ChatPage() {
   const t = useTranslations("chats");
@@ -23,10 +35,23 @@ export default function ChatPage() {
   const theme = useTheme();
   const isLightTheme = theme.palette.mode === "light";
 
+  const [sub, setSub] = useState<PushSubscription | null>(null);
+
+  // register push notifications
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "PushManager" in window) {
+      navigator.serviceWorker.register("/sw.js").then((reg) => {
+        reg.pushManager.getSubscription().then(setSub);
+      });
+    }
+  }, []);
+
+  // enable realtime messages update
   useRealtimeMessages((newMsg) => {
     setMessages((prev) => [...prev, newMsg]);
   });
 
+  // fetch all messages
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -43,6 +68,7 @@ export default function ChatPage() {
     fetchMessages();
   }, []);
 
+  // send message
   const onMessageSend = async (text: string) => {
     try {
       const { data } = await axiosClient.post<PostMessage["response"]>(
@@ -59,15 +85,49 @@ export default function ChatPage() {
     }
   };
 
+  // unsubscribe user from push notifications
+  const subscribe = async () => {
+    const reg = await navigator.serviceWorker.ready;
+    const subscription = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+      ),
+    });
+    setSub(subscription);
+    await subscribeUser(JSON.parse(JSON.stringify(subscription)));
+  };
+
+  // subscribe user to push notifications
+  const unsubscribe = async () => {
+    await sub?.unsubscribe();
+    setSub(null);
+    await unsubscribeUser();
+  };
+
   if (!authUser) return;
 
   return (
     <div className="relative flex flex-1 flex-col h-full">
       <Box className="fixed flex m-4 sm:m-6 w-fit items-center gap-2 backdrop-blur-sm bg-white/20 rounded-md px-3 py-1 z-40">
         <BackButton />
-        {/* <Typography variant="h6" fontWeight="bold" component="h1">
-          {t("title")}
-        </Typography> */}
+        {sub ? (
+          <IconButton size="small" onClick={unsubscribe}>
+            <Badge color="success" variant="dot">
+              <NotificationsOffIcon fontSize="small" />
+            </Badge>
+          </IconButton>
+        ) : (
+          <IconButton
+            size="small"
+            onClick={subscribe}
+            disabled={!("PushManager" in window)}
+          >
+            <Badge color="error" variant="dot">
+              <NotificationsIcon fontSize="small" />
+            </Badge>
+          </IconButton>
+        )}
       </Box>
       <div
         className={`fixed inset-0 bg-[url(/images/football_wallpaper.png)] bg-repeat-x bg-[length:auto_100%]

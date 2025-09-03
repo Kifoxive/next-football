@@ -14,6 +14,7 @@
     "games": "Hry",
     "players": "Hráči",
     "locations": "Místa",
+    "chat": "Chat",
     "profile": "Profil"
   },
   "validation": {
@@ -232,6 +233,13 @@
       "outdoor": "Venkovní",
       "covered_outdoor": "Krytá venkovní"
     }
+  },
+  "chats": {
+    "title": "Chat",
+    "messages": {
+      "error": "Zprávu se nepodařilo odeslat"
+    },
+    "fetchError": "Nelze načíst zprávy"
   },
   "profile": {
     "edit": {
