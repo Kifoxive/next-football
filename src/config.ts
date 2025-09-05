@@ -117,6 +117,7 @@ export const config = {
       main: {
         new: "/messages",
         list: "/messages",
+        subscribe: "/messages/subscribe",
       },
     },
   },

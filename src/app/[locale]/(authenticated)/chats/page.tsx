@@ -4,7 +4,13 @@ import { useTranslations } from "next-intl";
 import { useDocumentTitle } from "@/hooks";
 import { useAuthStore } from "@/store/auth";
 import { ChatBody } from "./_components/ChatBody";
-import { GetMessages, IMessage, PostMessage } from "./types";
+import {
+  DeleteSubscription,
+  GetMessages,
+  IMessage,
+  PostMessage,
+  PostSubscription,
+} from "./types";
 import { Badge, Box, IconButton, useTheme } from "@mui/material";
 import { MessageInput } from "./_components/MessageInput";
 import { useEffect, useState } from "react";
@@ -15,7 +21,7 @@ import { useRealtimeMessages } from "@/utils/supabase/client";
 import { BackButton } from "@/components/BackButton";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { subscribeUser, unsubscribeUser } from "@/actions";
+import { useAppStore } from "@/store/app";
 
 function urlBase64ToUint8Array(base64: string) {
   const padding = "=".repeat((4 - (base64.length % 4)) % 4);
@@ -34,17 +40,9 @@ export default function ChatPage() {
   const authUser = useAuthStore((s) => s.user);
   const theme = useTheme();
   const isLightTheme = theme.palette.mode === "light";
-
-  const [sub, setSub] = useState<PushSubscription | null>(null);
-
-  // register push notifications
-  useEffect(() => {
-    if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.register("/sw.js").then((reg) => {
-        reg.pushManager.getSubscription().then(setSub);
-      });
-    }
-  }, []);
+  const subscription = useAppStore((s) => s.subscription);
+  const setSubscription = useAppStore((s) => s.setSubscription);
+  const removeSubscription = useAppStore((s) => s.removeSubscription);
 
   // enable realtime messages update
   useRealtimeMessages((newMsg) => {
@@ -78,31 +76,46 @@ export default function ChatPage() {
           text,
         }
       );
-
       setMessages((prev) => [...prev, data]);
     } catch {
       toast.error(t("messages.error"));
     }
   };
 
-  // unsubscribe user from push notifications
+  // subscribe user to push notifications
   const subscribe = async () => {
-    const reg = await navigator.serviceWorker.ready;
-    const subscription = await reg.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
-      ),
-    });
-    setSub(subscription);
-    await subscribeUser(JSON.parse(JSON.stringify(subscription)));
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const subscription = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+        ),
+      });
+      setSubscription(subscription);
+      await axiosClient.post<PostSubscription["response"]>(
+        config.endpoints.messages.main.subscribe,
+        subscription
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  // subscribe user to push notifications
+  // unsubscribe user from push notifications
   const unsubscribe = async () => {
-    await sub?.unsubscribe();
-    setSub(null);
-    await unsubscribeUser();
+    try {
+      // remove subscription in service worker
+      await subscription?.unsubscribe();
+      // remove service worker from store
+      removeSubscription();
+      // remove subscription on the server
+      await axiosClient.delete<DeleteSubscription["response"]>(
+        config.endpoints.messages.main.subscribe
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (!authUser) return;
@@ -111,7 +124,7 @@ export default function ChatPage() {
     <div className="relative flex flex-1 flex-col h-full">
       <Box className="fixed flex m-4 sm:m-6 w-fit items-center gap-2 backdrop-blur-sm bg-white/20 rounded-md px-3 py-1 z-40">
         <BackButton />
-        {sub ? (
+        {subscription ? (
           <IconButton size="small" onClick={unsubscribe}>
             <Badge color="success" variant="dot">
               <NotificationsOffIcon fontSize="small" />

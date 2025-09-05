@@ -15,6 +15,7 @@ type getUserRoleResult = {
   errorMessage: string | null;
   status: number;
   user_id: string | null;
+  user_name: string | null;
 };
 
 export async function getIsAllowed({
@@ -35,13 +36,14 @@ export async function getIsAllowed({
       errorMessage: "Unauthorized",
       status: 401,
       user_id: null,
+      user_name: null,
     };
   }
 
   // Get role from profiles table
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("role, id")
+    .select("role, id, user_name")
     .eq("auth_user_id", user.id)
     .single();
 
@@ -52,6 +54,7 @@ export async function getIsAllowed({
       errorMessage: "Unauthorized",
       status: 401,
       user_id: null,
+      user_name: null,
     };
   } else if (!permissions[permission].includes(profile.role)) {
     return {
@@ -60,6 +63,7 @@ export async function getIsAllowed({
       errorMessage: "Forbidden",
       status: 403,
       user_id: profile.id,
+      user_name: profile.user_name,
     };
   }
 
@@ -69,5 +73,6 @@ export async function getIsAllowed({
     errorMessage: null,
     status: 200,
     user_id: profile.id,
+    user_name: profile.user_name,
   };
 }

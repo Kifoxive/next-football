@@ -1,16 +1,23 @@
 "use server";
+import webpush from "web-push";
 
 import { NextResponse } from "next/server";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { USER_ROLE } from "@/store/auth";
-import { sendNotification } from "@/actions";
 
-// add message
+webpush.setVapidDetails(
+  `mailto:${process.env.DEVELOPER_EMAIL}`,
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+  process.env.VAPID_PRIVATE_KEY!
+);
+
+// post message
 export async function POST(request: Request) {
-  const { user_id, isAllowed, errorMessage, status } = await getIsAllowed({
-    permission: USER_ROLE.player, // even players should be allowed to send
-  });
+  const { user_id, isAllowed, errorMessage, status, user_name } =
+    await getIsAllowed({
+      permission: USER_ROLE.player, // even players should be allowed to send
+    });
 
   if (!isAllowed || !user_id) {
     return NextResponse.json({ error: errorMessage }, { status });
@@ -43,8 +50,38 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Insert failed" }, { status: 500 });
   }
 
-  await sendNotification(body.text);
+  const { data: subscriptions, error: errorSubscriptions } = await supabase
+    .from("push_subscriptions")
+    .select("*")
+    .neq("user_id", user_id);
 
+  if (errorSubscriptions) {
+    console.error("Insert error:", errorSubscriptions);
+    return NextResponse.json(
+      { error: "Send notification failed" },
+      { status: 500 }
+    );
+  }
+
+  if (subscriptions) {
+    await Promise.allSettled(
+      subscriptions.map((sub) =>
+        webpush.sendNotification(
+          {
+            endpoint: sub.endpoint,
+            keys: {
+              p256dh: sub.p256dh,
+              auth: sub.auth,
+            },
+          },
+          JSON.stringify({
+            title: user_name,
+            body: body.text,
+          })
+        )
+      )
+    );
+  }
   return NextResponse.json(data, { status: 201 });
 }
 

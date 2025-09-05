@@ -3,8 +3,9 @@ self.addEventListener("push", (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: data.icon || "/icon-192x192.png",
-      badge: data.icon || "/icon-192x192.png",
+      icon: data.icon || "/favicon/icon-192x192.png",
+      badge: data.icon || "/favicon/icon-192x192.png",
+      vibrate: [100, 50, 100],
       data: { url: data.url || "/" },
     };
     event.waitUntil(

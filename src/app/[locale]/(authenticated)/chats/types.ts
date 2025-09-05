@@ -35,3 +35,18 @@ export type PutMessage = {
   request: IMessage;
   response: IMessage;
 };
+
+export interface ISubscription {
+  endpoint: string;
+  keys: { p256dh: string; auth: string };
+}
+
+export type PostSubscription = {
+  request: ISubscription;
+  response: { message: string };
+};
+
+export type DeleteSubscription = {
+  request: undefined;
+  response: { message: string };
+};

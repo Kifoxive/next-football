@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { getMe } from "@/app/[locale]/(anonymous)/login/actions";
 import { redirect } from "next/navigation";
 import { config } from "@/config";
+import { SubscriptionInitializer } from "./SubscriptionInitializer";
 
 export default async function AuthProvider({
   children,
@@ -21,6 +22,7 @@ export default async function AuthProvider({
   return (
     <>
       <AuthInitializer id={user?.id} />
+      <SubscriptionInitializer />
       {children}
     </>
   );
