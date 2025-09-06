@@ -239,7 +239,11 @@
     "messages": {
       "error": "Zprávu se nepodařilo odeslat"
     },
-    "fetchError": "Nelze načíst zprávy"
+    "fetchError": "Nelze načíst zprávy",
+    "subscriptions": {
+      "subscribe_failed": "Nastavení oznámení se nezdařilo",
+      "unsubscribe_failed": "Odebrání oznámení se nezdařilo"
+    }
   },
   "profile": {
     "edit": {

@@ -43,6 +43,8 @@ export default function ChatPage() {
   const subscription = useAppStore((s) => s.subscription);
   const setSubscription = useAppStore((s) => s.setSubscription);
   const removeSubscription = useAppStore((s) => s.removeSubscription);
+  const [isSubActionLoading, setIsSubActionLoading] = useState(false);
+  const [isSendMessageLoading, setIsSendMessageLoading] = useState(false);
 
   // enable realtime messages update
   useRealtimeMessages((newMsg) => {
@@ -52,6 +54,7 @@ export default function ChatPage() {
   // fetch all messages
   useEffect(() => {
     const fetchMessages = async () => {
+      setIsSendMessageLoading(true);
       try {
         const res = await axiosClient.get<GetMessages["response"]>(
           config.endpoints.messages.main.list
@@ -60,6 +63,8 @@ export default function ChatPage() {
       } catch (error) {
         console.error(error);
         toast.error(t("fetchError"));
+      } finally {
+        setIsSendMessageLoading(false);
       }
     };
 
@@ -69,14 +74,13 @@ export default function ChatPage() {
   // send message
   const onMessageSend = async (text: string) => {
     try {
-      const { data } = await axiosClient.post<PostMessage["response"]>(
+      await axiosClient.post<PostMessage["response"]>(
         config.endpoints.messages.main.new,
         {
           type: "text",
           text,
         }
       );
-      setMessages((prev) => [...prev, data]);
     } catch {
       toast.error(t("messages.error"));
     }
@@ -85,6 +89,8 @@ export default function ChatPage() {
   // subscribe user to push notifications
   const subscribe = async () => {
     try {
+      setIsSubActionLoading(true);
+      // add subscription in service worker
       const reg = await navigator.serviceWorker.ready;
       const subscription = await reg.pushManager.subscribe({
         userVisibleOnly: true,
@@ -92,29 +98,38 @@ export default function ChatPage() {
           process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
         ),
       });
-      setSubscription(subscription);
+      // remove subscription on the server
       await axiosClient.post<PostSubscription["response"]>(
         config.endpoints.messages.main.subscribe,
         subscription
       );
+      // remove service worker to the store
+      setSubscription(subscription);
     } catch (e) {
       console.error(e);
+      toast.error(t("subscriptions.subscribe_failed"));
+    } finally {
+      setIsSubActionLoading(false);
     }
   };
 
   // unsubscribe user from push notifications
   const unsubscribe = async () => {
+    setIsSubActionLoading(true);
     try {
-      // remove subscription in service worker
-      await subscription?.unsubscribe();
-      // remove service worker from store
-      removeSubscription();
       // remove subscription on the server
       await axiosClient.delete<DeleteSubscription["response"]>(
         config.endpoints.messages.main.subscribe
       );
+      // remove subscription in service worker
+      await subscription?.unsubscribe();
+      // remove service worker from store
+      removeSubscription();
     } catch (e) {
       console.error(e);
+      toast.error(t("subscriptions.unsubscribe_failed"));
+    } finally {
+      setIsSubActionLoading(false);
     }
   };
 
@@ -125,7 +140,11 @@ export default function ChatPage() {
       <Box className="fixed flex m-4 sm:m-6 w-fit items-center gap-2 backdrop-blur-sm bg-white/20 rounded-md px-3 py-1 z-40">
         <BackButton />
         {subscription ? (
-          <IconButton size="small" onClick={unsubscribe}>
+          <IconButton
+            size="small"
+            onClick={unsubscribe}
+            disabled={isSubActionLoading}
+          >
             <Badge color="success" variant="dot">
               <NotificationsOffIcon fontSize="small" />
             </Badge>
@@ -134,7 +153,10 @@ export default function ChatPage() {
           <IconButton
             size="small"
             onClick={subscribe}
-            disabled={!("PushManager" in window)}
+            disabled={
+              isSubActionLoading ||
+              !("serviceWorker" in navigator && "PushManager" in window)
+            }
           >
             <Badge color="error" variant="dot">
               <NotificationsIcon fontSize="small" />
@@ -160,7 +182,10 @@ export default function ChatPage() {
     before:h-[1px] 
     before:bg-[linear-gradient(90deg,rgba(127,127,127,0)_0%,rgba(127,127,127,0.4)_2%,rgba(127,127,127,0.4)_98%,rgba(127,127,127,0)_100%)]"
         >
-          <MessageInput onMessageSend={onMessageSend} />
+          <MessageInput
+            onMessageSend={onMessageSend}
+            isLoading={isSendMessageLoading}
+          />
         </Box>
       </div>
     </div>

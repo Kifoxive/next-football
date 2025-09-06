@@ -26,21 +26,6 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const { endpoint, keys } = body; // subscription object
 
-  // if exists, return
-  const { data } = await supabase
-    .from("push_subscriptions")
-    .select()
-    .eq("user_id", user_id)
-    .single();
-
-  if (data) {
-    return NextResponse.json(
-      { message: "Already subscribed" },
-      { status: 200 }
-    );
-  }
-
-  // if don't exist, create
   const { error } = await supabase.from("push_subscriptions").insert([
     {
       user_id,

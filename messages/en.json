@@ -239,7 +239,11 @@
     "messages": {
       "error": "Failed to send message"
     },
-    "fetchError": "Unable to fetch messages"
+    "fetchError": "Unable to fetch messages",
+    "subscriptions": {
+      "subscribe_failed": "Failed to set notifications",
+      "unsubscribe_failed": "Failed to remove notifications"
+    }
   },
   "profile": {
     "edit": {

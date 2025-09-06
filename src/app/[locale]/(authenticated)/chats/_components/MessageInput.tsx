@@ -6,10 +6,14 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SendIcon from "@mui/icons-material/Send";
 
 type IMessageInput = {
+  isLoading: boolean;
   onMessageSend: (text: string) => void;
 };
 
-export const MessageInput: React.FC<IMessageInput> = ({ onMessageSend }) => {
+export const MessageInput: React.FC<IMessageInput> = ({
+  isLoading,
+  onMessageSend,
+}) => {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
@@ -50,7 +54,7 @@ export const MessageInput: React.FC<IMessageInput> = ({ onMessageSend }) => {
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
 
-        <IconButton onClick={handleSend} color="primary">
+        <IconButton onClick={handleSend} color="primary" loading={isLoading}>
           <SendIcon />
         </IconButton>
       </Box>

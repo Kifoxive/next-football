@@ -15,8 +15,6 @@ export default function LogoutPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  supabase.auth.signOut();
-
   const onLogout = () => {
     // startLogoutTransition(() => {
     toast.promise(
