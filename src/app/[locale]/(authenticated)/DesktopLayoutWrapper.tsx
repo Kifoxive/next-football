@@ -62,7 +62,7 @@ export const navItems = (theme: Theme, userRole?: USER_ROLE) => {
   return items.filter(({ isProtected }) => !isProtected);
 };
 
-export function DashboardLayoutWrapper({
+export function DesktopLayoutWrapper({
   children,
 }: {
   children: React.ReactNode;
@@ -73,9 +73,9 @@ export function DashboardLayoutWrapper({
   const theme = useTheme();
 
   return (
-    <Box className="flex flex-col h-screen">
+    <Box className="hidden sm:flex flex-col h-screen">
       {/* Navbar — sticky to the top */}
-      <Box
+      {/* <Box
         sx={{
           position: "sticky",
           top: 0,
@@ -87,9 +87,9 @@ export function DashboardLayoutWrapper({
               ? theme.palette.background.default
               : theme.palette.background.paper,
         }}
-      >
-        <Navbar />
-      </Box>
+      > */}
+      <Navbar />
+      {/* </Box> */}
       {/* Content part with sidebar and main part */}
       <Box className="flex flex-1 overflow-hidden">
         {/* Sidebar */}

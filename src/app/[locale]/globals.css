@@ -360,3 +360,20 @@ body {
   background-image: --value(--overlay- *);
   box-shadow: --value(--shadow- *);
 }
+
+html,
+body {
+  height: 100%;
+  overflow: hidden; /* prevent whole-page scrolling */
+}
+
+#root, /* or your Next.js root div */
+#__next {
+  height: 100%;
+  overflow: hidden;
+}
+
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain; /* disable pull-to-refresh & bounce */
+}

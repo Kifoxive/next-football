@@ -1,5 +1,6 @@
-import { DashboardLayoutWrapper } from "./Dashboard";
+import { DesktopLayoutWrapper } from "./DesktopLayoutWrapper";
 import AuthProvider from "@/components/AuthProvider";
+import { MobileLayoutWrapper } from "./MobileLayoutWrapper";
 
 // export const metadata: Metadata = {
 //   title: "Next Football",
@@ -71,8 +72,9 @@ export default async function AuthenticatedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <DashboardLayoutWrapper>
-      <AuthProvider isAuthenticatedLayout={true}>{children}</AuthProvider>
-    </DashboardLayoutWrapper>
+    <AuthProvider isAuthenticatedLayout={true}>
+      <DesktopLayoutWrapper>{children}</DesktopLayoutWrapper>
+      <MobileLayoutWrapper>{children}</MobileLayoutWrapper>
+    </AuthProvider>
   );
 }

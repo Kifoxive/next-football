@@ -106,7 +106,7 @@ export default function GamesEditPage() {
           text: t("viewButton"),
           icon: <LaunchIcon />,
           variant: "contained",
-          color: "inherit",
+          color: "info",
           onClick: () =>
             router.push(config.routes.games.detail.replace(":id", id)),
         },

@@ -9,7 +9,6 @@ type MessageProps = {
 
 export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
   const theme = useTheme();
-  const isLightTheme = theme.palette.mode === "light";
 
   const messageStyle = {
     mineMessage: {
@@ -28,32 +27,29 @@ export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
     >
       {!isMineMessage && (
         <Avatar
-          alt={data.sender?.user_name}
+          alt={data.profiles?.user_name}
           src={undefined}
           sx={{ width: 34, height: 34 }}
         />
       )}
       <Box
-        className={`flex flex-col px-3 pt-1 w-fit rounded-b-2xl shadow-sm ${selectedStyle} ${isMineMessage ? "rounded-tl-2xl" : "rounded-tr-2xl"}`}
+        className={`relative flex flex-col px-3 p-2 w-fit rounded-b-2xl shadow-sm ${selectedStyle} ${isMineMessage ? "rounded-tl-2xl" : "rounded-tr-2xl"}`}
       >
         {!isMineMessage && (
-          <Typography
-            color="info"
-            variant="body2"
-            sx={{ paddingBottom: "1px" }}
-          >
-            {data.sender?.user_name}
+          <Typography color="info" variant="body2">
+            {data.profiles?.user_name}
           </Typography>
         )}
         {data.type === "text" && (
           <Typography fontSize={14} lineHeight={1.2}>
             {data?.text}
+            <span className="w-[40px] inline-block" />
           </Typography>
         )}
         <Typography
           variant="caption"
-          color={isMineMessage ? (isLightTheme ? "white" : "black") : "gray"}
-          sx={{ alignSelf: "end" }}
+          color={isMineMessage ? "white" : "gray"}
+          sx={{ position: "absolute", right: "8px", bottom: "2px" }}
         >
           {format(data.created_at, "hh:mm")}
         </Typography>

@@ -30,6 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ anonymous }) => {
       sx={(theme) => ({
         borderBottom: "1px solid",
         borderColor: "divider",
+        zIndex: 1,
         backgroundColor:
           theme.palette.mode === "dark"
             ? theme.palette.grey[900]

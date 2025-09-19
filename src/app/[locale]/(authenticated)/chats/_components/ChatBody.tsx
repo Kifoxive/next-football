@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useLayoutEffect, useRef } from "react";
 import { IMessage } from "../types";
 import { Message } from "./Message";
@@ -23,17 +23,23 @@ export const ChatBody: React.FC<ChatBodyProps> = ({ userId, messages }) => {
   return (
     <div
       ref={scrollRef}
-      className="flex-1 flex justify-center overflow-y-auto z-10"
+      className="flex-1 flex justify-center overflow-y-auto z-10 h-full"
     >
-      <Box className="flex flex-col w-full max-w-[600px] p-2 gap-4 h-fit">
-        {messages.map((data, index) => (
-          <Message
-            key={index}
-            isMineMessage={userId === data.sender_id}
-            data={data}
-          />
-        ))}
-      </Box>
+      {messages.length ? (
+        <Box className="flex flex-col w-full max-w-[600px] p-2 gap-4 h-fit z-1">
+          {messages.map((data, index) => (
+            <Message
+              key={index}
+              isMineMessage={userId === data.sender_id}
+              data={data}
+            />
+          ))}
+        </Box>
+      ) : (
+        <Box className="flex justify-center items-center flex-1">
+          <CircularProgress color="inherit" />
+        </Box>
+      )}
     </div>
   );
 };

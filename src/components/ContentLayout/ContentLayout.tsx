@@ -35,7 +35,7 @@ export default function ContentLayout({
       <Box className="sticky top-0 flex justify-center sm:justify-between w-full mb-4 sm:mb-6 z-10">
         <Box className="flex w-full md:w-fit items-center gap-2 backdrop-blur-sm bg-white/20 rounded-md px-3 py-1 z-40">
           <BackButton />
-          <Typography variant="h6" fontWeight="bold" component="h1">
+          <Typography variant="body1" fontWeight="bold" component="h1">
             {title}
           </Typography>
         </Box>
