@@ -10,9 +10,9 @@ enum MESSAGE_TYPE {
 export interface IMessage {
   message_id: string;
   sender_id: string;
-  profiles?: Pick<
+  profiles: Pick<
     IUser,
-    "id" | "user_name" | "first_name" | "last_name" | "avatar_url"
+    "id" | "user_name" | "first_name" | "last_name" | "role" | "avatar_url"
   >;
   created_at: string;
   type: MESSAGE_TYPE;

@@ -33,7 +33,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <ContentLayout title={t("title")} isLoading={!gamesData}>
+    <ContentLayout title={t("title")} isLoading={!gamesData.length}>
       <UpcomingGamesSection gamesData={gamesData} />
     </ContentLayout>
   );

@@ -1,5 +1,6 @@
 "use client";
 // import { useDocumentTitle } from "@/hooks";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import {
   Box,
   Button,
@@ -45,12 +46,13 @@ export default function ContentLayout({
               {endContent
                 .filter(({ show = true }) => show)
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .map(({ show, ...button }, index) => (
+                .map(({ show, loading, ...button }, index) => (
                   <Button
                     startIcon={button.icon}
                     key={index}
                     size="small"
-                    disabled={button.loading == true}
+                    disabled={loading === true}
+                    loading={loading}
                     {...button}
                   >
                     {button.text}
@@ -72,7 +74,9 @@ export default function ContentLayout({
                     {...button}
                     variant="circular"
                   >
-                    <Tooltip title={button.text}>{button.icon}</Tooltip>
+                    <Tooltip title={button.text}>
+                      {loading ? <HourglassTopIcon /> : button.icon}
+                    </Tooltip>
                   </Fab>
                 ))}
             </Box>

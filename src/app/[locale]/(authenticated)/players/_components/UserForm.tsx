@@ -1,6 +1,6 @@
 "use client";
 
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
@@ -13,6 +13,8 @@ import {
   IUser,
 } from "@/app/[locale]/(authenticated)/players/types";
 import { MarkdownEditor } from "@/components/form/components/MarkdownEditor/MarkdownEditor";
+import ShieldIcon from "@mui/icons-material/Shield";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 
 type UserFormProps = {
   fetchedData?: IUser;
@@ -45,8 +47,24 @@ export const UserForm: React.FC<UserFormProps> = ({
   const { handleSubmit } = methods;
 
   const roleOptions = [
-    { label: t("players.role.player"), value: USER_ROLE.player },
-    { label: t("players.role.moderator"), value: USER_ROLE.moderator },
+    {
+      label: (
+        <Box className="flex items-center gap-1">
+          <SportsSoccerIcon color="action" fontSize="small" />
+          {t("players.role.player")}
+        </Box>
+      ),
+      value: USER_ROLE.player,
+    },
+    {
+      label: (
+        <Box className="flex items-center gap-1">
+          <ShieldIcon color="warning" fontSize="small" />
+          {t("players.role.moderator")}
+        </Box>
+      ),
+      value: USER_ROLE.moderator,
+    },
   ];
 
   const onSubmit = (formData: IUserForm) => {

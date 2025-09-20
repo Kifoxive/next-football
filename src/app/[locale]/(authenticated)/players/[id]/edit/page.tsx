@@ -53,9 +53,16 @@ export default function PlayersEditPage() {
   const onSubmit = (newUserData: IUserForm) => {
     startUpdateTransition(async () => {
       try {
+        const formData = new FormData();
+        formData.append("player", JSON.stringify(newUserData));
         await axiosClient.put(
           config.endpoints.players.edit.replace(":id", id),
-          newUserData
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         toast.success(t("updateSuccess"));
         router.push(config.routes.players.list);

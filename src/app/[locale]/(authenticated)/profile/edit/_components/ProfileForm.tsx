@@ -10,7 +10,7 @@ import { MarkdownEditor } from "@/components/form/components/MarkdownEditor/Mark
 import { IUser } from "../../../players/types";
 import { IProfileForm, profileFormSchema } from "../../types";
 import Image from "next/image";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import Dialog from "@/components/Dialog/Dialog";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { createClient } from "@/utils/supabase/client";
@@ -83,32 +83,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
     });
   };
 
-  // on first render, add supabase avatar picture to local state
-  useEffect(() => {
-    if (!fetchedData.avatar_url) return;
-
-    const avatar_url = fetchedData.avatar_url;
-
-    const fetchImages = async () => {
-      const { data, error } = await supabase.storage
-        .from(config.buckets.profiles)
-        .createSignedUrl(avatar_url, 3600);
-
-      if (error || !data) {
-        console.error("Error fetching signed URL", error);
-        return null;
-      }
-
-      setAvatar({
-        file: null,
-        url: data.signedUrl,
-        originalId: avatar_url,
-      });
-    };
-
-    fetchImages();
-  }, []);
-
   return (
     <FormProvider {...methods}>
       <form
@@ -122,7 +96,12 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
               className="relative w-[100px] md:w-[200px] aspect-[1/1] rounded-full! overflow-hidden"
             >
               <Image
-                src={avatar?.url || fallbackImage}
+                src={
+                  fetchedData.avatar_url
+                    ? process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! +
+                      fetchedData.avatar_url
+                    : fallbackImage
+                }
                 fill
                 alt={fetchedData.user_name}
                 // priority

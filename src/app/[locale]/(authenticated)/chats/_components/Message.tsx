@@ -1,6 +1,7 @@
 import { Avatar, Box, Typography, useTheme } from "@mui/material";
 import { IMessage } from "../types";
 import { format } from "date-fns";
+import { USER_ROLE } from "@/store/auth";
 
 type MessageProps = {
   isMineMessage: boolean;
@@ -9,6 +10,7 @@ type MessageProps = {
 
 export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
   const theme = useTheme();
+  const isLightTheme = theme.palette.mode === "light";
 
   const messageStyle = {
     mineMessage: {
@@ -27,16 +29,25 @@ export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
     >
       {!isMineMessage && (
         <Avatar
-          alt={data.profiles?.user_name}
-          src={undefined}
+          alt={data.profiles.user_name}
+          src={
+            process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! +
+            data.profiles.avatar_url
+          }
           sx={{ width: 34, height: 34 }}
         />
       )}
       <Box
-        className={`relative flex flex-col px-3 p-2 w-fit rounded-b-2xl shadow-sm ${selectedStyle} ${isMineMessage ? "rounded-tl-2xl" : "rounded-tr-2xl"}`}
+        className={`relative flex flex-col px-3 p-2 w-fit rounded-b-2xl shadow-sm ${selectedStyle} ${isMineMessage ? "rounded-tl-2xl" : "rounded-tr-2xl"}
+        ${!isMineMessage && data.profiles.role === USER_ROLE["moderator"] && `border-l-2 ${isLightTheme ? "border-l-neutral-400" : "border-l-neutral-500"}`}
+        `}
       >
         {!isMineMessage && (
-          <Typography color="info" variant="body2">
+          <Typography
+            color="info"
+            fontSize={13}
+            sx={{ position: "relative", top: "-4px" }}
+          >
             {data.profiles?.user_name}
           </Typography>
         )}
@@ -48,7 +59,9 @@ export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
         )}
         <Typography
           variant="caption"
-          color={isMineMessage ? "white" : "gray"}
+          color={
+            isMineMessage ? (isLightTheme ? "#2C2D2D" : "#A9A9A9") : "gray"
+          }
           sx={{ position: "absolute", right: "8px", bottom: "2px" }}
         >
           {format(data.created_at, "hh:mm")}
