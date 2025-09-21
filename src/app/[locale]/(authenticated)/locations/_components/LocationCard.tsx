@@ -8,6 +8,7 @@ import {
   IconButton,
   Tooltip,
   useTheme,
+  Paper,
 } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -51,13 +52,13 @@ export const LocationCard = ({ location, isModerator }: LocationCardProps) => {
     if (image_list?.[0]) {
       fetchSignedUrl();
     }
-     
   }, [image_list]);
 
   return (
     <Card
-      sx={{ borderRadius: 3, boxShadow: 3, minHeight: "100%" }}
-      className="relative"
+      sx={{ borderRadius: 1, minHeight: "100%" }}
+      className="relative rounded-md"
+      component={Paper}
     >
       {isModerator && (
         <Box className="absolute right-1 top-1">

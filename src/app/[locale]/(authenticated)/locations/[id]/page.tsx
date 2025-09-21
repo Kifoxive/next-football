@@ -1,3 +1,4 @@
+"use client";
 import ContentLayout from "@/components/ContentLayout/ContentLayout";
 import { useDocumentTitle } from "@/hooks";
 import { useTranslations } from "next-intl";

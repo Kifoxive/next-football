@@ -46,9 +46,9 @@ export default function ContentLayout({
               {endContent
                 .filter(({ show = true }) => show)
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .map(({ show, loading, ...button }, index) => (
+                .map(({ show, loading, icon, ...button }, index) => (
                   <Button
-                    startIcon={button.icon}
+                    startIcon={icon}
                     key={index}
                     size="small"
                     disabled={loading === true}
@@ -63,7 +63,7 @@ export default function ContentLayout({
               {endContent
                 .filter(({ show = true }) => show)
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .map(({ show, loading, ...button }, index) => (
+                .map(({ show, loading, icon, ...button }, index) => (
                   <Fab
                     onClick={button.onClick}
                     aria-label={button.text}
@@ -75,7 +75,7 @@ export default function ContentLayout({
                     variant="circular"
                   >
                     <Tooltip title={button.text}>
-                      {loading ? <HourglassTopIcon /> : button.icon}
+                      {loading ? <HourglassTopIcon /> : icon}
                     </Tooltip>
                   </Fab>
                 ))}

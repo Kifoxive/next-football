@@ -63,11 +63,10 @@ export const FreshGame: React.FC<FreshGameProps> = ({
     };
 
     fetchImages();
-     
   }, []);
 
   return (
-    <Box className="flex flex-col gap-2 py-5" component={Paper}>
+    <Box className="flex flex-col gap-2 py-5 rounded-md" component={Paper}>
       <Box className="flex justify-between mb-2 px-4 md:px-8">
         <Typography
           className="flex gap-2 items-center"

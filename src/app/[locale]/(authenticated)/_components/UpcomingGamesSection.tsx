@@ -15,9 +15,11 @@ export const UpcomingGamesSection: React.FC<UpcomingGamesSectionProps> = ({
       <Typography variant="h6" component="h2">
         {t("title")}
       </Typography>
-      {gamesData.map((game) => (
-        <FreshGame key={game.id} {...game} />
-      ))}
+      <Box className="flex flex-col gap-4">
+        {gamesData.map((game) => (
+          <FreshGame key={game.id} {...game} />
+        ))}
+      </Box>
     </Box>
   );
 };

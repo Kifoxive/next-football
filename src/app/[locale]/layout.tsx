@@ -17,6 +17,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Providers } from "../Providers";
 import { LocalesType } from "@/utils/types";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +49,8 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen antialiased`}
       >
         <Providers locale={locale}>{children}</Providers>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

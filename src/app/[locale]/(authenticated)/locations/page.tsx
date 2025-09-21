@@ -57,7 +57,7 @@ export default function LocationsListPage() {
         },
       ]}
     >
-      <Grid container spacing={3} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
+      <Grid container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
         {locationsData.map((location) => (
           <Grid key={location.id} size={1}>
             <LocationCard

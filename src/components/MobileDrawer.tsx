@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { navItems } from "@/app/[locale]/(authenticated)/DesktopLayoutWrapper";
+import { navItems } from "@/utils/navigationItems";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { usePathname } from "@/i18n/navigation";
