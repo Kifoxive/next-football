@@ -126,7 +126,10 @@
     },
     "detail": {
       "title": "Player card",
-      "fetchError": "Unable to fetch user"
+      "fetchError": "Unable to fetch user",
+      "bio": "Bio",
+      "editButton": "Edit player",
+      "inviteButton": "Invite player"
     },
     "edit": {
       "title": "Edit player",
@@ -144,6 +147,7 @@
         "cancelBtnText": "Cancel"
       },
       "inviteButton": "Invite player",
+      "viewButton": "View player",
       "inviteDialog": {
         "title": "Activate user",
         "description": "To allow the user to log in, generate and share a link or QR code with them.",

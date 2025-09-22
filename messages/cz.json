@@ -126,7 +126,10 @@
     },
     "detail": {
       "title": "Karta hráče",
-      "fetchError": "Nelze načíst uživatele"
+      "fetchError": "Nelze načíst uživatele",
+      "bio": "Životopis",
+      "editButton": "Upravit hráče",
+      "inviteButton": "Pozvat hráče"
     },
     "edit": {
       "title": "Upravit hráče",
@@ -144,6 +147,7 @@
         "cancelBtnText": "Zrušit"
       },
       "inviteButton": "Pozvat hráče",
+      "viewButton": "Zobrazit hráče",
       "inviteDialog": {
         "title": "Aktivovat uživatele",
         "description": "Chcete-li uživateli umožnit přihlášení, vygenerujte a sdílejte s ním odkaz nebo QR kód.",

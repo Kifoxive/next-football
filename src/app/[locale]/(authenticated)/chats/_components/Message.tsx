@@ -60,7 +60,7 @@ export const Message: React.FC<MessageProps> = ({ isMineMessage, data }) => {
         <Typography
           variant="caption"
           color={
-            isMineMessage ? (isLightTheme ? "#2C2D2D" : "#A9A9A9") : "gray"
+            isMineMessage ? (isLightTheme ? "#2C2D2D" : "#C2C2C2") : "gray"
           }
           sx={{ position: "absolute", right: "8px", bottom: "2px" }}
         >

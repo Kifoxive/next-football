@@ -35,9 +35,9 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: LocalesType };
+  params: unknown;
 }) {
-  const { locale } = await params; // "await" fails in build  but needed for runtime
+  const { locale } = params as { locale: LocalesType };
 
   if (!locales.includes(locale)) {
     return notFound();

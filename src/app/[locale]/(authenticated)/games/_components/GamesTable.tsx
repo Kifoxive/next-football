@@ -11,7 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   useTheme,
 } from "@mui/material";
 import { config, permissions } from "@/config";
@@ -53,7 +52,7 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
         <Table aria-label="simple list">
           <TableHead>
             <TableRow>
-              <TableCell align="left">{t("form.id")}</TableCell>
+              {/* <TableCell align="left">{t("form.id")}</TableCell> */}
               <TableCell align="left">{t("form.location_id")}</TableCell>
               <TableCell align="left">{t("form.date")}</TableCell>
               <TableCell align="left">{t("form.duration")}</TableCell>
@@ -72,9 +71,9 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                   textWrap: "nowrap",
                 }}
               >
-                <TableCell sx={{ textWrap: "nowrap" }}>
+                {/* <TableCell sx={{ textWrap: "nowrap" }}>
                   <Typography color="primary">{row.id}</Typography>
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="left">{row.locations.name}</TableCell>
                 <TableCell align="left">
                   <Box className="flex items-center gap-2">

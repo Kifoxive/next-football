@@ -2,7 +2,7 @@
 
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
-import { lightTheme, darkTheme } from "@/theme/theme"; // створи окремий файл з темами
+import { lightTheme, darkTheme } from "@/theme/theme";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { NextIntlClientProvider } from "next-intl";

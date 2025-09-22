@@ -48,11 +48,10 @@ export default function GameDetail({
       total: votes.length,
       results,
     };
-     
   }, [votes]);
 
   return (
-    <Container className="flex flex-col gap-4" disableGutters>
+    <Container className="flex flex-col gap-4" disableGutters maxWidth={false}>
       <Box className="flex items-center gap-4">
         <GameStatusChip value={status} />
         {status === "cancelled" && (

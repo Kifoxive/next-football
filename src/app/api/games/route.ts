@@ -4,6 +4,7 @@ import { USER_ROLE } from "@/store/auth";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { GAME_STATUS } from "@/config";
 
 // create game
 export async function POST(request: Request) {
@@ -44,8 +45,6 @@ export async function POST(request: Request) {
     { status: 201 }
   );
 }
-
-import { GAME_STATUS } from "@/config"; // якщо enum в іншому файлі
 
 // get all games
 export async function GET(request: Request) {

@@ -62,7 +62,7 @@ export const config = {
     players: {
       new: "/players/new",
       detail: "/players/:id",
-      edit: "players/:id/edit",
+      edit: "/players/:id/edit",
       list: "/players",
     },
     locations: {

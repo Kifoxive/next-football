@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import {
+  Avatar,
   Box,
   IconButton,
   Paper,
@@ -49,7 +50,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
         <Table aria-label="simple list">
           <TableHead>
             <TableRow>
-              <TableCell align="left">{t("form.id")}</TableCell>
+              {/* <TableCell align="left">{t("form.id")}</TableCell> */}
               <TableCell align="left">{t("form.user_name")}</TableCell>
               <TableCell align="left">{t("form.email")}</TableCell>
               <TableCell align="left">{t("form.role")}</TableCell>
@@ -67,28 +68,40 @@ export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
                   textWrap: "nowrap",
                 }}
               >
-                <TableCell sx={{ textWrap: "nowrap" }}>
+                {/* <TableCell sx={{ textWrap: "nowrap" }}>
                   <Typography color="primary">{row.id}</Typography>
-                </TableCell>
-                <TableCell align="left" className="flex flex-col">
-                  <Typography fontWeight="600">
-                    {row.first_name} {row.last_name}
-                    {!row.auth_user_id && (
-                      <PersonOffIcon
-                        fontSize="small"
-                        color="action"
-                        className="ml-2"
-                      />
-                    )}
-                    {row.invited_at && !row.auth_user_id && (
-                      <HourglassTopIcon
-                        fontSize="small"
-                        color="action"
-                        className="ml-2"
-                      />
-                    )}
-                  </Typography>
-                  <Box>{row.user_name}</Box>
+                </TableCell> */}
+                <TableCell align="left">
+                  <Box className="flex items-center gap-2">
+                    <Avatar
+                      sizes="lg"
+                      alt={row.user_name}
+                      src={
+                        process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! +
+                        row.avatar_url
+                      }
+                    />
+                    <Box className="flex flex-col">
+                      <Typography fontWeight="600">
+                        {row.first_name} {row.last_name}
+                        {!row.auth_user_id && (
+                          <PersonOffIcon
+                            fontSize="small"
+                            color="action"
+                            className="ml-2"
+                          />
+                        )}
+                        {row.invited_at && !row.auth_user_id && (
+                          <HourglassTopIcon
+                            fontSize="small"
+                            color="action"
+                            className="ml-2"
+                          />
+                        )}
+                      </Typography>
+                      <Box>{row.user_name}</Box>
+                    </Box>
+                  </Box>
                 </TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">
@@ -119,7 +132,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
                       aria-label="view"
                       onClick={() =>
                         router.push(
-                          config.routes.players.list.replace(":id", row.id)
+                          config.routes.players.detail.replace(":id", row.id)
                         )
                       }
                     >

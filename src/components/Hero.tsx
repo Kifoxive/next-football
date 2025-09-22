@@ -29,7 +29,7 @@ const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Зміна кожні 5 секунд
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);

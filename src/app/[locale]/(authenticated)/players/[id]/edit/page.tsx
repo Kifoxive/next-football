@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import LinkIcon from "@mui/icons-material/Link";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LaunchIcon from "@mui/icons-material/Launch";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import toast from "react-hot-toast";
 import { UserForm } from "@/app/[locale]/(authenticated)/players/_components/UserForm";
@@ -102,10 +103,18 @@ export default function PlayersEditPage() {
         {
           text: t("inviteButton"),
           icon: <LinkIcon />,
-          variant: "contained",
+          variant: "outlined",
           color: "info",
           // loading: isInvitePending,
           onClick: () => setIsInviteConfirmationDialogOpen(true),
+        },
+        {
+          text: t("viewButton"),
+          icon: <LaunchIcon />,
+          variant: "contained",
+          color: "info",
+          onClick: () =>
+            router.push(config.routes.players.detail.replace(":id", id)),
         },
         {
           text: t("updateButton"),
