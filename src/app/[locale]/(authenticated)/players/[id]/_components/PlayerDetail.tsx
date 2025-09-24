@@ -31,10 +31,7 @@ export default function PlayerDetail({
           sx={{ width: 72, height: 72 }}
           alt={user_name}
           src={process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! + avatar_url}
-        >
-          {first_name?.[0]}
-          {last_name?.[0]}
-        </Avatar>
+        />
         <Box>
           <Typography variant="h5">
             {first_name} {last_name}

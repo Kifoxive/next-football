@@ -70,7 +70,7 @@ export default function GamesDetailPage() {
       endContent={[
         {
           text: t("games.detail.editButton"),
-          icon: <EditIcon />,
+          icon: <EditIcon color="inherit" />,
           variant: "contained",
           color: "inherit",
           show: canUpdate,

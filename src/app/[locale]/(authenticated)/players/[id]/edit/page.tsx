@@ -103,8 +103,8 @@ export default function PlayersEditPage() {
         {
           text: t("inviteButton"),
           icon: <LinkIcon />,
-          variant: "outlined",
-          color: "info",
+          variant: "contained",
+          color: "inherit",
           // loading: isInvitePending,
           onClick: () => setIsInviteConfirmationDialogOpen(true),
         },
