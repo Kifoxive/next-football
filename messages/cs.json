@@ -38,11 +38,17 @@
     "exactlyLengthFew": "Položka musí mít přesně {length} znaků",
     "minValue": "Zadejte číslo větší nebo rovné {value}",
     "maxValue": "Zadejte číslo menší nebo rovné {value}",
-    "passwordLength": "Heslo musí mít alespoň {minLength} znaků"
+    "passwordLength": "Heslo musí mít alespoň {minLength} znaků",
+    "passwordsMismatch": "Hesla se neshodují"
   },
   "login": {
     "title": "Přihlásit se",
     "description": "Pro pokračování se prosím přihlaste",
+    "email": "E-mail",
+    "password": "Heslo",
+    "confirmPassword": "Potvrdit heslo",
+    "login": "Přihlásit se",
+    "or": "nebo",
     "google": "Přihlásit se pomocí Google",
     "loading": "Přihlašování...",
     "success": "Přihlášení proběhlo úspěšně",
@@ -283,6 +289,7 @@
   },
   "activate": {
     "title": "Aktivace hráče",
+    "description": "Pro pokračování se prosím zaregistrujte",
     "fetchError": "Nelze načíst hráče",
     "alreadyActivated": {
       "warning": "Uživatel je již aktivován",
@@ -293,8 +300,12 @@
       "solution": "Požádejte moderátora o opětovné odeslání odkazu"
     },
     "welcome": "Vítejte, {username}",
-    "description": "Pro pokračování se prosím zaregistrujte",
-    "google": "Registrace u Googlu",
+    "email": "E-mail",
+    "password": "Heslo",
+    "confirmPassword": "Potvrdit heslo",
+    "signUp": "Registrovat se",
+    "or": "nebo",
+    "google": "Registrace přes Google",
     "loading": "Aktivace...",
     "success": "Aktivace proběhla úspěšně",
     "error": "Aktivace hráče se nezdařilo"

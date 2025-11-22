@@ -19,11 +19,11 @@ const WithState = () => {
   // pictures state to manipulate then locally
   const [pictures, setPictures] = useState<IPictureItem[]>([
     {
-      url: "https://prazacka.cz/data/image/file/prazacka-vtk-8927.jpg",
+      url: "https://prazacka.cs/data/image/file/prazacka-vtk-8927.jpg",
       file: null,
     },
     {
-      url: "https://prazacka.cz/data/image/file/prazacka-vtk-8921.jpg",
+      url: "https://prazacka.cs/data/image/file/prazacka-vtk-8921.jpg",
       file: null,
     },
   ]);
@@ -66,11 +66,11 @@ export const Default: Story = {
     locationName: "Stadium",
     pictures: [
       {
-        url: "https://prazacka.cz/data/image/file/prazacka-vtk-8927.jpg",
+        url: "https://prazacka.cs/data/image/file/prazacka-vtk-8927.jpg",
         file: null,
       },
       {
-        url: "https://prazacka.cz/data/image/file/prazacka-vtk-8921.jpg",
+        url: "https://prazacka.cs/data/image/file/prazacka-vtk-8921.jpg",
         file: null,
       },
     ],

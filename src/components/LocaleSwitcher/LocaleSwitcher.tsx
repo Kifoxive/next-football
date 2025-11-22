@@ -15,7 +15,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 const locales = [
   { code: "en", label: "English" },
   { code: "uk", label: "Українська" },
-  { code: "cz", label: "Čeština" },
+  { code: "cs", label: "Čeština" },
 ];
 
 export const LocaleSwitcher = () => {
@@ -29,7 +29,7 @@ export const LocaleSwitcher = () => {
   const handleChange = (event: SelectChangeEvent) => {
     const newLocale = event.target.value;
 
-    // Change /cz/some-page → /uk/some-page
+    // Change /cs/some-page → /uk/some-page
     const segments = pathname.split("/");
     segments[1] = newLocale;
     const newPath = segments.join("/");

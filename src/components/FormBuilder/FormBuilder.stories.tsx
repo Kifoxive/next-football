@@ -36,7 +36,7 @@ const fields: FieldConfig[] = [
     name: "country",
     label: "Country",
     options: [
-      { label: "Czechia", value: "cz" },
+      { label: "Czechia", value: "cs" },
       { label: "Ukraine", value: "ua" },
     ],
   },

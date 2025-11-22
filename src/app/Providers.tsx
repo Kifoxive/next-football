@@ -10,9 +10,9 @@ import { LocalesType } from "@/utils/types";
 
 import en from "../../messages/en.json";
 import uk from "../../messages/uk.json";
-import cz from "../../messages/cz.json";
+import cs from "../../messages/cs.json";
 
-const LOCALES = { en, cz, uk };
+const LOCALES = { en, cs, uk };
 
 function ThemeRegistry({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);

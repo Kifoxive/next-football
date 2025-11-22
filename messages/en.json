@@ -38,11 +38,17 @@
     "exactlyLengthFew": "Item must be exactly {length} characters",
     "minValue": "Please enter a number greater than or equal to {value}",
     "maxValue": "Please enter a number less than or equal to {value}",
-    "passwordLength": "Password must be at least {minLength} characters long"
+    "passwordLength": "Password must be at least {minLength} characters long",
+    "passwordsMismatch": "Passwords don't match"
   },
   "login": {
     "title": "Sign in",
     "description": "Please sign in to continue",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "login": "Log in",
+    "or": "or",
     "google": "Sign in with Google",
     "loading": "Logging in...",
     "success": "Log in is successful",
@@ -283,6 +289,7 @@
   },
   "activate": {
     "title": "Player activation",
+    "description": "Please sign up to continue",
     "fetchError": "Unable to fetch player",
     "alreadyActivated": {
       "warning": "The user is already activated",
@@ -293,7 +300,11 @@
       "solution": "Ask a moderator to resend the link"
     },
     "welcome": "Welcome, {username}",
-    "description": "Please sign up to continue",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signUp": "Sign Up",
+    "or": "or",
     "google": "Sign up with Google",
     "loading": "Activating...",
     "success": "Activation is successful",

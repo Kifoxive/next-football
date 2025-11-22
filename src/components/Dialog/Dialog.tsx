@@ -51,12 +51,13 @@ const Dialog: React.FC<DialogProps> = ({
         onClick={() => setIsOpen(false)}
         sx={(theme) => ({
           position: "absolute",
-          right: 0,
-          top: 0,
+          right: -3,
+          top: -3,
           color: theme.palette.grey[500],
         })}
+        size="small"
       >
-        <CloseIcon />
+        <CloseIcon fontSize="small" />
       </IconButton>
       <DialogTitle
         sx={{ m: 0, p: 2 }}

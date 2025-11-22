@@ -7,17 +7,19 @@ import { useTransition } from "react";
 
 import { activateUser } from "@/app/[locale]/(anonymous)/login/actions";
 
-type RegisterButtonProps = {
+type SignUpGoogleButtonProps = {
   token: string;
 };
 
-export const RegisterButton: React.FC<RegisterButtonProps> = ({ token }) => {
+export const SignUpGoogleButton: React.FC<SignUpGoogleButtonProps> = ({
+  token,
+}) => {
   const t = useTranslations("activate");
 
   const router = useRouter();
   const [isLoginPending, startLoginTransition] = useTransition();
 
-  const onLogin = () => {
+  const onSignUp = () => {
     startLoginTransition(() => {
       toast.promise(
         activateUser("google", token).then(({ errorMessage, url }) => {
@@ -39,11 +41,12 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ token }) => {
 
   return (
     <Button
-      onClick={onLogin}
+      onClick={onSignUp}
       loading={isLoginPending}
       disabled={isLoginPending}
       variant="outlined"
       color="inherit"
+      fullWidth
     >
       <GoogleLogo className="mr-2" />
       <Typography variant="subtitle1" className="normal-case text-white">

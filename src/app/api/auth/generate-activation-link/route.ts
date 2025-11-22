@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     { userId, inviterId },
     process.env.NEXT_PUBLIC_JWT_SECRET!,
     {
-      expiresIn: "12h",
+      expiresIn: "24h",
     }
   );
 

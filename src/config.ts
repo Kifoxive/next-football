@@ -1,6 +1,6 @@
 import { USER_ROLE } from "./store/auth";
 
-export type lang = "cz" | "uk" | "en";
+export type lang = "cs" | "uk" | "en";
 
 export const permissions = {
   admin: [USER_ROLE.admin],
@@ -40,7 +40,7 @@ export enum VOTE_OPTION {
 export enum LANGUAGE {
   en = "en",
   uk = "uk",
-  cz = "cz",
+  cs = "cs",
 }
 
 export type IActivationToken = {

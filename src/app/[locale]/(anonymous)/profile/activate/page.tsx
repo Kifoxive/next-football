@@ -14,7 +14,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDocumentTitle } from "@/hooks";
-import { RegisterButton } from "@/components/RegisterButton";
+import { SignUpForm } from "@/components/SignUpForm";
 
 export default function ProfileActivationPage() {
   const t = useTranslations("activate");
@@ -43,7 +43,6 @@ export default function ProfileActivationPage() {
       }
     };
     fetchUser();
-     
   }, []);
 
   if (!token) return router.push(config.routes.login);
@@ -55,43 +54,48 @@ export default function ProfileActivationPage() {
   return (
     <Box className="flex flex-col grow">
       <Container className="flex justify-center items-center grow p-20 mb-20">
-        <Box
-          className="flex gap-2 flex-col items-center max-w-[600px] px-10 py-8 border-[0.5px] border-gray-600 rounded-sm"
-          component={Paper}
-        >
-          {isAlreadyActivated ? (
-            <>
-              <DoneIcon fontSize="large" />
-              <Typography variant="h6">
-                {t("alreadyActivated.warning")}
-              </Typography>
-              <Button
-                className="flex items-center gap-2"
-                onClick={() => router.push(config.routes.login)}
-              >
-                {t("alreadyActivated.solution")}
-                <LoginIcon />
-              </Button>
-            </>
-          ) : isTokenExpired ? (
-            <>
-              <LinkOffIcon fontSize="large" />
-              <Typography variant="h6">{t("expired.warning")}</Typography>
-              <Typography variant="body2">{t("expired.solution")}</Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant="h5" fontWeight="bolder" component="h1">
-                {t("welcome", { username: player?.user_name || "" })}
-              </Typography>
-              <Typography variant="body2">{t("description")}</Typography>
-              <Box className="flex flex-col gap-2 mt-4">
-                <RegisterButton token={token} />
-              </Box>
-            </>
-          )}
-        </Box>
+        {isAlreadyActivated ? (
+          <AlreadyActivated />
+        ) : isTokenExpired ? (
+          <TokenExpired />
+        ) : (
+          <SignUpForm token={token} user_name={player?.user_name} />
+        )}
       </Container>
     </Box>
   );
 }
+
+const AlreadyActivated = () => {
+  const t = useTranslations("activate");
+  const router = useRouter();
+
+  return (
+    <Box
+      className="flex gap-2 flex-col items-center max-w-[400px] px-8 py-6 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+      component={Paper}
+    >
+      <DoneIcon fontSize="large" color="success" />
+      <Typography variant="h6">{t("alreadyActivated.warning")}</Typography>
+      <Button onClick={() => router.push(config.routes.login)}>
+        {t("alreadyActivated.solution")}
+        <LoginIcon className="ml-2" />
+      </Button>
+    </Box>
+  );
+};
+
+const TokenExpired = () => {
+  const t = useTranslations("activate");
+
+  return (
+    <Box
+      className="flex gap-2 flex-col items-center max-w-[400px] px-8 py-6 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+      component={Paper}
+    >
+      <LinkOffIcon fontSize="large" color="error" />
+      <Typography variant="h6">{t("expired.warning")}</Typography>
+      <Typography variant="body2">{t("expired.solution")}</Typography>
+    </Box>
+  );
+};

@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { GoogleLogo } from "./icons";
 import { useTransition } from "react";
 
-export const LoginButton = () => {
+export const LoginGoogleButton = () => {
   const t = useTranslations("login");
 
   const router = useRouter();
@@ -38,6 +38,7 @@ export const LoginButton = () => {
       disabled={isLoginPending}
       variant="outlined"
       color="inherit"
+      fullWidth
     >
       <GoogleLogo className="mr-2" />
       <Typography variant="subtitle1" className="normal-case text-white">
