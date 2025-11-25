@@ -160,16 +160,18 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
                 <LocaleSwitcher />
               </Grid>
             </Grid>
-            <Button
-              onClick={() => setIsLogoutConfirmationDialogOpen(true)}
-              variant="outlined"
-              color="error"
-              size="small"
-              loading={isLogoutPending}
-              disabled={isLogoutPending}
-            >
-              {t("logout.logoutButton")}
-            </Button>
+            <Box className="mb-4">
+              <Button
+                onClick={() => setIsLogoutConfirmationDialogOpen(true)}
+                variant="outlined"
+                color="error"
+                size="small"
+                loading={isLogoutPending}
+                disabled={isLogoutPending}
+              >
+                {t("logout.logoutButton")}
+              </Button>
+            </Box>
           </Box>
         </Container>
       </form>

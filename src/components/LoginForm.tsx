@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, Box, Paper } from "@mui/material";
+import { Typography, Button, Grid, Box, Paper, Container } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -14,8 +14,8 @@ import { LoginGoogleButton } from "./LoginGoogleButton";
 
 export const emailLoginFormSchema = (t: TFunction) =>
   z.object({
-    email: z.string().email(t("emailFormat")), // Added validation message key
-    password: z.string().min(8, t("passwordLength", { minLength: 8 })), // Added validation message key
+    email: z.string().email(t("emailFormat")),
+    password: z.string(),
   });
 
 export type IEmailLoginForm = z.infer<ReturnType<typeof emailLoginFormSchema>>;
@@ -43,10 +43,11 @@ export const LoginForm = () => {
     startLoginTransition(() => {
       toast.promise(
         loginUserEmail(data).then(({ errorMessage }) => {
+          console.log(errorMessage);
           if (!errorMessage) {
             router.push("/");
           } else {
-            toast.error(errorMessage);
+            throw Error;
           }
         }),
         {
@@ -59,11 +60,12 @@ export const LoginForm = () => {
   };
 
   return (
-    <Box
-      className="flex gap-4 flex-col items-center max-w-[400px] px-8 py-6 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+    <Container
       component={Paper}
+      className="w-full text-center py-4 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+      maxWidth="xs"
     >
-      <Box className="flex flex-col items-center">
+      <Box className="flex flex-col items-center mb-6">
         <Typography variant="h5" fontWeight="bolder" component="h1">
           {t("title")}
         </Typography>
@@ -121,6 +123,6 @@ export const LoginForm = () => {
 
         <LoginGoogleButton />
       </Box>
-    </Box>
+    </Container>
   );
 };

@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
   );
 
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}${config.routes.profile.activate}?token=${token}`;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}${config.routes.activate}?token=${token}`;
 
   return NextResponse.json({ url, token });
 }

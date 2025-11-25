@@ -288,18 +288,25 @@
     }
   },
   "activate": {
-    "title": "Player activation",
-    "description": "Please sign up to continue",
+    "title": "Welcome",
+    "subtitle": "You were invited to join the Next Football app",
+    "description": "This is an app where you can arrange football games with friends",
+    "welcome": "Welcome, {username}",
     "fetchError": "Unable to fetch player",
+    "join": "Join",
     "alreadyActivated": {
       "warning": "The user is already activated",
       "solution": "Log in instead"
     },
-    "expired": {
+    "tokenExpired": {
       "warning": "The link is expired",
       "solution": "Ask a moderator to resend the link"
-    },
-    "welcome": "Welcome, {username}",
+    }
+  },
+  "signUp": {
+    "title": "Sign up",
+    "description": "Please sign up to continue",
+    "fetchError": "Unable to fetch player",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",

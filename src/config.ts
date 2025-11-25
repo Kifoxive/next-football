@@ -76,8 +76,9 @@ export const config = {
     },
     profile: {
       edit: "/profile/edit",
-      activate: "/profile/activate",
     },
+    activate: "/activate",
+    signUp: "/signUp",
     login: "/login",
     unauthorized: "/unauthorized",
     logout: "/logout",

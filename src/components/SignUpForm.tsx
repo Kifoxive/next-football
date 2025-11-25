@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, Box, Paper } from "@mui/material";
+import { Typography, Button, Grid, Box, Paper, Container } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -33,8 +33,8 @@ type SignUpFormProps = {
   user_name?: string;
 };
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ token, user_name }) => {
-  const t = useTranslations("activate");
+export const SignUpForm: React.FC<SignUpFormProps> = ({ token }) => {
+  const t = useTranslations("signUp");
   const tValidation = useTranslations("validation");
 
   const router = useRouter();
@@ -74,13 +74,14 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token, user_name }) => {
   };
 
   return (
-    <Box
-      className="flex gap-4 flex-col items-center max-w-[400px] px-8 py-6 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+    <Container
       component={Paper}
+      className="w-full text-center py-4 border-[0.5px] border-gray-600 rounded-lg shadow-2xl"
+      maxWidth="xs"
     >
-      <Box className="flex flex-col items-center">
+      <Box className="flex flex-col items-center mb-6">
         <Typography variant="h5" fontWeight="bolder" component="h1">
-          {t("welcome", { username: user_name || "" })}
+          {t("title")}
         </Typography>
         <Typography variant="body2">{t("description")}</Typography>
       </Box>
@@ -146,6 +147,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token, user_name }) => {
 
         <SignUpGoogleButton token={token} />
       </Box>
-    </Box>
+    </Container>
   );
 };

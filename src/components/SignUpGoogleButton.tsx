@@ -14,7 +14,7 @@ type SignUpGoogleButtonProps = {
 export const SignUpGoogleButton: React.FC<SignUpGoogleButtonProps> = ({
   token,
 }) => {
-  const t = useTranslations("activate");
+  const t = useTranslations("signUp");
 
   const router = useRouter();
   const [isLoginPending, startLoginTransition] = useTransition();

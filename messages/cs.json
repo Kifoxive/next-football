@@ -288,22 +288,29 @@
     }
   },
   "activate": {
-    "title": "Aktivace hráče",
-    "description": "Pro pokračování se prosím zaregistrujte",
+    "title": "Vítejte",
+    "subtitle": "Byli jste pozváni k připojení k aplikaci Next Football",
+    "description": "Toto je aplikace, kde si můžete domluvit fotbalové zápasy s přáteli",
+    "welcome": "Vítejte, {username}",
     "fetchError": "Nelze načíst hráče",
+    "join": "Připojit se",
     "alreadyActivated": {
       "warning": "Uživatel je již aktivován",
-      "solution": "Přihlásit se"
+      "solution": "Přihlaste se"
     },
-    "expired": {
-      "warning": "Odkaz je již aktivován",
+    "tokenExpired": {
+      "warning": "Odkaz vypršel",
       "solution": "Požádejte moderátora o opětovné odeslání odkazu"
-    },
-    "welcome": "Vítejte, {username}",
+    }
+  },
+  "signUp": {
+    "title": "Registrovat se",
+    "description": "Pro pokračování se prosím zaregistrujte",
+    "fetchError": "Nelze načíst hráče",
     "email": "E-mail",
     "password": "Heslo",
     "confirmPassword": "Potvrdit heslo",
-    "signUp": "Registrovat se",
+    "signUp": "Registrace",
     "or": "nebo",
     "google": "Registrace přes Google",
     "loading": "Aktivace...",
