@@ -97,10 +97,12 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
             >
               <Image
                 src={
-                  fetchedData.avatar_url
-                    ? process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! +
-                      fetchedData.avatar_url
-                    : fallbackImage
+                  avatar?.url
+                    ? avatar.url
+                    : fetchedData.avatar_url
+                      ? process.env.NEXT_PUBLIC_PROFIlS_BUCKET_URL! +
+                        fetchedData.avatar_url
+                      : fallbackImage
                 }
                 fill
                 alt={fetchedData.user_name}

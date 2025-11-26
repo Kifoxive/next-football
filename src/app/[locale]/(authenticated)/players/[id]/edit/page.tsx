@@ -41,7 +41,6 @@ export default function PlayersEditPage() {
         const { data } = await axiosClient.get<GetOneUser["response"]>(
           config.endpoints.players.edit.replace(":id", id)
         );
-
         setPlayer(data);
       } catch (e) {
         toast.error(t("fetchError"));

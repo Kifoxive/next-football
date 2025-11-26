@@ -1,16 +1,16 @@
 "use client";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
+
 import {
   Box,
   Button,
   ButtonProps,
   CircularProgress,
+  Fab,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { BackButton } from "../BackButton";
-import { useState } from "react";
+import { useTheme } from "next-themes";
 
 interface IContentLayout {
   title: string;
@@ -33,7 +33,8 @@ export default function ContentLayout({
   endContent,
   children,
 }: IContentLayout) {
-  const [open, setOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Box className="relative flex flex-col items-center flex-1 overflow-auto p-4 sm:p-6">
@@ -64,47 +65,33 @@ export default function ContentLayout({
                   </Button>
                 ))}
             </Box>
-            {/* Mobile SpeedDial */}
-            <Box className="flex md:hidden fixed right-[20px] bottom-[20px] z-10">
-              <SpeedDial
-                ariaLabel="actions"
-                icon={<SpeedDialIcon />}
-                open={open}
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
-                // sx={{ position: "absolute", bottom: 0, right: 0 }}
-              >
-                {endContent
-                  .filter(({ show = true }) => show)
-                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                  .map(({ show, loading, icon, text, ...button }, index) => (
-                    <SpeedDialAction
-                      {...button}
-                      key={index}
-                      icon={
-                        loading ? (
-                          <CircularProgress size={20} color="inherit" />
-                        ) : (
-                          icon
-                        )
-                      }
-                      slotProps={{
-                        tooltip: {
-                          title: text,
-                        },
-                      }}
-                      sx={{
-                        opacity: loading ? 0.5 : 1,
-                        pointerEvents: loading ? "none" : "auto",
-                      }}
-                    />
-                  ))}
-              </SpeedDial>
+            {/* Mobile buttons */}
+            <Box className="flex flex-col-reverse md:hidden fixed right-[20px] bottom-[20px] gap-4 z-10">
+              {endContent
+                .filter(({ show = true }) => show)
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                .map(({ show, loading, icon, ...button }, index) => (
+                  <Fab
+                    onClick={button.onClick}
+                    aria-label={button.text}
+                    color={button.color}
+                    key={index}
+                    size="small"
+                    disabled={loading == true}
+                    {...button}
+                    variant="circular"
+                    sx={{ color: isDark ? "#222222" : "#ffffff" }}
+                  >
+                    <Tooltip title={button.text} className="font-black">
+                      {icon}
+                    </Tooltip>
+                  </Fab>
+                ))}
             </Box>
           </>
         )}
       </Box>
-      <Box component="main" className="w-full flex-1">
+      <Box component="main" className="w-full flex-1 pb-18">
         {isLoading ? (
           <Box className="flex justify-center items-center h-full pb-20">
             <CircularProgress color="inherit" />
