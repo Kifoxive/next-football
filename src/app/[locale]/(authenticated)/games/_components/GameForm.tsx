@@ -121,7 +121,6 @@ export const GameForm: React.FC<GameFormProps> = ({
                 label={t("games.form.duration")}
                 options={durationOptions}
                 number
-                fullWidth
               />
             </Grid>
             <Grid size={1}>

@@ -1,6 +1,7 @@
-import { GAME_STATUS, VOTE_OPTION } from "@/config";
+import { ASSIST_TYPE, GAME_STATUS, MOVE_TYPE, VOTE_OPTION } from "@/config";
 import { z } from "zod";
 import { ILocation } from "../locations/types";
+import { PlayerOptionType } from "../players/types";
 
 export const gameFormSchema = (
   t: (key: string, param?: Record<string, string | number>) => string
@@ -31,6 +32,35 @@ export const gameFormSchema = (
 
 export type IGameForm = z.infer<ReturnType<typeof gameFormSchema>>;
 
+export const gameLobbyFormSchema = (
+  t: (key: string, param?: Record<string, string | number>) => string
+) =>
+  z.object({
+    participants: z
+      .array(
+        z.object({
+          label: z.string({ message: t("validation.stringFormat") }),
+          value: z.string({ message: t("validation.stringFormat") }),
+        })
+      )
+      .min(2, t("validation.participantsMinLength", { minLength: 2 })),
+    moderators: z.array(
+      z.object({
+        label: z.string({ message: t("validation.stringFormat") }),
+        value: z.string({ message: t("validation.stringFormat") }),
+      })
+    ),
+  });
+
+export type IGameLobbyForm = z.infer<ReturnType<typeof gameLobbyFormSchema>>;
+
+enum LIVE_GAME_STATUS {
+  not_started = "not_started",
+  in_progress = "in_progress",
+  paused = "paused",
+  completed = "completed",
+}
+
 export interface IGame {
   // basic
   id: string;
@@ -43,6 +73,11 @@ export interface IGame {
   min_yes_votes_count: number;
   status: GAME_STATUS;
   cancelled_reason: string | null;
+  moderators: PlayerOptionType[] | null; // on server is array of user IDs
+  participants: PlayerOptionType[] | null; // on server is array of user IDs
+  started_at: string | null;
+  ended_at: string | null;
+  live_game_status: LIVE_GAME_STATUS; // when "status" is "live"
   // info
   created_at: string;
   created_by: string;
@@ -86,3 +121,22 @@ export type PostVote = {
   request: Omit<IVote, "id" | "created_at" | "updated_at">;
   response: IVote;
 };
+
+// moves
+export interface IMove {
+  // basic
+  id: string;
+  game_id: string;
+  // form
+  scorer_id: string;
+  is_scorer_goalkeeper: boolean;
+  assist_id: string | null;
+  is_assist_goalkeeper: boolean;
+  time: number;
+  type: MOVE_TYPE;
+  assist_type: ASSIST_TYPE;
+  // info
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+}

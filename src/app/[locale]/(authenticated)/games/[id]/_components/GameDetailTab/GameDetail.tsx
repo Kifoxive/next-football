@@ -4,13 +4,13 @@ import { VOTE_OPTION } from "@/config";
 import { useMemo } from "react";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import { MarkdownViewer } from "@/components/MarkdownViewer";
-import { LocationMap } from "../../_components/LocationMap";
+import { LocationMap } from "../../../_components/LocationMap";
 import { useAuthStore } from "@/store/auth";
-import { PictureSection } from "../_components/PictureSection";
-import { LocationInfoSection } from "../_components/LocationInfoSection";
-import { ReservationInfoSection } from "../_components/ReservationInfoSection";
-import { VotingSection } from "../_components/VotingSection";
-import { GetOneGame } from "../../types";
+import { PictureSection } from "./PictureSection";
+import { LocationInfoSection } from "./LocationInfoSection";
+import { ReservationInfoSection } from "./ReservationInfoSection";
+import { VotingSection } from "./VotingSection";
+import { GetOneGame } from "../../../types";
 import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
 
 type GameDetailProps = GetOneGame["response"] & {

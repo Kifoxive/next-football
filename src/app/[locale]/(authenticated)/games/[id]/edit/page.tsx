@@ -44,22 +44,6 @@ export default function GamesEditPage() {
     fetchGame();
   }, [id]);
 
-  // const onSubmit = (newGameData: IGameForm) => {
-  //   startUpdateTransition(async () => {
-  //     try {
-  //       await axiosClient.put(
-  //         config.endpoints.games.edit.replace(":id", id),
-  //         newGameData
-  //       );
-  //       toast.success(t("updateSuccess"));
-  //       router.push(config.routes.games.list);
-  //     } catch (e) {
-  //       console.error(e);
-  //       toast.error(t("updateError"));
-  //     }
-  //   });
-  // };
-
   // this code do not wait till router.push is executed
   const onSubmit = (newGameData: IGameForm) => {
     startUpdateTransition(() => {

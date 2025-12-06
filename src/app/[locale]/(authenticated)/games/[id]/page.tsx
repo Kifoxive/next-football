@@ -9,10 +9,17 @@ import { useEffect, useState, useTransition } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 import { GetOneGame, PostVote } from "../types";
 import EditIcon from "@mui/icons-material/Edit";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import toast from "react-hot-toast";
-import GameDetail from "./_components/GameDetail";
+import GameDetail from "./_components/GameDetailTab/GameDetail";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import GameLobby from "./_components/GameLobbyTab/GameLobby";
 
 export default function GamesDetailPage() {
   const t = useTranslations();
@@ -21,8 +28,11 @@ export default function GamesDetailPage() {
   const { id }: { id: string } = useParams();
   const router = useRouter();
   const authUser = useAuthStore((s) => s.user);
+  const [isUpdatePending, startUpdateTransition] = useTransition();
   const [isVotePending, startVoteTransition] = useTransition();
   const [game, setGame] = useState<GetOneGame["response"]>();
+  type TabItem = (typeof tabItems)[number];
+  const [selectedTab, setSelectedTab] = useState<TabItem>("detail");
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -63,6 +73,38 @@ export default function GamesDetailPage() {
     });
   };
 
+  const onLobbyUpdate = ({
+    participants,
+    moderators,
+  }: {
+    participants: string[];
+    moderators: string[];
+  }) => {
+    startUpdateTransition(() => {
+      toast.promise(
+        axiosClient.put(config.endpoints.games.edit.replace(":id", id), {
+          participants,
+          moderators,
+        }),
+        {
+          loading: t("games.lobby.updateLoading"),
+          success: t("games.lobby.updateSuccess"),
+          error: t("games.lobby.updateError"),
+        }
+      );
+    });
+  };
+
+  const tabItems = ["detail", "stats"];
+  // Insert lobby and action tabs if user has moderator permissions
+  if (authUser && permissions["moderator"].includes(authUser.role)) {
+    tabItems.splice(1, 0, "lobby", "action");
+  }
+
+  const handleChange = (event: React.SyntheticEvent, newValue: TabItem) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <ContentLayout
       title={t("games.detail.title")}
@@ -70,22 +112,58 @@ export default function GamesDetailPage() {
       endContent={[
         {
           text: t("games.detail.editButton"),
-          icon: <EditIcon color="inherit" />,
+          icon: <EditIcon />,
           variant: "contained",
           color: "inherit",
-          show: canUpdate,
+          show: canUpdate && selectedTab === "detail",
           onClick: () =>
             router.push(config.routes.games.edit.replace(":id", id)),
+        },
+        {
+          text: t("games.lobby.updateButton"),
+          icon: <UpgradeIcon />,
+          variant: "contained",
+          color: "success",
+          type: "submit",
+          form: "lobby_form",
+          show: canUpdate && selectedTab === "lobby",
+          loading: isUpdatePending,
         },
       ]}
     >
       {game && (
-        <GameDetail
-          {...game}
-          isVoteLoading={isVotePending}
-          onVoteChange={onVoteChange}
-          canUpdate={canUpdate}
-        />
+        <TabContext value={selectedTab}>
+          <Box
+            sx={{ borderBottom: 1, borderColor: "divider", marginBottom: 4 }}
+          >
+            <TabList onChange={handleChange} aria-label="Games tab">
+              {tabItems.map((item) => (
+                <Tab label={t(`games.tab.${item}`)} value={item} key={item} />
+              ))}
+            </TabList>
+          </Box>
+          <TabPanel value="detail" sx={{ padding: 0 }}>
+            <GameDetail
+              {...game}
+              isVoteLoading={isVotePending}
+              onVoteChange={onVoteChange}
+              canUpdate={canUpdate}
+            />
+          </TabPanel>
+          <TabPanel value="lobby" sx={{ padding: 0 }}>
+            <GameLobby
+              selectedParticipants={game.participants}
+              selectedModerators={game.moderators}
+              onLobbyUpdate={onLobbyUpdate}
+            />
+          </TabPanel>
+          <TabPanel value="action" sx={{ padding: 0 }}>
+            Item Three
+          </TabPanel>
+          <TabPanel value="stats" sx={{ padding: 0 }}>
+            Item Three
+          </TabPanel>
+        </TabContext>
       )}
     </ContentLayout>
   );

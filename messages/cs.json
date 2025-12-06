@@ -39,7 +39,8 @@
     "minValue": "Zadejte číslo větší nebo rovné {value}",
     "maxValue": "Zadejte číslo menší nebo rovné {value}",
     "passwordLength": "Heslo musí mít alespoň {minLength} znaků",
-    "passwordsMismatch": "Hesla se neshodují"
+    "passwordsMismatch": "Hesla se neshodují",
+    "participantsMinLength": "Musí být vybráni alespoň {minLength} účastníci"
   },
   "login": {
     "title": "Přihlásit se",
@@ -55,6 +56,12 @@
     "error": "Přihlášení se nezdařilo"
   },
   "games": {
+    "tab": {
+      "detail": "Detail",
+      "lobby": "Lobby",
+      "action": "Akce",
+      "stats": "Statistiky"
+    },
     "new": {
       "title": "Přidat novou hru",
       "addButton": "Vytvořit hru",
@@ -65,6 +72,7 @@
       "title": "Upravit hru",
       "viewButton": "Zobrazit hru",
       "updateButton": "Aktualizovat hru",
+      "updateLoading": "Aktualizace hry...",
       "updateSuccess": "Hra byla úspěšně aktualizována",
       "updateError": "Nelze aktualizovat hru",
       "fetchError": "Nelze načíst hru",
@@ -84,6 +92,31 @@
       "editButton": "Upravit hru",
       "fetchError": "Nelze načíst hru"
     },
+    "lobby": {
+      "participants": {
+        "label": "Účastníci",
+        "placeholder": "Zadejte text pro vyhledávání hráče",
+        "noOptionsText": "Žádní hráči pro dané možnosti",
+        "loadingText": "Hráči se načítají..."
+      },
+      "moderators": {
+        "label": "Moderátoři hry",
+        "placeholder": "Zadejte text pro vyhledávání hráče",
+        "noOptionsText": "Žádní hráči pro dané možnosti",
+        "loadingText": "Hráči se načítají..."
+      },
+      "moderatorInfo": {
+        "title": "Práva moderátora hry",
+        "description": "Moderátory hry je třeba přiřadit pouze v případě, že chcete hráči dát omezená práva k označování vstřelených gólů. Všichni moderátoři jsou již přiřazeni jako moderátoři hry"
+      },
+      "updateButton": "Uložit lobby",
+      "updateLoading": "Aktualizace lobby...",
+      "updateSuccess": "Lobby bylo úspěšně aktualizováno",
+      "updateError": "Nelze aktualizovat lobby",
+      "fetchError": "Nelze načíst možnosti hráčů"
+    },
+    "action": {},
+    "stats": {},
     "list": {
       "title": "Hry",
       "add": "Přidat novou hru",

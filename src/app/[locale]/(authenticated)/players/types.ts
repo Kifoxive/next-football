@@ -38,6 +38,12 @@ export interface IUser {
   joined_at: string | null;
 }
 
+export type PlayerOptionType = {
+  label: string;
+  value: string;
+  role: USER_ROLE;
+};
+
 export type GetUsers = {
   request: null;
   response: IUser[];
@@ -53,4 +59,8 @@ export type PostUser = {
 export type PutUser = {
   request: IUserForm;
   response: IUser;
+};
+export type GetUsersOptions = {
+  request: null;
+  response: PlayerOptionType[];
 };

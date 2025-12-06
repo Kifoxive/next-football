@@ -21,7 +21,6 @@ const meta = {
     label: "Choose option",
     options,
     number: false,
-    fullWidth: true,
   },
 } satisfies Meta<typeof AutocompleteField>;
 
@@ -32,9 +31,7 @@ import type { ComponentProps } from "react";
 
 const WithForm = (args: ComponentProps<typeof AutocompleteField>) => {
   const methods = useForm({
-    defaultValues: {
-      [args.name]: args.defaultValue || "",
-    },
+    defaultValues: {},
   });
 
   return (
@@ -65,7 +62,6 @@ export const WithNumber: Story = {
 export const Preselected: Story = {
   render: (args) => <WithForm {...args} />,
   args: {
-    defaultValue: { label: "Option B", value: "b" },
     options,
   },
 };

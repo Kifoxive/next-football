@@ -1,8 +1,10 @@
 "use server";
 
+import { PlayerOptionType } from "@/app/[locale]/(authenticated)/players/types";
 import { USER_ROLE } from "@/store/auth";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
+import { SimpleOptionType } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 // update game
@@ -62,28 +64,68 @@ export async function GET(
 
   if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });
 
-  const { data, error } = await supabase
+  // 🔑 fetch game
+  const { data: game, error: gameError } = await supabase
     .from("games")
     .select(
       `
         *,
-        locations (
-          *
-        ),
-        votes (
-          vote, user_id
-        )
-  `
+        locations (*),
+        votes (vote, user_id)
+      `
     )
     .eq("id", targetId)
     .single();
 
-  if (error) {
-    console.error(error);
+  if (gameError) {
+    console.error(gameError);
     return NextResponse.json({ error: "Fetch error" }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  // 🔑 fetch profiles for participants and moderators
+  let participants: SimpleOptionType[] = [];
+  let moderators: PlayerOptionType[] = [];
+
+  if (Array.isArray(game?.participants) && game.participants.length > 0) {
+    const { data: profiles, error: profilesError } = await supabase
+      .from("profiles")
+      .select("id, first_name, last_name")
+      .in("id", game.participants);
+
+    if (profilesError) {
+      console.error("Fetch participants error:", profilesError);
+    } else {
+      participants = profiles.map((p) => ({
+        label: `${p.first_name || "---"} ${p.last_name || "---"}`,
+        value: p.id,
+      }));
+    }
+  }
+
+  if (Array.isArray(game?.moderators) && game.moderators.length > 0) {
+    const { data: profiles, error: profilesError } = await supabase
+      .from("profiles")
+      .select("id, first_name, last_name, role")
+      .in("id", game.moderators);
+
+    if (profilesError) {
+      console.error("Fetch moderators error:", profilesError);
+    } else {
+      moderators = profiles.map((p) => ({
+        label: `${p.first_name || "---"} ${p.last_name || "---"}`,
+        value: p.id,
+        role: p.role, // 🔑 include role for flexibility
+      }));
+    }
+  }
+
+  const transformed = {
+    ...game,
+    participants,
+    moderators,
+  };
+
+  return NextResponse.json(transformed, { status: 200 });
 }
 
 // remove game

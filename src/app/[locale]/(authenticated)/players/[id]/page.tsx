@@ -60,7 +60,7 @@ export default function PlayersDetailPage() {
           text: t("editButton"),
           icon: <EditIcon />,
           variant: "contained",
-          color: "info",
+          color: "inherit",
           show: canUpdate,
           onClick: () =>
             router.push(config.routes.players.edit.replace(":id", id)),

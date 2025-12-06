@@ -39,7 +39,8 @@
     "minValue": "Please enter a number greater than or equal to {value}",
     "maxValue": "Please enter a number less than or equal to {value}",
     "passwordLength": "Password must be at least {minLength} characters long",
-    "passwordsMismatch": "Passwords don't match"
+    "passwordsMismatch": "Passwords don't match",
+    "participantsMinLength": "At least {minLength} participant must be selected"
   },
   "login": {
     "title": "Sign in",
@@ -55,6 +56,12 @@
     "error": "Failed to log in"
   },
   "games": {
+    "tab": {
+      "detail": "Detail",
+      "lobby": "Lobby",
+      "action": "Action",
+      "stats": "Stats"
+    },
     "new": {
       "title": "Add a new game",
       "addButton": "Create game",
@@ -65,6 +72,7 @@
       "title": "Edit game",
       "viewButton": "View game",
       "updateButton": "Update game",
+      "updateLoading": "Updating game...",
       "updateSuccess": "Game was updated successfully",
       "updateError": "Unable to update game",
       "fetchError": "Unable to fetch game",
@@ -84,6 +92,31 @@
       "editButton": "Edit game",
       "fetchError": "Unable to fetch game"
     },
+    "lobby": {
+      "participants": {
+        "label": "Participants",
+        "placeholder": "Type to search for player",
+        "noOptionsText": "No players for the options",
+        "loadingText": "Players are fetching..."
+      },
+      "moderators": {
+        "label": "Game moderators",
+        "placeholder": "Type to search for player",
+        "noOptionsText": "No players for the options",
+        "loadingText": "Players are fetching..."
+      },
+      "moderatorInfo": {
+        "title": "Game moderator rights",
+        "description": "You only need to assign game moderators if you want to give a player limited rights to mark goals scored. All moderators are already assigned as game moderators"
+      },
+      "updateButton": "Save lobby",
+      "updateLoading": "Updating lobby...",
+      "updateSuccess": "Lobby was updated successfully",
+      "updateError": "Unable to update lobby",
+      "fetchError": "Unable to fetch options of players"
+    },
+    "action": {},
+    "stats": {},
     "list": {
       "title": "Games",
       "add": "Add a new game",

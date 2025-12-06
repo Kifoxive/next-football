@@ -27,8 +27,25 @@ export enum GAME_STATUS {
   initialization = "initialization",
   voting = "voting",
   confirmed = "confirmed",
+  live = "live",
   completed = "completed",
   cancelled = "cancelled",
+}
+
+export enum ASSIST_TYPE {
+  regular_play = "regular_play",
+  corner = "corner",
+  free_kick = "free_kick",
+  throw_in = "throw_in",
+  penalty = "penalty",
+}
+
+export enum MOVE_TYPE {
+  regular_goal = "regular_goal",
+  header_goal = "header_goal",
+  penalty_goal = "penalty_goal",
+  long_goal = "long_goal",
+  own_goal = "own_goal",
 }
 
 export enum VOTE_OPTION {
@@ -105,6 +122,7 @@ export const config = {
       edit: "/players/:id",
       delete: "/players/:id",
       list: "/players",
+      options: "/players/options",
     },
     locations: {
       new: "/locations",

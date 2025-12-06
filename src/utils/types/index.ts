@@ -8,6 +8,8 @@ export type LocalesType = "en" | "uk" | "cs";
 
 export type OptionType = { label: React.ReactNode; value: string | number };
 
+export type SimpleOptionType = { label: string; value: string };
+
 import {
   AbstractIntlMessages,
   NamespaceKeys,
