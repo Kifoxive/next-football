@@ -139,6 +139,7 @@
       "voting": "Voting",
       "confirmed": "Confirmed",
       "completed": "Completed",
+      "live": "Live",
       "cancelled": "Cancelled"
     },
     "voting": {

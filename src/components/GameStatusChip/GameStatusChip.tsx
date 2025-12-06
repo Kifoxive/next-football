@@ -5,6 +5,7 @@ import LightbulbOutlineIcon from "@mui/icons-material/LightbulbOutline";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 type IGameStatusChipProps = {
@@ -45,6 +46,14 @@ export const GameStatusChip: React.FC<IGameStatusChipProps> = ({ value }) => {
         color="default"
         variant="outlined"
         icon={<CheckCircleOutlineIcon fontSize="small" />}
+      />
+    ),
+    [GAME_STATUS["live"]]: (
+      <Chip
+        label={t("live")}
+        color="primary"
+        variant="outlined"
+        icon={<DirectionsRunIcon fontSize="small" />}
       />
     ),
     [GAME_STATUS["cancelled"]]: (

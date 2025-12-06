@@ -139,6 +139,7 @@
       "voting": "Hlasování",
       "confirmed": "Potvrzeno",
       "completed": "Dokončeno",
+      "live": "Živě",
       "cancelled": "Zrušeno"
     },
     "voting": {
