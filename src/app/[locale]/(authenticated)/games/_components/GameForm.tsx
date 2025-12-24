@@ -11,7 +11,11 @@ import {
   IGame,
   gameFormSchema,
 } from "@/app/[locale]/(authenticated)/games/types";
-import { config, GAME_STATUS } from "@/config";
+import {
+  config,
+  GAME_STATUS,
+  VALID_GAME_STATUS_TRANSITIONS_FRONTEND,
+} from "@/config";
 import { DateTimePickerField } from "@/components/form/components/DateTimePickerField";
 import { AutocompleteField } from "@/components/form/components/AutocompleteField";
 import { useEffect, useState } from "react";
@@ -67,9 +71,14 @@ export const GameForm: React.FC<GameFormProps> = ({
     value,
   }));
 
-  const gameStatusOptions = Object.values(GAME_STATUS).map((value) => ({
+  const gameStatusOptions = Object.values(
+    VALID_GAME_STATUS_TRANSITIONS_FRONTEND[
+      fetchedData?.status || GAME_STATUS.initialization
+    ]
+  ).map((value) => ({
     label: <GameStatusChip value={value} />,
     value,
+    disabled: value === GAME_STATUS.live || value === GAME_STATUS.completed,
   }));
 
   const onSubmit = async (formData: IGameForm) => {

@@ -50,11 +50,12 @@ export const SelectField: React.FC<SelectFieldProps> = ({
                 onChange(value);
               }}
             >
-              {options.map(({ label, value }, index) => (
+              {options.map(({ label, value, disabled = false }, index) => (
                 <MenuItem
                   key={value}
                   value={value}
                   divider={additionalOption && index === options.length - 1}
+                  disabled={disabled}
                 >
                   {label}
                 </MenuItem>

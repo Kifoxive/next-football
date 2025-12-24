@@ -10,10 +10,11 @@ import { axiosClient } from "@/utils/axiosClient";
 import { GetOneGame, PostVote } from "../types";
 import EditIcon from "@mui/icons-material/Edit";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import toast from "react-hot-toast";
 import GameDetail from "./_components/GameDetailTab/GameDetail";
+import GameActionTab from "./_components/GameActionTab";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -21,18 +22,31 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GameLobby from "./_components/GameLobbyTab/GameLobby";
 
+type TabItem = "detail" | "lobby" | "action" | "stats";
+
 export default function GamesDetailPage() {
   const t = useTranslations();
   useDocumentTitle(t("games.detail.title"));
 
   const { id }: { id: string } = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const authUser = useAuthStore((s) => s.user);
   const [isUpdatePending, startUpdateTransition] = useTransition();
   const [isVotePending, startVoteTransition] = useTransition();
   const [game, setGame] = useState<GetOneGame["response"]>();
-  type TabItem = (typeof tabItems)[number];
-  const [selectedTab, setSelectedTab] = useState<TabItem>("detail");
+
+  const tabItems = ["detail", "stats"];
+  // Insert lobby and action tabs if user has moderator permissions
+  if (authUser && permissions["moderator"].includes(authUser.role)) {
+    tabItems.splice(1, 0, "lobby", "action");
+  }
+
+  // set active tab from URL query param
+  const tabParam = searchParams.get("tab") as TabItem | null;
+  const [selectedTab, setSelectedTab] = useState<TabItem>(
+    tabParam && tabItems.includes(tabParam) ? tabParam : "detail"
+  );
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -95,13 +109,21 @@ export default function GamesDetailPage() {
     });
   };
 
-  const tabItems = ["detail", "stats"];
-  // Insert lobby and action tabs if user has moderator permissions
-  if (authUser && permissions["moderator"].includes(authUser.role)) {
-    tabItems.splice(1, 0, "lobby", "action");
-  }
-
   const handleChange = (event: React.SyntheticEvent, newValue: TabItem) => {
+    const updateQuery = (key: string, value: string) => {
+      // Create a new URLSearchParams object from the current params
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set(key, value); // Add or update the param
+      } else {
+        params.delete(key); // Remove if value is empty
+      }
+
+      // Push the new URL without reloading the page
+      router.push(`?${params.toString()}`);
+    };
+
+    updateQuery("tab", newValue);
     setSelectedTab(newValue);
   };
 
@@ -158,7 +180,14 @@ export default function GamesDetailPage() {
             />
           </TabPanel>
           <TabPanel value="action" sx={{ padding: 0 }}>
-            Item Three
+            <GameActionTab
+              gameId={game.id}
+              game={game}
+              isLoading={isUpdatePending}
+              onGameStatusChange={(updatedGame) => {
+                setGame((prevGame) => ({ ...prevGame!, ...updatedGame }));
+              }}
+            />
           </TabPanel>
           <TabPanel value="stats" sx={{ padding: 0 }}>
             Item Three

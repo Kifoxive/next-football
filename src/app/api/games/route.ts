@@ -65,7 +65,11 @@ export async function GET(request: Request) {
 
   // Only fresh games
   if (getFreshGames) {
-    query = query.in("status", [GAME_STATUS.voting, GAME_STATUS.confirmed]);
+    query = query.in("status", [
+      GAME_STATUS.voting,
+      GAME_STATUS.confirmed,
+      GAME_STATUS.live,
+    ]);
   }
 
   const { data, error } = await query;

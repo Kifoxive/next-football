@@ -115,7 +115,62 @@
       "updateError": "Unable to update lobby",
       "fetchError": "Unable to fetch options of players"
     },
-    "action": {},
+    "action": {
+      "recordGoal": "Record Goal",
+      "scorer": "Scorer",
+      "selectPlayer": "Select player",
+      "isGoalkeeper": "Scorer is goalkeeper",
+      "assist": "Assistant",
+      "noAssist": "No Assist",
+      "assistantIsGoalkeeper": "Assistant is goalkeeper",
+      "goalType": "Goal Type",
+      "assistType": "Assist Type",
+      "recordButton": "Record Goal",
+      "recording": "Recording...",
+      "goalsListSection": {
+        "goalsAmount": "Goals ({amount})"
+      }
+    },
+    "moveType": {
+      "regular_goal": "Regular Goal",
+      "header_goal": "Header Goal",
+      "corner_goal": "Corner Goal",
+      "long_goal": "Long Range Goal",
+      "penalty": "Penalty",
+      "free_kick": "Free Kick",
+      "own_goal": "Own Goal"
+    },
+    "assistType": {
+      "regular_play": "Regular Play",
+      "corner": "Corner",
+      "free_kick": "Free Kick",
+      "throw_in": "Throw-in",
+      "penalty": "Penalty"
+    },
+    "control": {
+      "startGame": "Start Game",
+      "gameStarted": "Game started",
+      "startGameError": "Failed to start game",
+      "kickoff": "Kickoff",
+      "matchStarted": "Match started",
+      "kickoffError": "Failed to start match",
+      "matchInProgress": "Match in progress",
+      "pauseBtn": "Pause",
+      "gamePaused": "Game paused",
+      "pauseError": "Failed to pause game",
+      "resumeBtn": "Resume",
+      "gameResumed": "Game resumed",
+      "resumeError": "Failed to resume game",
+      "endGameBtn": "End Game",
+      "gameEnded": "Game ended",
+      "endGameError": "Failed to end game"
+    },
+    "goal": {
+      "scorerRequired": "Please select a scorer",
+      "goalRecorded": "Goal recorded successfully",
+      "goalRecordError": "Failed to record goal",
+      "goalRecordedSuccess": "Goal has been recorded"
+    },
     "stats": {},
     "list": {
       "title": "Games",
@@ -308,7 +363,8 @@
     "noLocation": "Please select a location on the map",
     "copy": "Copy",
     "copied": "Copied",
-    "interfaceLanguage": "Language of interface"
+    "interfaceLanguage": "Language of interface",
+    "cancel": "Cancel"
   },
   "logout": {
     "logoutButton": "Log out",

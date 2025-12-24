@@ -12,7 +12,7 @@ export const gameFormSchema = (
       .min(10, t("validation.minLengthFew", { minLength: 10 })),
     location_id: z
       .string({ message: t("validation.required") })
-      .min(10, t("validation.required")),
+      .min(1, t("validation.required")),
     date: z
       .string({ message: t("validation.required") })
       .min(3, t("validation.required")), // January 10
@@ -54,13 +54,6 @@ export const gameLobbyFormSchema = (
 
 export type IGameLobbyForm = z.infer<ReturnType<typeof gameLobbyFormSchema>>;
 
-enum LIVE_GAME_STATUS {
-  not_started = "not_started",
-  in_progress = "in_progress",
-  paused = "paused",
-  completed = "completed",
-}
-
 export interface IGame {
   // basic
   id: string;
@@ -71,14 +64,14 @@ export interface IGame {
   duration: number;
   reserved: boolean;
   min_yes_votes_count: number;
-  status: GAME_STATUS;
   cancelled_reason: string | null;
-  moderators: PlayerOptionType[] | null; // on server is array of user IDs
-  participants: PlayerOptionType[] | null; // on server is array of user IDs
+  // status & live tracking
+  status: GAME_STATUS;
+  moderators: PlayerOptionType[] | null;
+  participants: PlayerOptionType[] | null;
   started_at: string | null;
   ended_at: string | null;
-  live_game_status: LIVE_GAME_STATUS; // when "status" is "live"
-  // info
+  // metadata
   created_at: string;
   created_by: string;
 }
@@ -122,21 +115,30 @@ export type PostVote = {
   response: IVote;
 };
 
-// moves
-export interface IMove {
+// goals
+export interface IGoal {
   // basic
-  id: string;
+  id: number;
   game_id: string;
   // form
   scorer_id: string;
   is_scorer_goalkeeper: boolean;
   assist_id: string | null;
   is_assist_goalkeeper: boolean;
-  time: number;
+  time: string; // ISO timestamp of the goal
   type: MOVE_TYPE;
   assist_type: ASSIST_TYPE;
   // info
   created_at: string;
-  updated_at: string;
   created_by: string;
 }
+
+export type PostGoal = {
+  request: Omit<IGoal, "id" | "created_at">;
+  response: IGoal;
+};
+
+export type GetGoals = {
+  request: null;
+  response: IGoal[];
+};

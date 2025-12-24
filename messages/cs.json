@@ -115,7 +115,62 @@
       "updateError": "Nelze aktualizovat lobby",
       "fetchError": "Nelze načíst možnosti hráčů"
     },
-    "action": {},
+    "action": {
+      "recordGoal": "Zaznamenat Gól",
+      "scorer": "Střelec",
+      "selectPlayer": "Vyberte hráče",
+      "isGoalkeeper": "Střelec je brankář",
+      "assist": "Asistent",
+      "noAssist": "Bez Asistence",
+      "assistantIsGoalkeeper": "Asistent je brankář",
+      "goalType": "Typ Gólu",
+      "assistType": "Typ Asistence",
+      "recordButton": "Zaznamenat Gól",
+      "recording": "Zaznamenávání...",
+      "goalsListSection": {
+        "goalsAmount": "Góly ({amount})"
+      }
+    },
+    "moveType": {
+      "regular_goal": "Běžný Gól",
+      "header_goal": "Gól Hlavou",
+      "corner_goal": "Gól z Rohu",
+      "long_goal": "Gól ze Vzdálenosti",
+      "penalty": "Pokutový Kop",
+      "free_kick": "Přímý Kop",
+      "own_goal": "Vlastní Gól"
+    },
+    "assistType": {
+      "regular_play": "Běžná Hra",
+      "corner": "Roh",
+      "free_kick": "Přímý Kop",
+      "throw_in": "Vhazování",
+      "penalty": "Pokutový Kop"
+    },
+    "control": {
+      "startGame": "Začít Hru",
+      "gameStarted": "Hra začala",
+      "startGameError": "Nepodařilo se začít hru",
+      "kickoff": "Výkop",
+      "matchStarted": "Zápas začal",
+      "kickoffError": "Nepodařilo se začít zápas",
+      "matchInProgress": "Zápas probíhá",
+      "pauseBtn": "Pauza",
+      "gamePaused": "Hra je pozastavena",
+      "pauseError": "Nepodařilo se pozastavit hru",
+      "resumeBtn": "Pokračovat",
+      "gameResumed": "Hra pokračuje",
+      "resumeError": "Nepodařilo se pokračovat v hře",
+      "endGameBtn": "Ukončit Hru",
+      "gameEnded": "Hra skončila",
+      "endGameError": "Nepodařilo se ukončit hru"
+    },
+    "goal": {
+      "scorerRequired": "Prosím vyberte střelce",
+      "goalRecorded": "Gól byl úspěšně zaznamenán",
+      "goalRecordError": "Nepodařilo se zaznamenat gól",
+      "goalRecordedSuccess": "Gól byl zaznamenán"
+    },
     "stats": {},
     "list": {
       "title": "Hry",
@@ -154,7 +209,7 @@
       "updateSuccess": "Hlasování bylo úspěšně aktualizováno",
       "updateError": "Nelze hlasovat"
     },
-    "minutes": "minutes",
+    "minutes": "minut",
     "locationsFetchError": "Nepodařilo se načíst seznam lokací"
   },
   "players": {
@@ -308,7 +363,8 @@
     "noLocation": "Vyberte prosím místo na mapě",
     "copy": "Kopírovat",
     "copied": "Zkopírováno",
-    "interfaceLanguage": "Jazyk rozhraní"
+    "interfaceLanguage": "Jazyk rozhraní",
+    "cancel": "Zrušit"
   },
   "logout": {
     "logoutButton": "Odhlásit se",

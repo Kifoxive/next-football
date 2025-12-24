@@ -32,20 +32,31 @@ export enum GAME_STATUS {
   cancelled = "cancelled",
 }
 
+// Deprecated - use GAME_STATUS instead
+// export enum LIVE_GAME_STATUS {
+//   waiting_for_kickoff = "waiting_for_kickoff",
+//   in_progress = "in_progress",
+//   paused = "paused",
+//   ended = "completed",
+// }
+
+export enum MOVE_TYPE {
+  // regular_play = "regular_play",
+  regular_goal = "regular_goal",
+  header_goal = "header_goal",
+  corner_goal = "corner_goal",
+  long_goal = "long_goal",
+  penalty = "penalty",
+  free_kick = "free_kick",
+  own_goal = "own_goal",
+}
+
 export enum ASSIST_TYPE {
   regular_play = "regular_play",
   corner = "corner",
   free_kick = "free_kick",
   throw_in = "throw_in",
   penalty = "penalty",
-}
-
-export enum MOVE_TYPE {
-  regular_goal = "regular_goal",
-  header_goal = "header_goal",
-  penalty_goal = "penalty_goal",
-  long_goal = "long_goal",
-  own_goal = "own_goal",
 }
 
 export enum VOTE_OPTION {
@@ -144,4 +155,38 @@ export const config = {
     locations: "locations-bucket",
     profiles: "profiles-bucket",
   },
+};
+
+export const VALID_GAME_STATUS_TRANSITIONS: Record<GAME_STATUS, GAME_STATUS[]> =
+  {
+    [GAME_STATUS.initialization]: [GAME_STATUS.voting, GAME_STATUS.cancelled],
+    [GAME_STATUS.voting]: [GAME_STATUS.confirmed, GAME_STATUS.cancelled],
+    [GAME_STATUS.confirmed]: [GAME_STATUS.live, GAME_STATUS.cancelled],
+    [GAME_STATUS.live]: [GAME_STATUS.completed],
+    [GAME_STATUS.completed]: [],
+    [GAME_STATUS.cancelled]: [GAME_STATUS.confirmed],
+  };
+
+export const VALID_GAME_STATUS_TRANSITIONS_FRONTEND: Record<
+  GAME_STATUS,
+  GAME_STATUS[]
+> = {
+  [GAME_STATUS.initialization]: [
+    GAME_STATUS.initialization,
+    GAME_STATUS.voting,
+    GAME_STATUS.cancelled,
+  ],
+  [GAME_STATUS.voting]: [
+    GAME_STATUS.voting,
+    GAME_STATUS.confirmed,
+    GAME_STATUS.cancelled,
+  ],
+  [GAME_STATUS.confirmed]: [
+    GAME_STATUS.confirmed,
+    GAME_STATUS.live,
+    GAME_STATUS.cancelled,
+  ],
+  [GAME_STATUS.live]: [GAME_STATUS.live, GAME_STATUS.completed],
+  [GAME_STATUS.completed]: [GAME_STATUS.completed],
+  [GAME_STATUS.cancelled]: [GAME_STATUS.cancelled, GAME_STATUS.confirmed],
 };
