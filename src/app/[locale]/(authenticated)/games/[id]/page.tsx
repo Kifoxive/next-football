@@ -38,8 +38,11 @@ export default function GamesDetailPage() {
 
   const tabItems = ["detail", "stats"];
   // Insert lobby and action tabs if user has moderator permissions
-  if (authUser && permissions["moderator"].includes(authUser.role)) {
-    tabItems.splice(1, 0, "lobby", "action");
+  if (authUser) {
+    if (permissions["moderator"].includes(authUser.role))
+      tabItems.splice(1, 0, "lobby", "action");
+    else if (game?.moderators?.some(({ value }) => value === authUser?.id))
+      tabItems.splice(1, 0, "action");
   }
 
   // set active tab from URL query param

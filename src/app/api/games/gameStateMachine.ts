@@ -198,6 +198,7 @@ export class GameStateMachine {
       success: true,
       data: {
         status: GAME_STATUS.completed,
+        ended_at: new Date().toISOString(),
       },
     };
   }

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { executeGameCommand } from "@/utils/gameCommands";
 import { GAME_STATUS } from "@/config";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -33,6 +33,9 @@ export default function GameActionTab({
 }: GameActionTabProps) {
   const t = useTranslations();
 
+  // Transitions
+  const [isCommandPending, startCommandTransition] = useTransition();
+
   // Form states
   const [goals, setGoals] = useState<IGoal[] | null>(null);
   const [openGoalModal, setOpenGoalModal] = useState(false);
@@ -44,6 +47,14 @@ export default function GameActionTab({
   const getElapsedSeconds = (): number => {
     if (!game.started_at) return 0;
     const startTime = new Date(game.started_at).getTime();
+
+    // If game has ended, use ended_at timestamp for fixed time
+    if (game.ended_at) {
+      const endTime = new Date(game.ended_at).getTime();
+      return Math.floor((endTime - startTime) / 1000);
+    }
+
+    // Otherwise use current time
     const currentTime = new Date().getTime();
     return Math.floor((currentTime - startTime) / 1000);
   };
@@ -64,11 +75,15 @@ export default function GameActionTab({
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (isGameLive && game.started_at) {
+    // Only update timer if game is live and hasn't ended
+    if (isGameLive && game.started_at && !game.ended_at) {
       // Update timer every second based on started_at timestamp
       interval = setInterval(() => {
         setElapsedSeconds(getElapsedSeconds());
       }, 1000);
+    } else if (game.ended_at && game.started_at) {
+      // If game has ended, set fixed time once
+      setElapsedSeconds(getElapsedSeconds());
     }
 
     return () => clearInterval(interval);
@@ -83,25 +98,38 @@ export default function GameActionTab({
     }
   }, [isGameLive]);
 
-  const handleStartGame = async () => {
-    const result = await executeGameCommand(gameId, "startGame");
-    if (result.success) {
-      toast.success(t("games.control.gameStarted"));
-      // Timer will auto-calculate from started_at
-      onGameStatusChange?.(result.game!);
-    } else {
-      toast.error(result.error || t("games.control.startGameError"));
-    }
+  const handleStartGame = () => {
+    startCommandTransition(async () => {
+      try {
+        const result = await executeGameCommand(gameId, "startGame");
+        if (result.success) {
+          toast.success(t("games.control.gameStarted"));
+          onGameStatusChange?.(result.game!);
+        } else {
+          toast.error(result.error || t("games.control.startGameError"));
+        }
+      } catch (error) {
+        toast.error(t("games.control.startGameError"));
+        console.error(error);
+      }
+    });
   };
 
-  const handleEndGame = async () => {
-    const result = await executeGameCommand(gameId, "endGame");
-    if (result.success) {
-      toast.success(t("games.control.gameEnded"));
-      onGameStatusChange?.(result.game!);
-    } else {
-      toast.error(result.error || t("games.control.endGameError"));
-    }
+  const handleEndGame = () => {
+    startCommandTransition(async () => {
+      try {
+        const result = await executeGameCommand(gameId, "endGame");
+        if (result.success) {
+          toast.success(t("games.control.gameEnded"));
+          onGameStatusChange?.(result.game!);
+        } else {
+          toast.error(result.error || t("games.control.endGameError"));
+        }
+      } catch (error) {
+        toast.error(t("games.control.endGameError"));
+        console.error(error);
+      }
+    });
   };
 
   const handleOpenGoalModal = () => {
@@ -113,8 +141,15 @@ export default function GameActionTab({
   };
 
   const handleGoalRecorded = () => {
-    toast.success(t("games.goal.goalRecorded"));
-    fetchGoals();
+    startCommandTransition(async () => {
+      try {
+        toast.success(t("games.goal.goalRecorded"));
+        await fetchGoals();
+      } catch (error) {
+        toast.error(t("games.goal.goalRecordError"));
+        console.error(error);
+      }
+    });
   };
 
   const fetchGoals = async () => {
@@ -189,27 +224,28 @@ export default function GameActionTab({
               flexWrap="wrap"
             >
               {!isGameLive && (
-                <Button
+                <LoadingButton
                   variant="contained"
                   color="primary"
                   startIcon={<PlayArrowIcon />}
                   onClick={handleStartGame}
-                  disabled={isLoading || game.status !== GAME_STATUS.confirmed}
+                  disabled={game.status !== GAME_STATUS.confirmed}
+                  loading={isCommandPending}
                 >
                   {t("games.control.startGame")}
-                </Button>
+                </LoadingButton>
               )}
 
               {isGameLive && (
-                <Button
+                <LoadingButton
                   variant="contained"
                   color="error"
                   startIcon={<StopIcon />}
                   onClick={handleEndGame}
-                  disabled={isLoading}
+                  loading={isCommandPending}
                 >
                   {t("games.control.endGameBtn")}
-                </Button>
+                </LoadingButton>
               )}
             </Stack>
           </Stack>
@@ -222,15 +258,15 @@ export default function GameActionTab({
             </Typography>
 
             <Stack direction="row" spacing={2}>
-              <Button
+              <LoadingButton
                 variant="contained"
                 color="success"
                 onClick={handleOpenGoalModal}
-                disabled={isLoading}
+                loading={isCommandPending}
                 size="large"
               >
                 {t("games.action.recordGoal")}
-              </Button>
+              </LoadingButton>
             </Stack>
           </Paper>
         )}
