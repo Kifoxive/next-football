@@ -171,7 +171,38 @@
       "goalRecordError": "Не вдалося записати гол",
       "goalRecordedSuccess": "Гол записано"
     },
-    "stats": {},
+    "stats": {
+      "matchStatistics": {
+        "title": "Статистика матчу",
+        "totalGoals": "Всього голів",
+        "averageInterval": "Середній інтервал між голами",
+        "goalIntensity": "Інтенсивність голів",
+        "intensive": "Інтенсивна",
+        "normal": "Нормальна",
+        "relaxed": "Розслаблена",
+        "goalsWithAssist": "Голи з асистом"
+      },
+      "myStatistics": {
+        "title": "Моя статистика",
+        "myGoals": "Мої голи",
+        "myAssists": "Мої асисти",
+        "myShare": "Мій дріб голів",
+        "others": "Інші",
+        "topScorer": "Ви в топ {rank} бомбардирів",
+        "topAssister": "Ви в топ {rank} асистентів"
+      },
+      "goalsOverTime": {
+        "title": "Голи за часом",
+        "description": "Голи за 10-хвилинним інтервалом",
+        "allGoals": "Усі голи",
+        "myGoalsLine": "Мої голи",
+        "goals": "Голи",
+        "minutes": "Хвилини"
+      },
+      "goalTypes": {
+        "title": "Розподіл типів голів"
+      }
+    },
     "list": {
       "title": "Ігри",
       "add": "Додати нову гру",
@@ -229,7 +260,7 @@
     },
     "edit": {
       "title": "Редагувати гравця",
-      "updateButton": "Оновити player",
+      "updateButton": "Оновити гравця",
       "updateSuccess": "Гравця успішно оновлено",
       "updateError": "Не вдалося оновити гравця",
       "fetchError": "Не вдалося отримати гравця",

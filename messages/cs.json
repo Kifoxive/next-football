@@ -171,7 +171,38 @@
       "goalRecordError": "Nepodařilo se zaznamenat gól",
       "goalRecordedSuccess": "Gól byl zaznamenán"
     },
-    "stats": {},
+    "stats": {
+      "matchStatistics": {
+        "title": "Statistika Zápasu",
+        "totalGoals": "Celkem Gólů",
+        "averageInterval": "Průměrný Interval Mezi Góly",
+        "goalIntensity": "Intenzita Golů",
+        "intensive": "Intenzivní",
+        "normal": "Normální",
+        "relaxed": "Uvolněná",
+        "goalsWithAssist": "Góly S Asistencí"
+      },
+      "myStatistics": {
+        "title": "Moje Statistiky",
+        "myGoals": "Mé Góly",
+        "myAssists": "Mé Asistence",
+        "myShare": "Moje Podíl Na Golech",
+        "others": "Ostatní",
+        "topScorer": "Jste v top {rank} střelcích",
+        "topAssister": "Jste v top {rank} asistujících"
+      },
+      "goalsOverTime": {
+        "title": "Góly Během Času",
+        "description": "Góly za 10 minutový interval",
+        "allGoals": "Všechny Góly",
+        "myGoalsLine": "Mé Góly",
+        "goals": "Góly",
+        "minutes": "Minuty"
+      },
+      "goalTypes": {
+        "title": "Rozdělení Typů Gólů"
+      }
+    },
     "list": {
       "title": "Hry",
       "add": "Přidat novou hru",

@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 import { GetOneGame, PostVote } from "../types";
+import { IGoal } from "../types";
 import EditIcon from "@mui/icons-material/Edit";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,6 +16,7 @@ import { useAuthStore } from "@/store/auth";
 import toast from "react-hot-toast";
 import GameDetail from "./_components/GameDetailTab/GameDetail";
 import GameActionTab from "./_components/GameActionTab";
+import GameStatsTab from "./_components/GameStatsTab/GameStatsTab";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -35,6 +37,7 @@ export default function GamesDetailPage() {
   const [isUpdatePending, startUpdateTransition] = useTransition();
   const [isVotePending, startVoteTransition] = useTransition();
   const [game, setGame] = useState<GetOneGame["response"]>();
+  const [goals, setGoals] = useState<IGoal[] | null>(null);
 
   const tabItems = ["detail", "stats"];
   // Insert lobby and action tabs if user has moderator permissions
@@ -190,10 +193,13 @@ export default function GamesDetailPage() {
               onGameStatusChange={(updatedGame) => {
                 setGame((prevGame) => ({ ...prevGame!, ...updatedGame }));
               }}
+              onGoalsUpdate={(updatedGoals) => {
+                setGoals(updatedGoals);
+              }}
             />
           </TabPanel>
           <TabPanel value="stats" sx={{ padding: 0 }}>
-            Item Three
+            <GameStatsTab game={game} goals={goals} />
           </TabPanel>
         </TabContext>
       )}

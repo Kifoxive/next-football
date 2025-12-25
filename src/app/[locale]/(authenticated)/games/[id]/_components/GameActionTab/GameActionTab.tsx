@@ -23,6 +23,7 @@ interface GameActionTabProps {
   game: IGame;
   isLoading?: boolean;
   onGameStatusChange?: (game: IGame) => void;
+  onGoalsUpdate?: (goals: IGoal[]) => void;
 }
 
 export default function GameActionTab({
@@ -30,6 +31,7 @@ export default function GameActionTab({
   game,
   isLoading = false,
   onGameStatusChange,
+  onGoalsUpdate,
 }: GameActionTabProps) {
   const t = useTranslations();
 
@@ -157,12 +159,12 @@ export default function GameActionTab({
       const response = await fetch(`/api/games/${gameId}/goals`);
       if (response.ok) {
         const data = await response.json();
-        setGoals(
-          data.sort(
-            (a: IGoal, b: IGoal) =>
-              new Date(a.time).getTime() - new Date(b.time).getTime()
-          )
+        const sortedGoals = data.sort(
+          (a: IGoal, b: IGoal) =>
+            new Date(a.time).getTime() - new Date(b.time).getTime()
         );
+        setGoals(sortedGoals);
+        onGoalsUpdate?.(sortedGoals);
       }
     } catch (error) {
       console.error("Failed to fetch goals:", error);

@@ -171,7 +171,38 @@
       "goalRecordError": "Failed to record goal",
       "goalRecordedSuccess": "Goal has been recorded"
     },
-    "stats": {},
+    "stats": {
+      "matchStatistics": {
+        "title": "Match Statistics",
+        "totalGoals": "Total Goals",
+        "averageInterval": "Average Interval Between Goals",
+        "goalIntensity": "Goal Intensity",
+        "intensive": "Intensive",
+        "normal": "Normal",
+        "relaxed": "Relaxed",
+        "goalsWithAssist": "Goals with Assists"
+      },
+      "myStatistics": {
+        "title": "My Statistics",
+        "myGoals": "My Goals",
+        "myAssists": "My Assists",
+        "myShare": "My Share of Goals",
+        "others": "Others",
+        "topScorer": "You are in the top {rank} scorers",
+        "topAssister": "You are in the top {rank} assisters"
+      },
+      "goalsOverTime": {
+        "title": "Goals Over Time",
+        "description": "Goals per 10-minute interval",
+        "allGoals": "All Goals",
+        "myGoalsLine": "My Goals",
+        "goals": "Goals",
+        "minutes": "Minutes"
+      },
+      "goalTypes": {
+        "title": "Goal Types Distribution"
+      }
+    },
     "list": {
       "title": "Games",
       "add": "Add a new game",

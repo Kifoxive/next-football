@@ -1,6 +1,6 @@
 {
   "name": "next-football",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -20,6 +20,7 @@
     "@mui/lab": "^7.0.1-beta.19",
     "@mui/material": "^7.0.0",
     "@mui/material-nextjs": "^7.1.0",
+    "@mui/x-charts": "^8.23.0",
     "@mui/x-date-pickers": "^8.3.0",
     "@supabase/ssr": "^0.6.1",
     "@toolpad/core": "^0.15.0",
