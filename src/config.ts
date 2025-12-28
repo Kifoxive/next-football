@@ -110,6 +110,7 @@ export const config = {
     login: "/login",
     unauthorized: "/unauthorized",
     logout: "/logout",
+    privacyPolicy: "/privacy-policy",
   },
   endpoints: {
     auth: {

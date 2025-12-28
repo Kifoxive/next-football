@@ -40,7 +40,8 @@
     "maxValue": "Zadejte číslo menší nebo rovné {value}",
     "passwordLength": "Heslo musí mít alespoň {minLength} znaků",
     "passwordsMismatch": "Hesla se neshodují",
-    "participantsMinLength": "Musí být vybráni alespoň {minLength} účastníci"
+    "participantsMinLength": "Musí být vybráni alespoň {minLength} účastníci",
+    "privacyPolicyRequired": "Musíte souhlasit se Zásadami ochrany osobních údajů, abyste mohli pokračovat"
   },
   "login": {
     "title": "Přihlásit se",
@@ -81,7 +82,7 @@
       "removeError": "Nelze odebrat hru",
       "removeDialog": {
         "title": "Opravdu chcete tuto hru odebrat?",
-        "description": "Tuto akci nelze vrátit zpět. Data hry budou trvale smazána.",
+        "description": "Tuto akci nelze vrátit zpět. Data hry budou trvale smazána",
         "agreeBtnText": "Ano, odebrat",
         "cancelBtnText": "Zrušit"
       }
@@ -268,7 +269,7 @@
       "removeError": "Nelze odebrat hráče",
       "removeDialog": {
         "title": "Opravdu chcete tohoto hráče odstranit?",
-        "description": "Tuto akci nelze vrátit zpět. Data hráče budou trvale smazána.",
+        "description": "Tuto akci nelze vrátit zpět. Data hráče budou trvale smazána",
         "agreeBtnText": "Ano, odstranit",
         "cancelBtnText": "Zrušit"
       },
@@ -276,7 +277,7 @@
       "viewButton": "Zobrazit hráče",
       "inviteDialog": {
         "title": "Aktivovat uživatele",
-        "description": "Chcete-li uživateli umožnit přihlášení, vygenerujte a sdílejte s ním odkaz nebo QR kód.",
+        "description": "Chcete-li uživateli umožnit přihlášení, vygenerujte a sdílejte s ním odkaz nebo QR kód",
         "agreeBtnText": "Generovat odkaz",
         "cancelBtnText": "Zavřít",
         "createLoading": "Generování odkazu...",
@@ -329,7 +330,7 @@
       "removeError": "Nelze odebrat polohu",
       "removeDialog": {
         "title": "Opravdu chcete tuto polohu odstranit?",
-        "description": "Tuto akci nelze vrátit zpět. Data o poloze budou trvale smazána.",
+        "description": "Tuto akci nelze vrátit zpět. Data o poloze budou trvale smazána",
         "agreeBtnText": "Ano, odstranit",
         "cancelBtnText": "Zrušit"
       }
@@ -411,7 +412,12 @@
   "activate": {
     "title": "Vítejte",
     "subtitle": "Byli jste pozváni k připojení k aplikaci Next Football",
-    "description": "Toto je aplikace, kde si můžete domluvit fotbalové zápasy s přáteli",
+    "description": "Toto je aplikace, kde můžete...",
+    "list": {
+      "negotiateGames": "Vyjednávat fotbalové zápasy",
+      "viewStats": "Zobrazit statistiky výkonu",
+      "history": "Uchovávat historii svých zápasů"
+    },
     "welcome": "Vítejte, {username}",
     "fetchError": "Nelze načíst hráče",
     "join": "Připojit se",
@@ -432,6 +438,8 @@
     "password": "Heslo",
     "confirmPassword": "Potvrdit heslo",
     "signUp": "Registrace",
+    "agreeTerms": "Souhlasím s",
+    "privacyPolicy": "zásadami ochrany osobních údajů",
     "or": "nebo",
     "google": "Registrace přes Google",
     "loading": "Aktivace...",
@@ -443,5 +451,47 @@
     "warning": "Uživatel se nemůže přihlásit",
     "description": "Požádejte moderátora o zaslání odkazu s pozvánkou",
     "solution": "Přejít na přihlašovací stránku"
+  },
+  "privacyPolicy": {
+    "title": "Zásady ochrany osobních údajů",
+    "lastUpdated": "Poslední aktualizace: 28. prosince 2025",
+    "sections": {
+      "introduction": {
+        "title": "Úvod",
+        "content": "Next Football je soukromá aplikace pouze pro pozvané uživatele určená pro přátelé, aby organizovali a sledovali fotbalové zápasy. Tyto Zásady ochrany osobních údajů vysvětlují, jaké informace shromažďujeme, jak je používáme a jak je chránodáme"
+      },
+      "scope": {
+        "title": "Rozsah a přístup",
+        "content": "Tato aplikace je určena výhradně pozvaným uživatelům. Není dostupný žádný veřejný přístup. Všichni uživatelé musí být pozváni stávajícími členy, aby si vytvořili účet"
+      },
+      "dataCollection": {
+        "title": "Data, která shromažďujeme",
+        "content": "Shromažďujeme minimální osobní údaje nezbytné k provozování aplikace:\n• Jméno a příjmení (uvedeno při registraci)\n• E-mailová adresa (pro ověřování účtu)\n• Záznamy o gólech během zápasů (střelec, asistent, čas, typ)\n• Záznamy o zápasech (místo, datum, účastníci, stav)\n• Ověření pomocí poskytovatelů OAuth, pokud je to vhodné\n\nNESHROMažďujeme:\n• IP adresy\n• Cookies (mimo správu technických relací)\n• Data prohlížeče\n• Informace o zařízení\n• Data o poloze\n• Analytiku používání"
+      },
+      "dataStorage": {
+        "title": "Úložiště dat",
+        "content": "Všechna data jsou bezpečně uložena v Supabase, službě backendu založené na PostgreSQL. Data jsou uložena pouze po dobu, kdy je váš účet aktivní, a nikdy se nesdělují třetím stranám pro komerční účely"
+      },
+      "dataUsage": {
+        "title": "Jak používáme vaše data",
+        "content": "Vaše data se používají výhradně pro:\n• Vytváření a správu vašeho účtu\n• Sledování a zobrazování statistik zápasů\n• Výpočet individuálních a týmových metrik výkonu\n• Zobrazení výsledků zápasů a ranking hráčů\n• Umožnění komunikace v aplikaci"
+      },
+      "security": {
+        "title": "Bezpečnost",
+        "content": "Implementujeme standardní opatření na ochranu vašich osobních údajů:\n• Šifrované přenosy dat (HTTPS/TLS)\n• Bezpečné ukládání hesel pomocí hashing\n• Řízení přístupu na základě rolí\n• Pravidelné bezpečnostní recenze\n\nVšak žádná metoda přenosu přes internet není zcela bezpečná. Doporučujeme vám používat silná hesla a chránit přihlašovací údaje vašeho účtu"
+      },
+      "userRights": {
+        "title": "Vaše práva",
+        "content": "Máte právo:\n• Přistupovat k vašim osobním údajům\n• Požádat o opravu nepřesných údajů\n• Požádat o smazání vašeho účtu a souvisejících dat\n• Kdykoliv se odhlásit z aplikace\n\nChcete-li tato práva uplatnit, kontaktujte nás pomocí níže uvedených informací"
+      },
+      "changes": {
+        "title": "Změny těchto zásad",
+        "content": "Tyto Zásady ochrany osobních údajů můžeme čas od času aktualizovat. Významné změny budou sděleny uživatelům. Pokračování v používání aplikace po takových změnách představuje přijetí aktualizovaných zásad"
+      },
+      "contact": {
+        "title": "Kontakt",
+        "content": "Pokud máte dotazy nebo obavy týkající se těchto Zásad ochrany osobních údajů, kontaktujte prosím správce aplikace prostřednictvím kanálů podpory aplikace"
+      }
+    }
   }
 }

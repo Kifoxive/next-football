@@ -25,7 +25,7 @@ export const AnonymousLayoutWrapper = ({
       >
         <Navbar anonymous />
       </Box>
-      <Box className="flex grow" component="main">
+      <Box className="flex grow overflow-scroll" component="main">
         {children}
       </Box>
     </Box>

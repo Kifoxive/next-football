@@ -106,7 +106,7 @@ const InviteDialog: React.FC<InviteDialogProps> = ({
       <DialogContent>
         <Typography gutterBottom>{t("description")}</Typography>
         {activationLink && (
-          <Box className="flex flex-col items-center w-full">
+          <Box className="flex flex-col items-center w-full py-2">
             <QRCodeSVG
               value={activationLink}
               imageSettings={{

@@ -9,10 +9,12 @@ import { activateUser } from "@/app/[locale]/(anonymous)/login/actions";
 
 type SignUpGoogleButtonProps = {
   token: string;
+  disabled: boolean;
 };
 
 export const SignUpGoogleButton: React.FC<SignUpGoogleButtonProps> = ({
   token,
+  disabled = false,
 }) => {
   const t = useTranslations("signUp");
 
@@ -43,7 +45,7 @@ export const SignUpGoogleButton: React.FC<SignUpGoogleButtonProps> = ({
     <Button
       onClick={onSignUp}
       loading={isLoginPending}
-      disabled={isLoginPending}
+      disabled={isLoginPending || disabled}
       variant="outlined"
       color="inherit"
       fullWidth

@@ -1,4 +1,14 @@
-import { Typography, Button, Grid, Box, Paper, Container } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Grid,
+  Box,
+  Paper,
+  Container,
+  FormControlLabel,
+  Checkbox,
+  Link,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -11,16 +21,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "./form";
 import { SignUpGoogleButton } from "./SignUpGoogleButton";
 import { TFunction } from "@/utils/types";
+import { config } from "@/config";
 
-export const emailSignUpFormSchema = (t: TFunction) =>
+export const emailSignUpFormSchema = (tValidation: TFunction) =>
   z
     .object({
-      email: z.string().email(t("emailFormat")),
-      password: z.string().min(8, t("passwordLength", { minLength: 8 })),
-      confirmPassword: z.string().min(8, t("passwordLength", { minLength: 8 })),
+      email: z.string().email(tValidation("emailFormat")),
+      password: z
+        .string()
+        .min(8, tValidation("passwordLength", { minLength: 8 })),
+      confirmPassword: z
+        .string()
+        .min(8, tValidation("passwordLength", { minLength: 8 })),
+      agreePrivacy: z.boolean().refine((val) => val === true, {
+        message: tValidation("privacyPolicyRequired"),
+      }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: t("passwordsMismatch"),
+      message: tValidation("passwordsMismatch"),
       path: ["confirmPassword"],
     });
 
@@ -44,6 +62,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    agreePrivacy: false,
   };
 
   const methods = useForm<IEmailSignUpForm>({
@@ -52,7 +71,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token }) => {
     reValidateMode: "onChange",
     resolver: zodResolver(emailSignUpFormSchema(tValidation)),
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
 
   const onSignUp = (data: IEmailSignUpForm) => {
     startLoginTransition(() => {
@@ -123,12 +142,40 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token }) => {
               </Grid>
 
               <Grid size={1}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...methods.register("agreePrivacy")}
+                      size="small"
+                    />
+                  }
+                  label={
+                    <Box
+                      component="span"
+                      sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}
+                    >
+                      <span>{t("agreeTerms")}</span>
+                      <Link
+                        href={config.routes.privacyPolicy}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        underline="always"
+                      >
+                        {t("privacyPolicy")}
+                      </Link>
+                    </Box>
+                  }
+                  sx={{ ml: -1 }}
+                />
+              </Grid>
+
+              <Grid size={1}>
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={isLoginPending}
+                  disabled={isLoginPending || !watch("agreePrivacy")}
                 >
                   {t("signUp")}
                 </Button>
@@ -145,7 +192,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ token }) => {
           <Box className="flex-grow border-t border-gray-700" />
         </Box>
 
-        <SignUpGoogleButton token={token} />
+        <SignUpGoogleButton
+          token={token}
+          disabled={isLoginPending || !watch("agreePrivacy")}
+        />
       </Box>
     </Container>
   );
