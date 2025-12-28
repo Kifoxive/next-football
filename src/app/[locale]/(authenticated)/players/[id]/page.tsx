@@ -49,6 +49,7 @@ export default function PlayersDetailPage() {
       isLoading={!user}
       endContent={[
         {
+          show: !user?.joined_at,
           text: t("inviteButton"),
           icon: <LinkIcon />,
           variant: "outlined",

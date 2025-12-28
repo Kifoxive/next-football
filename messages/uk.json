@@ -121,7 +121,7 @@
       "selectPlayer": "Виберіть гравця",
       "isGoalkeeper": "Авторем голу є воротар",
       "assist": "Асист",
-      "noAssist": "Без Асисту",
+      "noAssist": "Без асисту",
       "assistantIsGoalkeeper": "Асистентом є воротар",
       "goalType": "Тип голу",
       "assistType": "Тип асисту",
@@ -167,9 +167,9 @@
     },
     "goal": {
       "scorerRequired": "Будь ласка, виберіть автора гола",
+      "goalRecording": "Запис гола...",
       "goalRecorded": "Гол успішно записано",
-      "goalRecordError": "Не вдалося записати гол",
-      "goalRecordedSuccess": "Гол записано"
+      "goalRecordError": "Не вдалося записати гол"
     },
     "stats": {
       "matchStatistics": {

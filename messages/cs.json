@@ -167,9 +167,9 @@
     },
     "goal": {
       "scorerRequired": "Prosím vyberte střelce",
+      "goalRecording": "Zaznamenávání gólu...",
       "goalRecorded": "Gól byl úspěšně zaznamenán",
-      "goalRecordError": "Nepodařilo se zaznamenat gól",
-      "goalRecordedSuccess": "Gól byl zaznamenán"
+      "goalRecordError": "Nepodařilo se zaznamenat gól"
     },
     "stats": {
       "matchStatistics": {

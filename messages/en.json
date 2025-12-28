@@ -167,9 +167,9 @@
     },
     "goal": {
       "scorerRequired": "Please select a scorer",
+      "goalRecording": "Recording goal...",
       "goalRecorded": "Goal recorded successfully",
-      "goalRecordError": "Failed to record goal",
-      "goalRecordedSuccess": "Goal has been recorded"
+      "goalRecordError": "Failed to record goal"
     },
     "stats": {
       "matchStatistics": {

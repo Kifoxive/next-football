@@ -20,6 +20,7 @@ import GoalsListSection from "./GoalsListSection";
 
 interface GameActionTabProps {
   gameId: string;
+  goals: IGoal[] | null;
   game: IGame;
   isLoading?: boolean;
   onGameStatusChange?: (game: IGame) => void;
@@ -29,17 +30,15 @@ interface GameActionTabProps {
 export default function GameActionTab({
   gameId,
   game,
+  goals,
   isLoading = false,
   onGameStatusChange,
-  onGoalsUpdate,
 }: GameActionTabProps) {
   const t = useTranslations();
 
   // Transitions
   const [isCommandPending, startCommandTransition] = useTransition();
 
-  // Form states
-  const [goals, setGoals] = useState<IGoal[] | null>(null);
   const [openGoalModal, setOpenGoalModal] = useState(false);
 
   // Game control states
@@ -141,40 +140,6 @@ export default function GameActionTab({
   const handleCloseGoalModal = () => {
     setOpenGoalModal(false);
   };
-
-  const handleGoalRecorded = () => {
-    startCommandTransition(async () => {
-      try {
-        toast.success(t("games.goal.goalRecorded"));
-        await fetchGoals();
-      } catch (error) {
-        toast.error(t("games.goal.goalRecordError"));
-        console.error(error);
-      }
-    });
-  };
-
-  const fetchGoals = async () => {
-    try {
-      const response = await fetch(`/api/games/${gameId}/goals`);
-      if (response.ok) {
-        const data = await response.json();
-        const sortedGoals = data.sort(
-          (a: IGoal, b: IGoal) =>
-            new Date(a.time).getTime() - new Date(b.time).getTime()
-        );
-        setGoals(sortedGoals);
-        onGoalsUpdate?.(sortedGoals);
-      }
-    } catch (error) {
-      console.error("Failed to fetch goals:", error);
-    }
-  };
-
-  // Fetch goals on mount
-  useEffect(() => {
-    fetchGoals();
-  }, [gameId]);
 
   const getPlayerName = (playerId: string) => {
     return (
@@ -286,7 +251,6 @@ export default function GameActionTab({
           game={game}
           participants={participants}
           isLoading={isLoading}
-          onGoalRecorded={handleGoalRecorded}
         />
       </Container>
     </Box>

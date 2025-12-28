@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "@mui/material";
 import { DesktopLayoutWrapper } from "./DesktopLayoutWrapper";
 import { MobileLayoutWrapper } from "./MobileLayoutWrapper";
 
@@ -9,11 +8,10 @@ export default function ClientLayoutSwitcher({
 }: {
   children: React.ReactNode;
 }) {
-  const isDesktop = useMediaQuery("(min-width: 600px)");
-
-  return isDesktop ? (
-    <DesktopLayoutWrapper>{children}</DesktopLayoutWrapper>
-  ) : (
-    <MobileLayoutWrapper>{children}</MobileLayoutWrapper>
+  return (
+    <>
+      <DesktopLayoutWrapper>{children}</DesktopLayoutWrapper>
+      <MobileLayoutWrapper>{children}</MobileLayoutWrapper>
+    </>
   );
 }

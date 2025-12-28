@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { axiosClient } from "@/utils/axiosClient";
-import { GetOneGame, PostVote } from "../types";
+import { GetGoals, GetOneGame, PostVote } from "../types";
 import { IGoal } from "../types";
 import EditIcon from "@mui/icons-material/Edit";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
@@ -23,6 +23,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GameLobby from "./_components/GameLobbyTab/GameLobby";
+import { useRealtimeGoals } from "@/utils/supabase/client";
 
 type TabItem = "detail" | "lobby" | "action" | "stats";
 
@@ -38,6 +39,11 @@ export default function GamesDetailPage() {
   const [isVotePending, startVoteTransition] = useTransition();
   const [game, setGame] = useState<GetOneGame["response"]>();
   const [goals, setGoals] = useState<IGoal[] | null>(null);
+
+  // enable realtime messages update
+  useRealtimeGoals((newGoal) => {
+    setGoals((prev) => [...(prev ?? []), newGoal]);
+  }, id);
 
   const tabItems = ["detail", "stats"];
   // Insert lobby and action tabs if user has moderator permissions
@@ -67,7 +73,25 @@ export default function GamesDetailPage() {
         console.error(e);
       }
     };
+
+    const fetchGoals = async () => {
+      try {
+        const { data } = await axiosClient.get<GetGoals["response"]>(
+          config.endpoints.games.goals.replace(":id", id)
+        );
+
+        const sortedGoals = data.sort(
+          (a: IGoal, b: IGoal) =>
+            new Date(a.time).getTime() - new Date(b.time).getTime()
+        );
+        setGoals(sortedGoals);
+      } catch (error) {
+        console.error("Failed to fetch goals:", error);
+      }
+    };
+
     fetchGame();
+    fetchGoals();
   }, [id]);
 
   const canUpdate =
@@ -189,13 +213,14 @@ export default function GamesDetailPage() {
             <GameActionTab
               gameId={game.id}
               game={game}
+              goals={goals}
               isLoading={isUpdatePending}
               onGameStatusChange={(updatedGame) => {
                 setGame((prevGame) => ({ ...prevGame!, ...updatedGame }));
               }}
-              onGoalsUpdate={(updatedGoals) => {
-                setGoals(updatedGoals);
-              }}
+              // onGoalsUpdate={(updatedGoals) => {
+              //   setGoals(updatedGoals);
+              // }}
             />
           </TabPanel>
           <TabPanel value="stats" sx={{ padding: 0 }}>

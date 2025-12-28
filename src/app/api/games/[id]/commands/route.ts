@@ -158,8 +158,8 @@ export async function POST(
               assist_id: payload.assist_id || null,
               is_assist_goalkeeper: payload.is_assist_goalkeeper || false,
               time: payload.time,
-              type: payload.type || "regular_goal", // Allow custom type from payload
-              assist_type: payload.assist_type || "regular_play", // Allow custom assist_type from payload
+              type: payload.type,
+              assist_type: payload.assist_type,
               created_by: user_id,
             },
           ])

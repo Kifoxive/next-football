@@ -31,38 +31,27 @@ export async function executeGameCommand(
   command: string,
   payload?: Record<string, unknown>
 ): Promise<{ success: boolean; game?: IGame; error?: string }> {
-  try {
-    const response = await fetch(`/api/games/${gameId}/commands`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        command,
-        payload,
-      }),
-    });
+  const response = await fetch(`/api/games/${gameId}/commands`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      command,
+      payload,
+    }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data.error || "Command execution failed",
-      };
-    }
-
-    return {
-      success: true,
-      game: data.game,
-    };
-  } catch (err) {
-    console.error("Command execution error:", err);
-    return {
-      success: false,
-      error: "Network error",
-    };
+  if (!response.ok) {
+    throw new Error(data.error || "Command execution failed");
   }
+
+  return {
+    success: true,
+    game: data.game,
+  };
 }
 
 // Optional React Hook for easier usage

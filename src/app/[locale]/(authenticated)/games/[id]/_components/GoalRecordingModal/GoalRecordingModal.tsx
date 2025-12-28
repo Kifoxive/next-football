@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { executeGameCommand } from "@/utils/gameCommands";
@@ -33,7 +33,6 @@ interface GoalRecordingModalProps {
   game: IGame;
   participants: PlayerOptionType[];
   isLoading?: boolean;
-  onGoalRecorded?: () => void;
 }
 
 export default function GoalRecordingModal({
@@ -43,21 +42,18 @@ export default function GoalRecordingModal({
   game,
   participants,
   isLoading = false,
-  onGoalRecorded,
 }: GoalRecordingModalProps) {
   const t = useTranslations();
 
   // Form states
   const [scorerId, setScorerId] = useState("");
   const [isGK, setIsGK] = useState(false);
-  const [assistId, setAssistId] = useState("");
+  const [assistId, setAssistId] = useState<string | "">("");
   const [isAssistGK, setIsAssistGK] = useState(false);
   const [moveType, setMoveType] = useState<MOVE_TYPE>(MOVE_TYPE.regular_goal);
-  const [assistType, setAssistType] = useState<ASSIST_TYPE>(
-    ASSIST_TYPE.regular_play
-  );
+  const [assistType, setAssistType] = useState<ASSIST_TYPE | string>("");
   const [timeOffsetSeconds, setTimeOffsetSeconds] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittingPending, startSubmittingTransition] = useTransition();
 
   // Calculate current time for display
   const getElapsedSeconds = (): number => {
@@ -89,55 +85,33 @@ export default function GoalRecordingModal({
       return;
     }
 
-    setIsSubmitting(true);
-
     // Calculate the adjusted time based on offset
     const baseTime = new Date(game.started_at || new Date()).getTime();
     const adjustedTime = new Date(baseTime + getAdjustedTimeSeconds() * 1000);
 
-    const result = await executeGameCommand(gameId, "recordMove", {
+    const commandBody = {
       scorer_id: scorerId,
       is_scorer_goalkeeper: isGK,
       assist_id: assistId || null,
       is_assist_goalkeeper: isAssistGK,
       time: adjustedTime.toISOString(),
       type: moveType,
-      assist_type: assistType,
-    });
+      assist_type: assistType || null,
+    };
 
-    setIsSubmitting(false);
+    startSubmittingTransition(async () => {
+      toast.promise(executeGameCommand(gameId, "recordMove", commandBody), {
+        loading: t("games.goal.goalRecording"),
+        success: t("games.goal.goalRecorded"),
+        error: t("games.goal.goalRecordError"),
+      });
 
-    if (result.success) {
-      // Reset form
-      setScorerId("");
-      setIsGK(false);
-      setAssistId("");
-      setIsAssistGK(false);
-      setMoveType(MOVE_TYPE.regular_goal);
-      setAssistType(ASSIST_TYPE.regular_play);
-      setTimeOffsetSeconds(0);
-      // Trigger callback which will show toast and refresh
-      onGoalRecorded?.();
       onClose();
-    } else {
-      toast.error(result.error || t("games.goal.goalRecordError"));
-    }
-  };
-
-  const handleClose = () => {
-    // Reset form on close
-    setScorerId("");
-    setIsGK(false);
-    setAssistId("");
-    setIsAssistGK(false);
-    setMoveType(MOVE_TYPE.regular_goal);
-    setAssistType(ASSIST_TYPE.regular_play);
-    setTimeOffsetSeconds(0);
-    onClose();
+    });
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{t("games.action.recordGoal")}</DialogTitle>
       <DialogContent sx={{ pt: 2 }}>
         <Stack spacing={3}>
@@ -146,7 +120,7 @@ export default function GoalRecordingModal({
             <IconButton
               size="small"
               onClick={() => setTimeOffsetSeconds((prev) => prev - 30)}
-              disabled={isSubmitting || isLoading}
+              disabled={isSubmittingPending || isLoading}
               title="Remove 30 seconds"
             >
               <RemoveIcon />
@@ -162,7 +136,7 @@ export default function GoalRecordingModal({
             <IconButton
               size="small"
               onClick={() => setTimeOffsetSeconds((prev) => prev + 30)}
-              disabled={isSubmitting || isLoading}
+              disabled={isSubmittingPending || isLoading}
               title="Add 30 seconds"
             >
               <AddIcon />
@@ -176,7 +150,7 @@ export default function GoalRecordingModal({
               value={scorerId}
               label={t("games.action.scorer")}
               onChange={(e) => setScorerId(e.target.value)}
-              disabled={isSubmitting || isLoading}
+              disabled={isSubmittingPending || isLoading}
             >
               <MenuItem value="">
                 <em>{t("games.action.selectPlayer")}</em>
@@ -195,7 +169,7 @@ export default function GoalRecordingModal({
               <Checkbox
                 checked={isGK}
                 onChange={(e) => setIsGK(e.target.checked)}
-                disabled={isSubmitting || isAssistGK || isLoading}
+                disabled={isSubmittingPending || isAssistGK || isLoading}
               />
             }
             label={t("games.action.isGoalkeeper")}
@@ -207,8 +181,16 @@ export default function GoalRecordingModal({
             <Select
               value={assistId}
               label={t("games.action.assist")}
-              onChange={(e) => setAssistId(e.target.value)}
-              disabled={isSubmitting || isLoading}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                setAssistId(e.target.value);
+                // Reset assist type if no assist selected
+                if (value === "") {
+                  setAssistType("");
+                }
+              }}
+              disabled={isSubmittingPending || isLoading}
             >
               <MenuItem value="">
                 <em>{t("games.action.noAssist")}</em>
@@ -230,7 +212,7 @@ export default function GoalRecordingModal({
                 <Checkbox
                   checked={isAssistGK}
                   onChange={(e) => setIsAssistGK(e.target.checked)}
-                  disabled={isSubmitting || isGK || isLoading}
+                  disabled={isSubmittingPending || isGK || isLoading}
                 />
               }
               label={t("games.action.assistantIsGoalkeeper")}
@@ -244,7 +226,7 @@ export default function GoalRecordingModal({
               value={moveType}
               label={t("games.action.goalType")}
               onChange={(e) => setMoveType(e.target.value as MOVE_TYPE)}
-              disabled={isSubmitting || isLoading}
+              disabled={isSubmittingPending || isLoading}
             >
               {Object.values(MOVE_TYPE).map((type) => (
                 <MenuItem key={type} value={type}>
@@ -261,7 +243,7 @@ export default function GoalRecordingModal({
               value={assistType}
               label={t("games.action.assistType")}
               onChange={(e) => setAssistType(e.target.value as ASSIST_TYPE)}
-              disabled={isSubmitting || isLoading || !assistId}
+              disabled={isSubmittingPending || isLoading || !assistId}
             >
               {Object.values(ASSIST_TYPE).map((type) => (
                 <MenuItem key={type} value={type}>
@@ -273,16 +255,16 @@ export default function GoalRecordingModal({
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} disabled={isSubmitting}>
+        <Button onClick={onClose} disabled={isSubmittingPending}>
           {t("basic.cancel")}
         </Button>
         <Button
           onClick={handleRecordGoal}
           variant="contained"
           color="success"
-          disabled={isSubmitting || isLoading || !scorerId}
+          disabled={isSubmittingPending || isLoading || !scorerId}
         >
-          {isSubmitting
+          {isSubmittingPending
             ? t("games.action.recording")
             : t("games.action.recordButton")}
         </Button>

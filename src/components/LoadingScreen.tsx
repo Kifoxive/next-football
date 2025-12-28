@@ -17,7 +17,7 @@ export default function LoadingScreen() {
       </Box>
       <Box className="absolute bottom-2 right-3 opacity-50">
         <Typography variant="subtitle2" fontWeight="thin">
-          v0.1.0
+          v0.3.0
         </Typography>
       </Box>
     </Box>

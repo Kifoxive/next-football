@@ -126,6 +126,7 @@ export const config = {
       list: "/games",
       delete: "/games/:id",
       vote: "/games/:id/votes",
+      goals: "/games/:id/goals",
     },
     players: {
       new: "/players",

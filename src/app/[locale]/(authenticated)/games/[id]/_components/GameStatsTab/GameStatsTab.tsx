@@ -63,6 +63,15 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
       averageIntervalSeconds = Math.round(totalSeconds / totalGoals);
     }
 
+    const totalMinutes = game.started_at
+      ? ((game.ended_at
+          ? new Date(game.ended_at).getTime()
+          : new Date().getTime()) -
+          new Date(game.started_at).getTime()) /
+        1000 /
+        60
+      : 0;
+
     // Calculate goal types distribution
     const goalTypeStats = new Map<string, number>();
     goals.forEach((goal) => {
@@ -75,9 +84,8 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
 
     if (game.started_at) {
       const startTime = new Date(game.started_at).getTime();
-
       // Initialize with 0 and ensure 0-100 minute range (0 stays 0, data shifts right)
-      for (let i = 0; i <= 100; i += 10) {
+      for (let i = 0; i <= totalMinutes; i += 10) {
         goalsPerInterval.set(i, { all: 0, mine: 0 });
       }
 
@@ -186,7 +194,6 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
     const intervals = Array.from(stats.goalsPerInterval.entries()).sort(
       (a, b) => a[0] - b[0]
     );
-    intervals.pop();
 
     const xAxisData = intervals.map(([intervalStart]) => `${intervalStart}`);
     const allGoalsData = intervals.map(([, counts]) => counts.all);
@@ -290,18 +297,6 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
                     >
                       {t(`games.stats.matchStatistics.goalIntensity`)}:{" "}
                       {t(`games.stats.matchStatistics.${intensityLevel}`)}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                {/* Goals with Assist */}
-                <Grid size={{ xs: 2, sm: 2 }}>
-                  <Box>
-                    <Typography color="textSecondary" variant="body2">
-                      {t("games.stats.matchStatistics.goalsWithAssist")}
-                    </Typography>
-                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                      {stats.goalsWithAssist} ({stats.goalsWithAssistPercent}%)
                     </Typography>
                   </Box>
                 </Grid>
