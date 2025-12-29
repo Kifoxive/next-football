@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { executeGameCommand } from "@/utils/gameCommands";
@@ -17,14 +17,15 @@ import { IGame, IGoal } from "../../../types";
 import GoalRecordingModal from "../GoalRecordingModal/GoalRecordingModal";
 import { Container } from "@mui/material";
 import GoalsListSection from "./GoalsListSection";
+import GameTimer from "./GameTimer";
 
 interface GameActionTabProps {
   gameId: string;
   goals: IGoal[] | null;
   game: IGame;
   isLoading?: boolean;
-  onGameStatusChange?: (game: IGame) => void;
-  onGoalsUpdate?: (goals: IGoal[]) => void;
+  onGameStatusChange: (game: IGame) => void;
+  onGoalRecorded: () => void;
 }
 
 export default function GameActionTab({
@@ -33,71 +34,13 @@ export default function GameActionTab({
   goals,
   isLoading = false,
   onGameStatusChange,
+  onGoalRecorded,
 }: GameActionTabProps) {
   const t = useTranslations();
-
-  // Transitions
   const [isCommandPending, startCommandTransition] = useTransition();
-
   const [openGoalModal, setOpenGoalModal] = useState(false);
-
-  // Game control states
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-
-  // Calculate elapsed time from started_at
-  const getElapsedSeconds = (): number => {
-    if (!game.started_at) return 0;
-    const startTime = new Date(game.started_at).getTime();
-
-    // If game has ended, use ended_at timestamp for fixed time
-    if (game.ended_at) {
-      const endTime = new Date(game.ended_at).getTime();
-      return Math.floor((endTime - startTime) / 1000);
-    }
-
-    // Otherwise use current time
-    const currentTime = new Date().getTime();
-    return Math.floor((currentTime - startTime) / 1000);
-  };
-
-  const [elapsedSeconds, setElapsedSeconds] = useState(getElapsedSeconds());
-
   const participants = game.participants || [];
   const isGameLive = game.status === GAME_STATUS.live;
-
-  // Calculate time components from elapsed seconds
-  const currentTimeHours = Math.floor(elapsedSeconds / 3600);
-  const currentTimeMinutes = Math.floor((elapsedSeconds % 3600) / 60);
-  const currentTimeSeconds = elapsedSeconds % 60;
-
-  // Format time as HH:MM:SS
-
-  // Timer effect - calculate from started_at
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    // Only update timer if game is live and hasn't ended
-    if (isGameLive && game.started_at && !game.ended_at) {
-      // Update timer every second based on started_at timestamp
-      interval = setInterval(() => {
-        setElapsedSeconds(getElapsedSeconds());
-      }, 1000);
-    } else if (game.ended_at && game.started_at) {
-      // If game has ended, set fixed time once
-      setElapsedSeconds(getElapsedSeconds());
-    }
-
-    return () => clearInterval(interval);
-  }, [isGameLive, game.started_at]);
-
-  // Update timer when game state changes
-  useEffect(() => {
-    if (isGameLive) {
-      setIsTimerRunning(true);
-    } else {
-      setIsTimerRunning(false);
-    }
-  }, [isGameLive]);
 
   const handleStartGame = () => {
     startCommandTransition(async () => {
@@ -154,7 +97,7 @@ export default function GameActionTab({
         <Paper
           sx={{
             padding: 3,
-            marginBottom: 3,
+            marginBottom: 2,
             backgroundColor: "background.default",
           }}
         >
@@ -165,18 +108,11 @@ export default function GameActionTab({
             justifyContent="center"
           >
             {/* Timer */}
-            <Typography
-              variant="h3"
-              sx={{
-                fontFamily: "monospace",
-                fontWeight: "bold",
-                color: isTimerRunning ? "success.main" : "text.secondary",
-              }}
-            >
-              {currentTimeHours > 0
-                ? `${String(currentTimeHours).padStart(2, "0")}:${String(currentTimeMinutes).padStart(2, "0")}:${String(currentTimeSeconds).padStart(2, "0")}`
-                : `${String(currentTimeMinutes).padStart(2, "0")}:${String(currentTimeSeconds).padStart(2, "0")}`}
-            </Typography>
+            <GameTimer
+              isGameLive={isGameLive}
+              started_at={game.started_at}
+              ended_at={game.ended_at}
+            />
 
             {/* Game Status */}
             <Typography variant="body2" color="text.secondary">
@@ -247,6 +183,7 @@ export default function GameActionTab({
         <GoalRecordingModal
           open={openGoalModal}
           onClose={handleCloseGoalModal}
+          onGoalRecorded={onGoalRecorded}
           gameId={gameId}
           game={game}
           participants={participants}

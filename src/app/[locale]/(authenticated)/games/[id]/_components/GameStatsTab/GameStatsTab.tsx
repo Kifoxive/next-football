@@ -253,7 +253,7 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
             </Stack>
           </Box>
         ) : (
-          <Stack spacing={3}>
+          <Stack spacing={2}>
             {/* General Statistics */}
             <Paper sx={{ padding: 3 }}>
               <Typography variant="h6" sx={{ marginBottom: 3 }}>
@@ -291,8 +291,8 @@ export default function GameStatsTab({ game, goals }: GameStatsTabProps) {
                           intensityLevel === "intensive"
                             ? "error.main"
                             : intensityLevel === "normal"
-                              ? "warning.main"
-                              : "success.main",
+                            ? "warning.main"
+                            : "success.main",
                       }}
                     >
                       {t(`games.stats.matchStatistics.goalIntensity`)}:{" "}

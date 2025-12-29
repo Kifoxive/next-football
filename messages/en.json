@@ -41,7 +41,8 @@
     "passwordLength": "Password must be at least {minLength} characters long",
     "passwordsMismatch": "Passwords don't match",
     "participantsMinLength": "At least {minLength} participant must be selected",
-    "privacyPolicyRequired": "You must agree to the Privacy Policy to continue"
+    "privacyPolicyRequired": "You must agree to the Privacy Policy to continue",
+    "scorerRequired": "You must select a scorer "
   },
   "login": {
     "title": "Sign in",
@@ -417,7 +418,7 @@
       "negotiateGames": "Negotiate football games",
       "viewStats": "View statistics of your performances",
       "history": "Keep a history of your matches"
-    }, 
+    },
     "welcome": "Welcome, {username}",
     "fetchError": "Unable to fetch player",
     "join": "Join",

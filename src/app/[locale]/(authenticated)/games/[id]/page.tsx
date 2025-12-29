@@ -23,7 +23,6 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GameLobby from "./_components/GameLobbyTab/GameLobby";
-import { useRealtimeGoals } from "@/utils/supabase/client";
 
 type TabItem = "detail" | "lobby" | "action" | "stats";
 
@@ -41,9 +40,9 @@ export default function GamesDetailPage() {
   const [goals, setGoals] = useState<IGoal[] | null>(null);
 
   // enable realtime messages update
-  useRealtimeGoals((newGoal) => {
-    setGoals((prev) => [...(prev ?? []), newGoal]);
-  }, id);
+  // useRealtimeGoals((newGoal) => {
+  //   setGoals((prev) => [...(prev ?? []), newGoal]);
+  // }, id);
 
   const tabItems = ["detail", "stats"];
   // Insert lobby and action tabs if user has moderator permissions
@@ -61,38 +60,38 @@ export default function GamesDetailPage() {
   );
 
   useEffect(() => {
-    const fetchGame = async () => {
-      try {
-        const { data } = await axiosClient.get<GetOneGame["response"]>(
-          config.endpoints.games.detail.replace(":id", id)
-        );
-
-        setGame(data);
-      } catch (e) {
-        toast.error(t("games.detail.fetchError"));
-        console.error(e);
-      }
-    };
-
-    const fetchGoals = async () => {
-      try {
-        const { data } = await axiosClient.get<GetGoals["response"]>(
-          config.endpoints.games.goals.replace(":id", id)
-        );
-
-        const sortedGoals = data.sort(
-          (a: IGoal, b: IGoal) =>
-            new Date(a.time).getTime() - new Date(b.time).getTime()
-        );
-        setGoals(sortedGoals);
-      } catch (error) {
-        console.error("Failed to fetch goals:", error);
-      }
-    };
-
     fetchGame();
     fetchGoals();
-  }, [id]);
+  }, []);
+
+  const fetchGame = async () => {
+    try {
+      const { data } = await axiosClient.get<GetOneGame["response"]>(
+        config.endpoints.games.detail.replace(":id", id)
+      );
+
+      setGame(data);
+    } catch (e) {
+      toast.error(t("games.detail.fetchError"));
+      console.error(e);
+    }
+  };
+
+  const fetchGoals = async () => {
+    try {
+      const { data } = await axiosClient.get<GetGoals["response"]>(
+        config.endpoints.games.goals.replace(":id", id)
+      );
+
+      const sortedGoals = data.sort(
+        (a: IGoal, b: IGoal) =>
+          new Date(a.time).getTime() - new Date(b.time).getTime()
+      );
+      setGoals(sortedGoals);
+    } catch (error) {
+      console.error("Failed to fetch goals:", error);
+    }
+  };
 
   const canUpdate =
     !!authUser && permissions["moderator"].includes(authUser.role);
@@ -218,9 +217,9 @@ export default function GamesDetailPage() {
               onGameStatusChange={(updatedGame) => {
                 setGame((prevGame) => ({ ...prevGame!, ...updatedGame }));
               }}
-              // onGoalsUpdate={(updatedGoals) => {
-              //   setGoals(updatedGoals);
-              // }}
+              onGoalRecorded={() => {
+                fetchGoals();
+              }}
             />
           </TabPanel>
           <TabPanel value="stats" sx={{ padding: 0 }}>

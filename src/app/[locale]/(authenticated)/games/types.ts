@@ -1,11 +1,10 @@
+import { TFunction } from "@/utils/types";
 import { ASSIST_TYPE, GAME_STATUS, MOVE_TYPE, VOTE_OPTION } from "@/config";
 import { z } from "zod";
 import { ILocation } from "../locations/types";
 import { PlayerOptionType } from "../players/types";
 
-export const gameFormSchema = (
-  t: (key: string, param?: Record<string, string | number>) => string
-) =>
+export const gameFormSchema = (t: TFunction) =>
   z.object({
     description: z
       .string({ message: t("validation.required") })
@@ -32,9 +31,7 @@ export const gameFormSchema = (
 
 export type IGameForm = z.infer<ReturnType<typeof gameFormSchema>>;
 
-export const gameLobbyFormSchema = (
-  t: (key: string, param?: Record<string, string | number>) => string
-) =>
+export const gameLobbyFormSchema = (t: TFunction) =>
   z.object({
     participants: z
       .array(
