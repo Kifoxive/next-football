@@ -5,13 +5,12 @@ import { useDocumentTitle } from "@/hooks";
 import { useAuthStore } from "@/store/auth";
 import {
   DeleteSubscription,
-  GetMessages,
   IMessage,
   PostMessage,
   PostSubscription,
 } from "../chats/types";
 import { Badge, Box, IconButton, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { axiosClient } from "@/utils/axiosClient";
 import { config } from "@/config";
 import toast from "react-hot-toast";
@@ -22,6 +21,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useAppStore } from "@/store/app";
 import { MessageInput } from "../chats/_components/MessageInput";
 import { ChatBody } from "../chats/_components/ChatBody";
+
+const MESSAGES_PER_PAGE = 50;
 
 function urlBase64ToUint8Array(base64: string) {
   const padding = "=".repeat((4 - (base64.length % 4)) % 4);
@@ -37,6 +38,9 @@ export default function ChatPage() {
   useDocumentTitle(t("title"));
 
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [totalMessages, setTotalMessages] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const authUser = useAuthStore((s) => s.user);
   const theme = useTheme();
   const isLightTheme = theme.palette.mode === "light";
@@ -45,30 +49,62 @@ export default function ChatPage() {
   const removeSubscription = useAppStore((s) => s.removeSubscription);
   const [isSubActionLoading, setIsSubActionLoading] = useState(false);
   const [isSendMessageLoading, setIsSendMessageLoading] = useState(false);
+  const [isActionLoading, setIsActionLoading] = useState(false);
 
   // enable realtime messages update
   useRealtimeMessages((newMsg) => {
-    setMessages((prev) => [...prev, newMsg]);
+    setMessages((prev) => {
+      // Avoid duplicates
+      if (prev.some((m) => m.id === newMsg.id)) return prev;
+      return [...prev, newMsg];
+    });
+    setTotalMessages((prev) => prev + 1);
   });
 
-  // fetch all messages
-  useEffect(() => {
-    const fetchMessages = async () => {
-      setIsSendMessageLoading(true);
+  // fetch messages with pagination
+  const fetchMessages = useCallback(
+    async (pageOffset: number = 0) => {
       try {
-        const res = await axiosClient.get<GetMessages["response"]>(
-          config.endpoints.messages.main.list
-        );
-        setMessages(res.data);
+        if (pageOffset === 0) {
+          setIsSendMessageLoading(true);
+        } else {
+          setIsLoadingMore(true);
+        }
+
+        const res = await axiosClient.get<{
+          messages: IMessage[];
+          total: number;
+          limit: number;
+          offset: number;
+        }>(config.endpoints.messages.main.list, {
+          params: {
+            limit: MESSAGES_PER_PAGE,
+            offset: pageOffset,
+          },
+        });
+
+        setTotalMessages(res.data.total || 0);
+
+        if (pageOffset === 0) {
+          setMessages(res.data.messages);
+        } else {
+          setMessages((prev) => [...res.data.messages, ...prev]);
+        }
+        setOffset(pageOffset + MESSAGES_PER_PAGE);
       } catch (error) {
         console.error(error);
         toast.error(t("fetchError"));
       } finally {
         setIsSendMessageLoading(false);
+        setIsLoadingMore(false);
       }
-    };
+    },
+    [t]
+  );
 
-    fetchMessages();
+  // fetch all messages on mount
+  useEffect(() => {
+    fetchMessages(0);
   }, []);
 
   // send message
@@ -83,6 +119,44 @@ export default function ChatPage() {
       );
     } catch {
       toast.error(t("messages.error"));
+    }
+  };
+
+  // delete message
+  const onMessageDelete = async (messageId: string) => {
+    try {
+      setIsActionLoading(true);
+      await axiosClient.delete(
+        config.endpoints.messages.main.delete.replace(":id", messageId)
+      );
+      setMessages((prev) => prev.filter((m) => m.id !== messageId));
+      setTotalMessages((prev) => Math.max(0, prev - 1));
+      toast.success(t("messages.deleted"));
+    } catch (error) {
+      console.error(error);
+      toast.error(t("messages.deleteError"));
+    } finally {
+      setIsActionLoading(false);
+    }
+  };
+
+  // edit message
+  const onMessageEdit = async (messageId: string, text: string) => {
+    try {
+      setIsActionLoading(true);
+      await axiosClient.put(
+        config.endpoints.messages.main.edit.replace(":id", messageId),
+        { text }
+      );
+      setMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? { ...m, text } : m))
+      );
+      toast.success(t("messages.edited"));
+    } catch (error) {
+      console.error(error);
+      toast.error(t("messages.editError"));
+    } finally {
+      setIsActionLoading(false);
     }
   };
 
@@ -168,10 +242,19 @@ export default function ChatPage() {
         className={`fixed inset-0 bg-[url(/images/football_wallpaper.png)] bg-repeat-x bg-[length:auto_100%]
                 ${isLightTheme && "invert"}`}
       ></div>
-      <div className="flex flex-col h-screen sm:h-auto overflow-hidden flex-1">
+      <div className="flex flex-col h-screen sm:h-auto overflow-hidden flex-1 relative">
         {/* Messages area */}
-        <div className="flex-1 overflow-y-auto scroll-container">
-          <ChatBody userId={authUser.id} messages={messages} />
+        <div className="flex-1 overflow-hidden relative">
+          <ChatBody
+            userId={authUser.id}
+            messages={messages}
+            onLoadMore={() => fetchMessages(offset)}
+            hasMore={messages.length < totalMessages}
+            isLoadingMore={isLoadingMore}
+            onDelete={onMessageDelete}
+            onEdit={onMessageEdit}
+            isLoading={isActionLoading}
+          />
         </div>
 
         {/* Input */}

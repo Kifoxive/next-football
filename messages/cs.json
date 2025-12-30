@@ -41,7 +41,8 @@
     "passwordLength": "Heslo musí mít alespoň {minLength} znaků",
     "passwordsMismatch": "Hesla se neshodují",
     "participantsMinLength": "Musí být vybráni alespoň {minLength} účastníci",
-    "privacyPolicyRequired": "Musíte souhlasit se Zásadami ochrany osobních údajů, abyste mohli pokračovat"
+    "privacyPolicyRequired": "Musíte souhlasit se Zásadami ochrany osobních údajů, abyste mohli pokračovat",
+    "scorerRequired": "Musíte vybrat střelce"
   },
   "login": {
     "title": "Přihlásit se",
@@ -368,7 +369,15 @@
   "chats": {
     "title": "Chat",
     "messages": {
-      "error": "Zprávu se nepodařilo odeslat"
+      "save": "Uložit",
+      "cancel": "Zrušit",
+      "edit": "Upravit",
+      "delete": "Smazat",
+      "error": "Zprávu se nepodařilo odeslat",
+      "deleted": "Zpráva byla úspěšně smazána",
+      "deleteError": "Nepodařilo se smazat zprávu",
+      "edited": "Zpráva byla úspěšně upravena",
+      "editError": "Nepodařilo se upravit zprávu"
     },
     "fetchError": "Nelze načíst zprávy",
     "subscriptions": {

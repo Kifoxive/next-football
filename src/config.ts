@@ -149,6 +149,8 @@ export const config = {
       main: {
         new: "/messages",
         list: "/messages",
+        edit: "/messages/:id",
+        delete: "/messages/:id",
         subscribe: "/messages/subscribe",
       },
     },

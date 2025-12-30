@@ -85,8 +85,8 @@ export async function POST(request: Request) {
   return NextResponse.json(data, { status: 201 });
 }
 
-// get all messages
-export async function GET() {
+// get all messages with pagination
+export async function GET(request: Request) {
   const { isAllowed, errorMessage, status } = await getIsAllowed({
     permission: USER_ROLE.player, // anyone who can chat
   });
@@ -95,10 +95,14 @@ export async function GET() {
     return NextResponse.json({ error: errorMessage }, { status });
   }
 
+  const url = new URL(request.url);
+  const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+  const offset = parseInt(url.searchParams.get("offset") || "0", 10);
+
   const supabase = await createClient();
 
-  // Fetch messages with sender (author)
-  const { data, error } = await supabase
+  // Fetch messages with sender (author) - ordered by created_at descending for infinite scroll
+  const { data, error, count } = await supabase
     .from("messages")
     .select(
       `
@@ -115,14 +119,22 @@ export async function GET() {
         role,
         avatar_url
       )
-      `
+      `,
+      { count: "exact" }
     )
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
 
   if (error) {
     console.error("Fetch error:", error);
     return NextResponse.json({ error: "Fetch failed" }, { status: 500 });
   }
 
-  return NextResponse.json(data, { status: 200 });
+  // Reverse the array to maintain chronological order for display
+  const reversedData = (data || []).reverse();
+
+  return NextResponse.json(
+    { messages: reversedData, total: count, limit, offset },
+    { status: 200 }
+  );
 }

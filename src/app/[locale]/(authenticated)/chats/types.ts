@@ -8,7 +8,7 @@ enum MESSAGE_TYPE {
 }
 
 export interface IMessage {
-  message_id: string;
+  id: string;
   sender_id: string;
   profiles: Pick<
     IUser,

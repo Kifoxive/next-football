@@ -369,7 +369,15 @@
   "chats": {
     "title": "Chat",
     "messages": {
-      "error": "Failed to send message"
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "error": "Failed to send message",
+      "deleted": "Message deleted successfully",
+      "deleteError": "Failed to delete message",
+      "edited": "Message updated successfully",
+      "editError": "Failed to edit message"
     },
     "fetchError": "Unable to fetch messages",
     "subscriptions": {
