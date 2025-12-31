@@ -12,7 +12,7 @@ export const Sidebar = () => {
   return (
     <Box
       component="ul"
-      className="hidden sm:flex flex-col p-2 gap-2"
+      className="hidden sm:flex flex-col p-2 gap-2 h-full"
       sx={(theme) => ({
         width: 100, // or 240px — depending on the design
         borderRight: "1px solid",

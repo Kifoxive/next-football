@@ -1,7 +1,8 @@
 "use client";
 
-import { DesktopLayoutWrapper } from "./DesktopLayoutWrapper";
-import { MobileLayoutWrapper } from "./MobileLayoutWrapper";
+import { Box } from "@mui/material";
+import Navbar from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 
 export default function ClientLayoutSwitcher({
   children,
@@ -10,8 +11,13 @@ export default function ClientLayoutSwitcher({
 }) {
   return (
     <>
-      <DesktopLayoutWrapper>{children}</DesktopLayoutWrapper>
-      <MobileLayoutWrapper>{children}</MobileLayoutWrapper>
+      <Box className="flex flex-col h-screen">
+        <Navbar />
+        <Box className="flex flex-1 overflow-auto sm:overflow-hidden">
+          <Sidebar />
+          {children}
+        </Box>
+      </Box>
     </>
   );
 }

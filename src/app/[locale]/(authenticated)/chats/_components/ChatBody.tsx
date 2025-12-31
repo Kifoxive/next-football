@@ -101,7 +101,7 @@ export const ChatBody: React.FC<ChatBodyProps> = ({
     <>
       <div
         ref={scrollRef}
-        className="flex-1 flex justify-center overflow-y-auto z-10 h-full scroll-container"
+        className="relative flex-1 flex justify-center overflow-y-auto z-10 h-full scroll-container"
         onScroll={handleScroll}
       >
         {messages.length ? (

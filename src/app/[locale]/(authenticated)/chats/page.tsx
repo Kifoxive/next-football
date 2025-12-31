@@ -242,7 +242,7 @@ export default function ChatPage() {
         className={`fixed inset-0 bg-[url(/images/football_wallpaper.png)] bg-repeat-x bg-[length:auto_100%]
                 ${isLightTheme && "invert"}`}
       ></div>
-      <div className="flex flex-col h-screen sm:h-auto overflow-hidden flex-1 relative">
+      <div className="flex flex-col h-full sm:h-auto overflow-hidden flex-1 relative">
         {/* Messages area */}
         <div className="flex-1 overflow-hidden relative">
           <ChatBody
@@ -261,12 +261,12 @@ export default function ChatPage() {
         <div className="sticky bottom-0 w-full flex justify-center">
           <Box
             className="w-full flex justify-center max-w-[640px] p-3 relative
-            before:content-[''] 
-            before:absolute 
-            before:top-0 
-            before:left-0 
-            before:w-full 
-            before:h-[1px] 
+            before:content-['']
+            before:absolute
+            before:top-0
+            before:left-0
+            before:w-full
+            before:h-[1px]
             before:bg-[linear-gradient(90deg,rgba(127,127,127,0)_0%,rgba(127,127,127,0.4)_2%,rgba(127,127,127,0.4)_98%,rgba(127,127,127,0)_100%)]"
           >
             <MessageInput
