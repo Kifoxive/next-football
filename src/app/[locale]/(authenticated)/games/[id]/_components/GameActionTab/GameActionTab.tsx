@@ -18,13 +18,16 @@ import GoalRecordingModal from "../GoalRecordingModal/GoalRecordingModal";
 import { Container } from "@mui/material";
 import GoalsListSection from "./GoalsListSection";
 import GameTimer from "./GameTimer";
+import Dialog from "@/components/Dialog/Dialog";
 
 interface GameActionTabProps {
   gameId: string;
   goals: IGoal[] | null;
   game: IGame;
   isLoading?: boolean;
-  onGameStatusChange: (game: IGame) => void;
+  onGameStatusChange: (
+    game: Pick<IGame, "status" | "started_at" | "ended_at">
+  ) => void;
   onGoalRecorded: () => void;
 }
 
@@ -41,38 +44,46 @@ export default function GameActionTab({
   const [openGoalModal, setOpenGoalModal] = useState(false);
   const participants = game.participants || [];
   const isGameLive = game.status === GAME_STATUS.live;
+  const [isStartGameModalOpen, setIsStartGameModalOpen] = useState(false);
+  const [isEndGameModalOpen, setIsEndGameModalOpen] = useState(false);
 
   const handleStartGame = () => {
     startCommandTransition(async () => {
-      try {
-        const result = await executeGameCommand(gameId, "startGame");
-        if (result.success) {
-          toast.success(t("games.control.gameStarted"));
-          onGameStatusChange?.(result.game!);
-        } else {
-          toast.error(result.error || t("games.control.startGameError"));
-        }
-      } catch (error) {
-        toast.error(t("games.control.startGameError"));
-        console.error(error);
-      }
+      await toast.promise(executeGameCommand(gameId, "startGame"), {
+        loading: t("games.action.start.loading"),
+        success: (result) => {
+          if (result.game) {
+            const data = {
+              status: result.game.status,
+              started_at: result.game.started_at,
+              ended_at: result.game.ended_at,
+            };
+            onGameStatusChange(data);
+          }
+          return t("games.action.start.success");
+        },
+        error: t("games.action.start.error"),
+      });
     });
   };
 
   const handleEndGame = () => {
     startCommandTransition(async () => {
-      try {
-        const result = await executeGameCommand(gameId, "endGame");
-        if (result.success) {
-          toast.success(t("games.control.gameEnded"));
-          onGameStatusChange?.(result.game!);
-        } else {
-          toast.error(result.error || t("games.control.endGameError"));
-        }
-      } catch (error) {
-        toast.error(t("games.control.endGameError"));
-        console.error(error);
-      }
+      await toast.promise(executeGameCommand(gameId, "endGame"), {
+        loading: t("games.action.end.loading"),
+        success: (result) => {
+          if (result.game) {
+            const data = {
+              status: result.game.status,
+              started_at: result.game.started_at,
+              ended_at: result.game.ended_at,
+            };
+            onGameStatusChange(data);
+          }
+          return t("games.action.end.success");
+        },
+        error: t("games.action.end.error"),
+      });
     });
   };
 
@@ -131,11 +142,11 @@ export default function GameActionTab({
                   variant="contained"
                   color="primary"
                   startIcon={<PlayArrowIcon />}
-                  onClick={handleStartGame}
+                  onClick={() => setIsStartGameModalOpen(true)}
                   disabled={game.status !== GAME_STATUS.confirmed}
                   loading={isCommandPending}
                 >
-                  {t("games.control.startGame")}
+                  {t("games.action.start.text")}
                 </LoadingButton>
               )}
 
@@ -144,10 +155,10 @@ export default function GameActionTab({
                   variant="contained"
                   color="error"
                   startIcon={<StopIcon />}
-                  onClick={handleEndGame}
+                  onClick={() => setIsEndGameModalOpen(true)}
                   loading={isCommandPending}
                 >
-                  {t("games.control.endGameBtn")}
+                  {t("games.action.end.text")}
                 </LoadingButton>
               )}
             </Stack>
@@ -188,6 +199,32 @@ export default function GameActionTab({
           game={game}
           participants={participants}
           isLoading={isLoading}
+        />
+        <Dialog
+          isOpen={isStartGameModalOpen}
+          title={t("games.action.startDialog.title")}
+          description={t("games.action.startDialog.description")}
+          agreeBtnText={t("games.action.startDialog.agreeBtnText")}
+          cancelBtnText={t("games.action.startDialog.cancelBtnText")}
+          onAgree={() => {
+            handleStartGame();
+            setIsStartGameModalOpen(false);
+          }}
+          onCancel={() => setIsStartGameModalOpen(false)}
+          setIsOpen={setIsStartGameModalOpen}
+        />
+        <Dialog
+          isOpen={isEndGameModalOpen}
+          title={t("games.action.endDialog.title")}
+          description={t("games.action.endDialog.description")}
+          agreeBtnText={t("games.action.endDialog.agreeBtnText")}
+          cancelBtnText={t("games.action.endDialog.cancelBtnText")}
+          onAgree={() => {
+            handleEndGame();
+            setIsEndGameModalOpen(false);
+          }}
+          onCancel={() => setIsEndGameModalOpen(false)}
+          setIsOpen={setIsEndGameModalOpen}
         />
       </Container>
     </Box>

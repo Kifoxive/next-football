@@ -52,9 +52,9 @@ export default function GamesEditPage() {
           .put(config.endpoints.games.edit.replace(":id", id), newGameData)
           .then(() => router.push(config.routes.games.list)),
         {
-          loading: null,
-          success: t("updateSuccess"),
-          error: t("updateError"),
+          loading: t("update.loading"),
+          success: t("update.success"),
+          error: t("update.error"),
         }
       );
     });
@@ -62,14 +62,16 @@ export default function GamesEditPage() {
 
   const onRemove = () => {
     startRemoveTransition(async () => {
-      try {
-        await axiosClient.delete(`${config.endpoints.games}/${id}`);
-        toast.success(t("removeSuccess"));
-        router.push(config.routes.games.list);
-      } catch (e) {
-        console.error(e);
-        toast.error(t("removeError"));
-      }
+      toast.promise(
+        axiosClient
+          .delete(config.endpoints.games.delete.replace(":id", id))
+          .then(() => router.push(config.routes.games.list)),
+        {
+          loading: t("remove.loading"),
+          success: t("remove.success"),
+          error: t("remove.error"),
+        }
+      );
     });
   };
 
@@ -79,7 +81,7 @@ export default function GamesEditPage() {
       isLoading={!game}
       endContent={[
         {
-          text: t("removeButton"),
+          text: t("remove.text"),
           icon: <DeleteIcon />,
           variant: "outlined",
           color: "error",
@@ -95,7 +97,7 @@ export default function GamesEditPage() {
             router.push(config.routes.games.detail.replace(":id", id)),
         },
         {
-          text: t("updateButton"),
+          text: t("update.text"),
           icon: <UpgradeIcon />,
           variant: "contained",
           color: "success",

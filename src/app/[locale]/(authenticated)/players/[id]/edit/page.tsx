@@ -52,37 +52,38 @@ export default function PlayersEditPage() {
 
   const onSubmit = (newUserData: IUserForm) => {
     startUpdateTransition(async () => {
-      try {
-        const formData = new FormData();
-        formData.append("player", JSON.stringify(newUserData));
-        await axiosClient.put(
-          config.endpoints.players.edit.replace(":id", id),
-          formData,
-          {
+      const formData = new FormData();
+      formData.append("player", JSON.stringify(newUserData));
+
+      toast.promise(
+        axiosClient
+          .put(config.endpoints.players.edit.replace(":id", id), formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
-        );
-        toast.success(t("updateSuccess"));
-        router.push(config.routes.players.list);
-      } catch {
-        toast.error(t("updateError"));
-      }
+          })
+          .then(() => router.push(config.routes.players.list)),
+        {
+          loading: t("update.loading"),
+          success: t("update.success"),
+          error: t("update.error"),
+        }
+      );
     });
   };
 
   const onRemove = () => {
     startRemoveTransition(async () => {
-      try {
-        await axiosClient.delete(
-          config.endpoints.players.delete.replace(":id", id)
-        );
-        toast.success(t("removeSuccess"));
-        router.push(config.routes.players.list);
-      } catch {
-        toast.error(t("removeError"));
-      }
+      toast.promise(
+        axiosClient
+          .delete(config.endpoints.players.delete.replace(":id", id))
+          .then(() => router.push(config.routes.players.list)),
+        {
+          loading: t("remove.loading"),
+          success: t("remove.success"),
+          error: t("remove.error"),
+        }
+      );
     });
   };
 
@@ -92,7 +93,7 @@ export default function PlayersEditPage() {
       isLoading={!player}
       endContent={[
         {
-          text: t("removeButton"),
+          text: t("remove.text"),
           icon: <DeleteIcon />,
           variant: "outlined",
           color: "error",
@@ -116,7 +117,7 @@ export default function PlayersEditPage() {
             router.push(config.routes.players.detail.replace(":id", id)),
         },
         {
-          text: t("updateButton"),
+          text: t("update.text"),
           icon: <UpgradeIcon />,
           variant: "contained",
           color: "success",

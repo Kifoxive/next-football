@@ -1,39 +1,24 @@
-"use client";
+"use server";
 
 import ContentLayout from "@/components/ContentLayout/ContentLayout";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { GetFreshGames } from "./games/types";
-import { axiosClient } from "@/utils/axiosClient";
-import { config } from "@/config";
-import toast from "react-hot-toast";
-import { useDocumentTitle } from "@/hooks";
 import { UpcomingGamesSection } from "./_components/UpcomingGamesSection";
+import { getTranslations } from "next-intl/server";
 
-export default function HomePage() {
-  const t = useTranslations("home");
-  useDocumentTitle(t("title"));
+import getFreshGames from "@/server/games/getFreshGames";
 
-  const [gamesData, setGamesData] = useState<GetFreshGames["response"]>([]);
+export async function generateMetadata() {
+  const t = await import("next-intl/server").then((m) =>
+    m.getTranslations("home")
+  );
+  return { title: t("title") };
+}
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const res = await axiosClient.get<GetFreshGames["response"]>(
-          config.endpoints.games.list,
-          { params: { fresh: true } }
-        );
-        setGamesData(res.data);
-      } catch {
-        toast.error(t("upcomingGamesSection.fetchError"));
-      }
-    };
-
-    fetchGames();
-  }, []);
+export default async function HomePage() {
+  const t = await getTranslations("home");
+  const gamesData = await getFreshGames();
 
   return (
-    <ContentLayout title={t("title")} isLoading={!gamesData.length}>
+    <ContentLayout title={t("title")}>
       <UpcomingGamesSection gamesData={gamesData} />
     </ContentLayout>
   );

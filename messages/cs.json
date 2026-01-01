@@ -3,6 +3,7 @@
     "title": "Domů",
     "upcomingGamesSection": {
       "title": "Nadcházející hry",
+      "noGames": "Momentálně nejsou plánovány žádné hry",
       "fetchError": "Nelze načíst hry",
       "freshGame": {
         "viewDetailsBtn": "Zobrazit podrobnosti"
@@ -66,21 +67,29 @@
     },
     "new": {
       "title": "Přidat novou hru",
-      "addButton": "Vytvořit hru",
-      "createSuccess": "Hra byla úspěšně vytvořena",
-      "createError": "Nelze vytvořit hru"
+      "create": {
+        "text": "Vytvořit hru",
+        "loading": "Vytváření hry...",
+        "success": "Hra byla úspěšně vytvořena",
+        "error": "Nelze vytvořit hru"
+      }
     },
     "edit": {
       "title": "Upravit hru",
       "viewButton": "Zobrazit hru",
-      "updateButton": "Aktualizovat hru",
-      "updateLoading": "Aktualizace hry...",
-      "updateSuccess": "Hra byla úspěšně aktualizována",
-      "updateError": "Nelze aktualizovat hru",
+      "update": {
+        "text": "Aktualizovat hru",
+        "loading": "Aktualizace hry...",
+        "success": "Hra byla úspěšně aktualizována",
+        "error": "Nelze aktualizovat hru"
+      },
+      "remove": {
+        "text": "Odebrat hru",
+        "loading": "Hra se odstraňuje...",
+        "success": "Hra byla úspěšně odstraněna",
+        "error": "Nelze odstranit hru"
+      },
       "fetchError": "Nelze načíst hru",
-      "removeButton": "Odebrat hru",
-      "removeSuccess": "Hra byla úspěšně odebrána",
-      "removeError": "Nelze odebrat hru",
       "removeDialog": {
         "title": "Opravdu chcete tuto hru odebrat?",
         "description": "Tuto akci nelze vrátit zpět. Data hry budou trvale smazána",
@@ -131,6 +140,30 @@
       "recording": "Zaznamenávání...",
       "goalsListSection": {
         "goalsAmount": "Góly ({amount})"
+      },
+      "start": {
+        "text": "Spustit hru",
+        "loading": "Spouštění hry...",
+        "success": "Hra byla spuštěna",
+        "error": "Spuštění hry se nezdařilo"
+      },
+      "end": {
+        "text": "Konec hry",
+        "loading": "Ukončení hry...",
+        "success": "Hra skončila",
+        "error": "Ukončení hry se nezdařilo"
+      },
+      "startDialog": {
+        "title": "Opravdu chcete hru spustit?",
+        "description": "Poté nebudete moci hru restartovat ani pozastavit",
+        "agreeBtnText": "Ano, spustit",
+        "cancelBtnText": "Zrušit"
+      },
+      "endDialog": {
+        "title": "Opravdu chcete hru ukončit?",
+        "description": "Poté nebude možné hru restartovat ani zaznamenávat góly",
+        "agreeBtnText": "Ano, konec",
+        "cancelBtnText": "Zrušit"
       }
     },
     "moveType": {
@@ -148,24 +181,6 @@
       "free_kick": "Přímý Kop",
       "throw_in": "Vhazování",
       "penalty": "Pokutový Kop"
-    },
-    "control": {
-      "startGame": "Začít Hru",
-      "gameStarted": "Hra začala",
-      "startGameError": "Nepodařilo se začít hru",
-      "kickoff": "Výkop",
-      "matchStarted": "Zápas začal",
-      "kickoffError": "Nepodařilo se začít zápas",
-      "matchInProgress": "Zápas probíhá",
-      "pauseBtn": "Pauza",
-      "gamePaused": "Hra je pozastavena",
-      "pauseError": "Nepodařilo se pozastavit hru",
-      "resumeBtn": "Pokračovat",
-      "gameResumed": "Hra pokračuje",
-      "resumeError": "Nepodařilo se pokračovat v hře",
-      "endGameBtn": "Ukončit Hru",
-      "gameEnded": "Hra skončila",
-      "endGameError": "Nepodařilo se ukončit hru"
     },
     "goal": {
       "scorerRequired": "Prosím vyberte střelce",
@@ -261,13 +276,19 @@
     },
     "edit": {
       "title": "Upravit hráče",
-      "updateButton": "Aktualizovat hráče",
-      "updateSuccess": "Hráč byl úspěšně aktualizován",
-      "updateError": "Nelze aktualizovat hráče",
+      "update": {
+        "text": "Aktualizovat hráče",
+        "loading": "Hráč se aktualizuje...",
+        "success": "Hráč byl úspěšně aktualizován",
+        "error": "Nelze aktualizovat hráče"
+      },
+      "remove": {
+        "text": "Odebrat hráče",
+        "loading": "Hráč se odebírá...",
+        "success": "Hráč byl úspěšně odebrán",
+        "error": "Nelze odebrat hráče"
+      },
       "fetchError": "Nelze načíst hráče",
-      "removeButton": "Odebrat hráče",
-      "removeSuccess": "Hráč byl úspěšně odstraněn",
-      "removeError": "Nelze odebrat hráče",
       "removeDialog": {
         "title": "Opravdu chcete tohoto hráče odstranit?",
         "description": "Tuto akci nelze vrátit zpět. Data hráče budou trvale smazána",

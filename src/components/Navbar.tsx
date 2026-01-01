@@ -1,11 +1,9 @@
 "use client";
 
-import PersonIcon from "@mui/icons-material/Person";
 import { AppBar, Toolbar, Typography, Box, IconButton } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "@/i18n/navigation";
 import { config } from "@/config";
-import { useAuthStore } from "@/store/auth";
 import Logo from "./icons";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "next-themes";
@@ -18,7 +16,6 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ anonymous }) => {
-  const user = useAuthStore((s) => s.user);
   const { resolvedTheme } = useTheme();
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
@@ -55,20 +52,12 @@ const Navbar: React.FC<NavbarProps> = ({ anonymous }) => {
         {/* Language and Login */}
         <Box className="flex gap-1">
           <ThemeToggle />
-          {user ? (
-            <Link href={config.routes.profile.edit} className="hidden">
-              <IconButton>
-                <PersonIcon />
+          {anonymous === true && (
+            <Link href={config.routes.login}>
+              <IconButton color="inherit">
+                <LoginIcon />
               </IconButton>
             </Link>
-          ) : (
-            !anonymous && (
-              <Link href={config.routes.login}>
-                <IconButton color="inherit">
-                  <LoginIcon />
-                </IconButton>
-              </Link>
-            )
           )}
           {!anonymous && (
             <Box className="sm:hidden">

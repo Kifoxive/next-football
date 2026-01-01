@@ -3,6 +3,7 @@
     "title": "Home",
     "upcomingGamesSection": {
       "title": "Upcoming games",
+      "noGames": "No games are currently planned",
       "fetchError": "Unable to fetch games",
       "freshGame": {
         "viewDetailsBtn": "View details"
@@ -66,21 +67,29 @@
     },
     "new": {
       "title": "Add a new game",
-      "addButton": "Create game",
-      "createSuccess": "Game was created successfully",
-      "createError": "Unable to create game"
+      "create": {
+        "text": "Create game",
+        "loading": "Creating game...",
+        "success": "Game was created successfully",
+        "error": "Unable to create game"
+      }
     },
     "edit": {
       "title": "Edit game",
       "viewButton": "View game",
-      "updateButton": "Update game",
-      "updateLoading": "Updating game...",
-      "updateSuccess": "Game was updated successfully",
-      "updateError": "Unable to update game",
+      "update": {
+        "text": "Update game",
+        "loading": "Updating game...",
+        "success": "Game was updated successfully",
+        "error": "Unable to update game"
+      },
+      "remove": {
+        "text": "Remove game",
+        "loading": "Removing game...",
+        "success": "Game was removed successfully",
+        "error": "Unable to remove game"
+      },
       "fetchError": "Unable to fetch game",
-      "removeButton": "Remove game",
-      "removeSuccess": "Game was removed successfully",
-      "removeError": "Unable to remove game",
       "removeDialog": {
         "title": "Do you really want to remove this game?",
         "description": "This action cannot be undone. The game's data will be permanently deleted",
@@ -131,6 +140,30 @@
       "recording": "Recording...",
       "goalsListSection": {
         "goalsAmount": "Goals ({amount})"
+      },
+      "start": {
+        "text": "Start game",
+        "loading": "Starting game...",
+        "success": "Game started",
+        "error": "Failed to start game"
+      },
+      "end": {
+        "text": "End game",
+        "loading": "Ending game...",
+        "success": "Game ended",
+        "error": "Failed to end game"
+      },
+      "startDialog": {
+        "title": "Do you really want to start the game?",
+        "description": "After that, you will not be able to restart the game or pause it",
+        "agreeBtnText": "Yes, start",
+        "cancelBtnText": "Cancel"
+      },
+      "endDialog": {
+        "title": "Do you really want to end the game?",
+        "description": "After this, the game will not be able to be restarted, nor will you be able to record goals",
+        "agreeBtnText": "Yes, end",
+        "cancelBtnText": "Cancel"
       }
     },
     "moveType": {
@@ -148,24 +181,6 @@
       "free_kick": "Free Kick",
       "throw_in": "Throw-in",
       "penalty": "Penalty"
-    },
-    "control": {
-      "startGame": "Start Game",
-      "gameStarted": "Game started",
-      "startGameError": "Failed to start game",
-      "kickoff": "Kickoff",
-      "matchStarted": "Match started",
-      "kickoffError": "Failed to start match",
-      "matchInProgress": "Match in progress",
-      "pauseBtn": "Pause",
-      "gamePaused": "Game paused",
-      "pauseError": "Failed to pause game",
-      "resumeBtn": "Resume",
-      "gameResumed": "Game resumed",
-      "resumeError": "Failed to resume game",
-      "endGameBtn": "End Game",
-      "gameEnded": "Game ended",
-      "endGameError": "Failed to end game"
     },
     "goal": {
       "scorerRequired": "Please select a scorer",
@@ -261,13 +276,19 @@
     },
     "edit": {
       "title": "Edit player",
-      "updateButton": "Update player",
-      "updateSuccess": "Player was updated successfully",
-      "updateError": "Unable to update player",
+      "update": {
+        "text": "Update player",
+        "loading": "Player is updating...",
+        "success": "Player was updated successfully",
+        "error": "Unable to update player"
+      },
+      "remove": {
+        "text": "Remove player",
+        "loading": "Player is removing...",
+        "success": "Player was removed successfully",
+        "error": "Unable to remove player"
+      },
       "fetchError": "Unable to fetch player",
-      "removeButton": "Remove player",
-      "removeSuccess": "Player was removed successfully",
-      "removeError": "Unable to remove player",
       "removeDialog": {
         "title": "Do you really want to remove this player?",
         "description": "This action cannot be undone. The player's data will be permanently deleted",

@@ -4,6 +4,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --themed-icon-color: #777;
+}
+
+.dark {
+  --themed-icon-color: #fff;
 }
 
 @theme inline {

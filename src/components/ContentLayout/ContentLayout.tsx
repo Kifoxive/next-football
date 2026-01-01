@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { BackButton } from "../BackButton";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 interface IContentLayout {
   title: string;
@@ -22,6 +23,9 @@ interface IContentLayout {
     show?: boolean;
     text: string;
     icon: React.ReactElement;
+    // for server pages
+    redirect?: string;
+    // for client pages
     onClick?: () => void;
   })[];
   children: React.ReactNode;
@@ -70,23 +74,41 @@ export default function ContentLayout({
               {endContent
                 .filter(({ show = true }) => show)
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .map(({ show, loading, icon, ...button }, index) => (
-                  <Fab
-                    onClick={button.onClick}
-                    aria-label={button.text}
-                    color={button.color}
-                    key={index}
-                    size="small"
-                    disabled={loading == true}
-                    {...button}
-                    variant="circular"
-                    sx={{ color: isDark ? "#222222" : "#ffffff" }}
-                  >
-                    <Tooltip title={button.text} className="font-black">
-                      {icon}
-                    </Tooltip>
-                  </Fab>
-                ))}
+                .map(({ show, loading, icon, redirect, ...button }, index) =>
+                  redirect ? (
+                    <Link href={redirect} key={index}>
+                      <Fab
+                        aria-label={button.text}
+                        color={button.color}
+                        size="small"
+                        disabled={loading == true}
+                        {...button}
+                        variant="circular"
+                        sx={{ color: isDark ? "#222222" : "#ffffff" }}
+                      >
+                        <Tooltip title={button.text} className="font-black">
+                          {icon}
+                        </Tooltip>
+                      </Fab>
+                    </Link>
+                  ) : (
+                    <Fab
+                      onClick={button.onClick}
+                      aria-label={button.text}
+                      color={button.color}
+                      key={index}
+                      size="small"
+                      disabled={loading == true}
+                      {...button}
+                      variant="circular"
+                      sx={{ color: isDark ? "#222222" : "#ffffff" }}
+                    >
+                      <Tooltip title={button.text} className="font-black">
+                        {icon}
+                      </Tooltip>
+                    </Fab>
+                  )
+                )}
             </Box>
           </>
         )}

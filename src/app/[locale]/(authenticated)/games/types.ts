@@ -91,7 +91,7 @@ export type PutGame = {
 };
 export type GetFreshGames = {
   request: null;
-  response: (IGame & { locations: ILocation })[];
+  response: (IGame & { locations: Pick<ILocation, "name" | "image_list"> })[];
 };
 
 // voting

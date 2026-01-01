@@ -1,45 +1,27 @@
-"use client";
+"use server";
 
 import ContentLayout from "@/components/ContentLayout/ContentLayout";
-import { useDocumentTitle } from "@/hooks";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { GetGames } from "./types";
 import SportsIcon from "@mui/icons-material/Sports";
-import { axiosClient } from "@/utils/axiosClient";
-import { useRouter } from "next/navigation";
 import { config, permissions } from "@/config";
-import { GamesTable } from "./_components/GamesTable";
-import toast from "react-hot-toast";
-import { useAuthStore } from "@/store/auth";
+import GamesTable from "./_components/GamesTable";
 
-export default function GamesListPage() {
-  const t = useTranslations("games.list");
-  useDocumentTitle(t("title"));
+import { getTranslations } from "next-intl/server";
+import getAllGames from "@/server/games/getAllGames";
+import getServerAuthUser from "@/utils/getServerAuthUser";
 
-  const authUser = useAuthStore((s) => s.user);
-  const router = useRouter();
-  const [gamesData, setGamesData] = useState<GetGames["response"]>([]);
+export async function generateMetadata() {
+  const t = await import("next-intl/server").then((m) =>
+    m.getTranslations("games.list")
+  );
+  return { title: t("title") };
+}
 
-  const onAddNewGameButtonClick = () => {
-    router.push(config.routes.games.new);
-  };
+export default async function GamesListPage() {
+  const t = await getTranslations("games.list");
+  const gamesData = await getAllGames();
+  const authUser = await getServerAuthUser();
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const res = await axiosClient.get<GetGames["response"]>(
-          config.endpoints.games.list
-        );
-        setGamesData(res.data);
-      } catch (error) {
-        console.error(error);
-        toast.error(t("fetchError"));
-      }
-    };
-
-    fetchGames();
-  }, []);
+  const canAdd = !!authUser && permissions.moderator.includes(authUser.role);
 
   return (
     <ContentLayout
@@ -50,8 +32,8 @@ export default function GamesListPage() {
           text: t("add"),
           icon: <SportsIcon color="inherit" />,
           variant: "contained",
-          onClick: onAddNewGameButtonClick,
-          show: !!authUser && permissions.moderator.includes(authUser?.role),
+          redirect: config.routes.games.new,
+          show: canAdd,
         },
       ]}
     >

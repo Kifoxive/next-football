@@ -1,10 +1,10 @@
 "use server";
 
+import getAllGames from "@/server/games/getAllGames";
 import { USER_ROLE } from "@/store/auth";
 import { getIsAllowed } from "@/utils/supabase/getIsAllowed";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-import { GAME_STATUS } from "@/config";
 
 // create game
 export async function POST(request: Request) {
@@ -46,38 +46,11 @@ export async function POST(request: Request) {
   );
 }
 
-// get all games
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const getFreshGames = searchParams.get("fresh") === "true";
-
-  const supabase = await createClient();
-  const { isAllowed, errorMessage, status } = await getIsAllowed({
-    permission: USER_ROLE.player,
-  });
-
-  if (!isAllowed) return NextResponse.json({ error: errorMessage }, { status });
-
-  const locationSelection = getFreshGames ? "locations(*)" : "locations(name)";
-
-  // Basic query
-  let query = supabase.from("games").select(`*, ${locationSelection}`);
-
-  // Only fresh games
-  if (getFreshGames) {
-    query = query.in("status", [
-      GAME_STATUS.voting,
-      GAME_STATUS.confirmed,
-      GAME_STATUS.live,
-    ]);
+export async function GET() {
+  try {
+    const data = await getAllGames();
+    return NextResponse.json(data);
+  } catch (e) {
+    return NextResponse.json({ error: e }, { status: 401 });
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Fetch error" }, { status: 500 });
-  }
-
-  return NextResponse.json(data);
 }

@@ -21,17 +21,16 @@ export default function GamesNewPage() {
 
   const onSubmit = (newGameData: IGameForm) => {
     startCreateTransition(async () => {
-      try {
-        await axiosClient.post<PostGame["response"]>(
-          config.endpoints.games.new,
-          newGameData
-        );
-        toast.success(t("createSuccess"));
-        router.push(config.routes.games.list);
-      } catch (e) {
-        toast.error(t("createError"));
-        console.error(e);
-      }
+      toast.promise(
+        axiosClient
+          .post<PostGame["response"]>(config.endpoints.games.new, newGameData)
+          .then(() => router.push(config.routes.games.list)),
+        {
+          loading: t("create.loading"),
+          success: t("create.success"),
+          error: t("create.error"),
+        }
+      );
     });
   };
 
@@ -40,7 +39,7 @@ export default function GamesNewPage() {
       title={t("title")}
       endContent={[
         {
-          text: t("addButton"),
+          text: t("create.text"),
           icon: <UpgradeIcon />,
           variant: "contained",
           color: "success",

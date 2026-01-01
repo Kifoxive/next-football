@@ -1,6 +1,5 @@
-"use client";
+"use server";
 import React from "react";
-import { useTranslations } from "next-intl";
 import {
   Box,
   IconButton,
@@ -11,44 +10,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  useTheme,
 } from "@mui/material";
 import { config, permissions } from "@/config";
-import { useRouter } from "next/navigation";
 import EditIcon from "@mui/icons-material/Edit";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { GetGames } from "../types";
-import { useAuthStore } from "@/store/auth";
 import { GameStatusChip } from "@/components/GameStatusChip/GameStatusChip";
 import { format } from "date-fns";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TimerIcon from "@mui/icons-material/Timer";
-import { getThemedColor } from "@/utils/getThemedColor";
+import { getTranslations } from "next-intl/server";
+import getServerAuthUser from "@/utils/getServerAuthUser";
+import Link from "next/link";
 
 type GamesTableProps = {
   data?: GetGames["response"];
 };
 
-export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
-  const t = useTranslations("games");
-
-  const authUser = useAuthStore((s) => s.user);
-  const router = useRouter();
-  const theme = useTheme();
-
-  const onEditButtonClick = (id: string) => {
-    router.push(config.routes.games.edit.replace(":id", id));
-  };
-  const onOpenButtonClick = (id: string) => {
-    router.push(config.routes.games.detail.replace(":id", id));
-  };
+export default async function GamesTable({ data }: GamesTableProps) {
+  const t = await getTranslations("games");
+  const authUser = await getServerAuthUser();
 
   return (
     <>
-      <TableContainer
-        component={Paper}
-        // sx={{ width: "100%", overflowX: "scroll" }}
-      >
+      <TableContainer component={Paper}>
         <Table aria-label="simple list">
           <TableHead>
             <TableRow>
@@ -71,14 +56,11 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                   textWrap: "nowrap",
                 }}
               >
-                {/* <TableCell sx={{ textWrap: "nowrap" }}>
-                  <Typography color="primary">{row.id}</Typography>
-                </TableCell> */}
                 <TableCell align="left">{row.locations.name}</TableCell>
                 <TableCell align="left">
                   <Box className="flex items-center gap-2">
                     <CalendarMonthIcon
-                      sx={{ color: getThemedColor(theme) }}
+                      sx={{ color: "var(--themed-icon-color)" }}
                       fontSize="small"
                     />
                     {format(row.date, "EEEE, d MMMM")}
@@ -87,7 +69,7 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                 <TableCell align="left">
                   <Box className="flex items-center gap-2">
                     <TimerIcon
-                      sx={{ color: getThemedColor(theme) }}
+                      sx={{ color: "var(--themed-icon-color)" }}
                       fontSize="small"
                     />
                     {row.duration} {t("minutes")}
@@ -95,39 +77,26 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
                 </TableCell>
                 <TableCell align="left">
                   <GameStatusChip value={row.status} />
-                  {/* <GameStatusChip value={GAME_STATUS["initialization"]} />
-                  <GameStatusChip value={GAME_STATUS["voting"]} />
-                  <GameStatusChip value={GAME_STATUS["confirmed"]} />
-                  <GameStatusChip value={GAME_STATUS["completed"]} />
-                  <GameStatusChip value={GAME_STATUS["cancelled"]} /> */}
                 </TableCell>
                 <TableCell align="right">
                   <Box className="flex justify-end">
                     {authUser?.role &&
                       permissions.moderator.includes(authUser?.role) && (
-                        <>
-                          <IconButton
-                            aria-label="edit"
-                            onClick={() => onEditButtonClick(row.id)}
-                          >
+                        <Link
+                          href={config.routes.games.edit.replace(":id", row.id)}
+                        >
+                          <IconButton aria-label="edit">
                             <EditIcon fontSize="small" />
                           </IconButton>
-                          {/* <IconButton
-                          aria-label="remove"
-                          // onClick={() =>
-                          //   onEditButtonClick(row.auth_user_id, row.id)
-                          // }
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton> */}
-                        </>
+                        </Link>
                       )}
-                    <IconButton
-                      aria-label="view"
-                      onClick={() => onOpenButtonClick(row.id)}
+                    <Link
+                      href={config.routes.games.detail.replace(":id", row.id)}
                     >
-                      <LaunchIcon fontSize="small" />
-                    </IconButton>
+                      <IconButton aria-label="view">
+                        <LaunchIcon fontSize="small" />
+                      </IconButton>
+                    </Link>
                   </Box>
                 </TableCell>
               </TableRow>
@@ -137,4 +106,4 @@ export const GamesTable: React.FC<GamesTableProps> = ({ data }) => {
       </TableContainer>
     </>
   );
-};
+}
